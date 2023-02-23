@@ -6,8 +6,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class Frame {
+    /** Width of frame. */
     private static final int WIDTH = 1000;
 
+    /** Height of frame. */
     private static final int HEIGHT = 500;
 
     //main method TESTING PURPOSES ONLY... for now
