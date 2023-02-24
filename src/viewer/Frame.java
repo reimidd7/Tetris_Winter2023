@@ -1,16 +1,23 @@
 package viewer;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
+/** This class creates the Frame for the tetris game. It includes a menu bar at the top */
 public class Frame {
+
     /** Width of frame. */
     private static final int WIDTH = 1000;
 
     /** Height of frame. */
     private static final int HEIGHT = 500;
+
+    ///Possible constructor needed later.///
 
     //main method TESTING PURPOSES ONLY... for now
     public static void main(final String[] theArgs) {
@@ -32,8 +39,8 @@ public class Frame {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createTetrisFrame(WIDTH, HEIGHT);
-            } // the method call for createTetrisFrame
+                createTetrisFrame(WIDTH, HEIGHT); // the method call for createTetrisFrame
+            }
         });
     }
 
@@ -43,7 +50,41 @@ public class Frame {
         tFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         tFrame.setSize(theWidth, theHeight); //set height and width
         tFrame.setVisible(true);
+
+        tFrame.setJMenuBar(createFileMenu()); //add menu bar to the frame
     }
 
-    //Create a file menu with event handlers
+    //Create a file menu with event handlers.
+    public static JMenuBar createFileMenu() {
+        final JMenuBar menuBar = new JMenuBar();
+
+        final JMenu menu = new JMenu("File");
+        final JMenuItem exit = new JMenuItem("Exit");
+        exit.addActionListener(
+                e -> {
+                    System.exit(0);
+                });
+        menu.add(exit);
+        menuBar.add(menu);
+
+        final JMenu help = new JMenu("Help");
+        final JMenuItem rules = new JMenuItem("Rules");
+        rules.addActionListener(
+                e -> {
+                    JOptionPane.showMessageDialog(null, "Best of Luck");
+                });
+        help.add(rules);
+        menuBar.add(help);
+
+        final JMenu about = new JMenu("About");
+        final JMenuItem abt = new JMenuItem("About Game");
+        abt.addActionListener(
+                e -> {
+                    JOptionPane.showMessageDialog(null, "This is a tetris game");
+                });
+        about.add(abt);
+        menuBar.add(about);
+
+        return menuBar;
+    }
 }
