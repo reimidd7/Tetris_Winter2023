@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  * on the top right of the game.
  *
  * @author Viktoria Dolojan
- * @version 1.1
+ * @version 1.2
  */
 public class NextPiece extends JPanel {
 
@@ -18,19 +18,15 @@ public class NextPiece extends JPanel {
     private static final int SIZE = 250;
 
     /** Panel that displays the next tetris piece. */
-    private static JPanel myNextPiece;
+    private static JPanel myNextPiecePanel;
 
-    /*
-     * Creates the panel that displays the next tetris piece
-     * @param theX x coordinate of panel
-     * @param theY y coordinate of panel
-     * @param theSize size of square panel
-     */
+    /** Creates the panel that displays the next tetris piece. */
     private static void createPiecePanel() {
-        myNextPiece = new JPanel();
-        myNextPiece.setBackground(Color.BLUE);
-        myNextPiece.setBounds(SIZE, 0, SIZE, SIZE);
+        myNextPiecePanel = new JPanel();
+        myNextPiecePanel.setBackground(Color.BLUE);
+        myNextPiecePanel.setBounds(SIZE, 0, SIZE, SIZE);
         // TODO: display next tetris piece inside panel
+        // Note: model.Board class has a private field which holds the next tetris piece
     }
 
     // TODO: add panel to frame
@@ -45,6 +41,6 @@ public class NextPiece extends JPanel {
         frame.setSize(new Dimension(width, height));
         frame.setVisible(true);
         createPiecePanel();
-        frame.add(myNextPiece);
+        frame.add(myNextPiecePanel);
     }
 }
