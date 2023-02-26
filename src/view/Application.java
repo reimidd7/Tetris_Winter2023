@@ -1,7 +1,8 @@
+/**
+ * TCSS 305A - Tetris.
+ *
+ */
 package view;
-
-import java.io.Serial;
-import javax.swing.JFrame;
 
 /**
  * Application class to kick off the Tetris game.
@@ -10,19 +11,12 @@ import javax.swing.JFrame;
  * @author Calvin Beardemphl, Viktoria Dolojan, Tsion Fufa, Reilly Middlebrooks.
  * @version Winter 2023.
  */
-public class Application extends JFrame {
-
-    /** Serial generated for version UID. */
-    @Serial
-    private static final long serialVersionUID = 1942683769738516682L;
-
+public final class Application  {
     /**
      * Public constructor.
      */
-    public Application() {
-        super();
+    private Application() {
     }
-
     /**
      * Main driver method.
      * Calls the parent container, Frame().
