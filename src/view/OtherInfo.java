@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * @author Calvin Beardemphl
  * @version 1.0
  */
-public class OtherInfo {
+public class OtherInfo extends JPanel {
 
 
 
@@ -32,7 +32,10 @@ public class OtherInfo {
     private static JPanel myInfo;
 
     /** Constructor so Checkstyle doesn't yell at me. */
-    public OtherInfo() { }
+    public OtherInfo() {
+        super();
+        createOtherInfoPanel();
+    }
 
 
     /**
@@ -40,10 +43,14 @@ public class OtherInfo {
      * It sets the color of the panel, and the preferred size
      * of the panel.
      */
-    private static void createOtherInfoPanel() {
+    public static JPanel createOtherInfoPanel() {
         myInfo = new JPanel();
         myInfo.setBackground(Color.GREEN);
         myInfo.setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+        //myInfo.setMaximumSize(new Dimension(PREFERRED_WIDTH,PREFERRED_HEIGHT));
+        myInfo.setVisible(true);
+
+        return myInfo;
     }
 
     // TODO: add to frame

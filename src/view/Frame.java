@@ -1,57 +1,32 @@
-package viewer;
+package view;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
+import java.awt.*;
 
 /** This class creates the Frame for the tetris game. It includes a menu bar at the top */
 public class Frame {
 
     /** Width of frame. */
-    private static final int WIDTH = 1000;
+    private static final int WIDTH = 400;
 
     /** Height of frame. */
-    private static final int HEIGHT = 500;
+    private static final int HEIGHT = 400;
 
     ///Possible constructor needed later.///
-
-    //main method TESTING PURPOSES ONLY... for now
-    public static void main(final String[] theArgs) {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (final UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (final IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (final InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (final ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        /* Turn off metal's use of bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createTetrisFrame(WIDTH, HEIGHT); // the method call for createTetrisFrame
-            }
-        });
+    public Frame() {
+        createAndShowGUI();
     }
 
     //Used to create the rough frame for our tetris project.
-    public static void createTetrisFrame(final int theWidth, final int theHeight) {
+    public static JFrame createTetrisFrame(final int WIDTH, final int HEIGHT) {
         final JFrame tFrame = new JFrame();
         tFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        tFrame.setSize(theWidth, theHeight); //set height and width
+        tFrame.setSize(WIDTH, HEIGHT); //set height and width
         tFrame.setVisible(true);
 
         tFrame.setJMenuBar(createFileMenu()); //add menu bar to the frame
+
+        return tFrame;
     }
 
     //Create a file menu with event handlers.
@@ -86,5 +61,28 @@ public class Frame {
         menuBar.add(about);
 
         return menuBar;
+    }
+
+    private static void createAndShowGUI() {
+        final JFrame tetrisFrame = createTetrisFrame(WIDTH, HEIGHT);
+        final NextPiece nextPiece = new NextPiece();
+        final OtherInfo otherInfo = new OtherInfo();
+        final BoardPanel boardPanel = new BoardPanel();
+
+        tetrisFrame.setLayout(new GridLayout(1,2));
+
+//        JPanel eastInfo = new JPanel(new BorderLayout());
+//        eastInfo.add(nextPiece, BorderLayout.NORTH);
+//        eastInfo.add(otherInfo, BorderLayout.SOUTH);
+
+//        tetrisFrame.add(boardPanel);
+//        tetrisFrame.add(nextPiece);
+        tetrisFrame.add(otherInfo);
+//        tetrisFrame.add(eastInfo, BorderLayout.EAST);
+//        tetrisFrame.add(nextPiece, BorderLayout.EAST);
+
+
+        //eastInfo.setVisible(true);
+        tetrisFrame.setVisible(true);
     }
 }

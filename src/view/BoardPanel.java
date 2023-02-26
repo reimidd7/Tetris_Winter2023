@@ -55,7 +55,7 @@ public class BoardPanel extends JPanel {
         super();
         setBackground(Color.RED);
         setSize(BOARD_SIZE);
-        setMaximumSize(BOARD_SIZE);
+        //setMaximumSize(BOARD_SIZE);
     }
     /**
      * Overrides swings paintComponent to draw a simple grid on a JPanel.

@@ -1,4 +1,4 @@
-package viewer;
+package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,11 +20,19 @@ public class NextPiece extends JPanel {
     /** Panel that displays the next tetris piece. */
     private static JPanel myNextPiecePanel;
 
+    public NextPiece () {
+        super();
+        createPiecePanel();
+    }
+
     /** Creates the panel that displays the next tetris piece. */
     private static void createPiecePanel() {
         myNextPiecePanel = new JPanel();
         myNextPiecePanel.setBackground(Color.BLUE);
-        myNextPiecePanel.setBounds(SIZE, 0, SIZE, SIZE);
+//        myNextPiecePanel.setBounds(SIZE, 0, SIZE, SIZE);
+        myNextPiecePanel.setPreferredSize(new Dimension(SIZE, SIZE));
+
+        myNextPiecePanel.setVisible(true);
         // TODO: display next tetris piece inside panel
         // Note: model.Board class has a private field which holds the next tetris piece
     }
@@ -32,15 +40,15 @@ public class NextPiece extends JPanel {
     // TODO: add panel to frame
 
     // main for testing
-    public static void main(final String[] theArgs) {
-        final JFrame frame = new JFrame();
-        final int width = 500;
-        final int height = 1000;
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-        frame.setSize(new Dimension(width, height));
-        frame.setVisible(true);
-        createPiecePanel();
-        frame.add(myNextPiecePanel);
-    }
+//    public static void main(final String[] theArgs) {
+//        final JFrame frame = new JFrame();
+//        final int width = 500;
+//        final int height = 1000;
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setLayout(null);
+//        frame.setSize(new Dimension(width, height));
+//        frame.setVisible(true);
+//        createPiecePanel();
+//        frame.add(myNextPiecePanel);
+//    }
 }
