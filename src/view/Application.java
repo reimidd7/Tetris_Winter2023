@@ -4,7 +4,7 @@ import java.io.Serial;
 import javax.swing.JFrame;
 
 /**
- * Driver for the tetris game.
+ * Application class to kick off the Tetris game.
  *
  * @author Rick Adams
  * @author Calvin Beardemphl, Viktoria Dolojan, Tsion Fufa, Reilly Middlebrooks.
@@ -24,8 +24,8 @@ public class Application extends JFrame {
     }
 
     /**
-     * Main method.
-     * Runs the full tetris game GUI.
+     * Main driver method.
+     * Calls the parent container, Frame().
      *
      * @param theArgs command-line arguments.
      */
