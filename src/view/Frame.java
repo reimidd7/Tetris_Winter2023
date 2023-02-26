@@ -1,9 +1,25 @@
 package view;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-/** This class creates the Frame for the tetris game. It includes a menu bar at the top */
+
+
+/**
+ * This class creates the Frame and GUI for the tetris game.
+ *  It includes a menu bar at the top of the frame
+ *
+ * @author Reilly Middlebrooks
+ * @author Tsion Fufa
+ * @author Calvin Beardemphl, Viktoria Dolojan, Rick Adams
+ * @version Winter 2023
+ */
 public class Frame {
 
     /** Width of frame. */

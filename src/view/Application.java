@@ -4,10 +4,11 @@ import java.io.Serial;
 import javax.swing.JFrame;
 
 /**
- * Application for the board panel testing.
+ * Driver for the tetris game.
  *
- * @author rick_adams.
- * @version 2023 Winter.
+ * @author Rick Adams
+ * @author Calvin Beardemphl, Viktoria Dolojan, Tsion Fufa, Reilly Middlebrooks.
+ * @version Winter 2023.
  */
 public class Application extends JFrame {
 
@@ -24,7 +25,7 @@ public class Application extends JFrame {
 
     /**
      * Main method.
-     * Strictly for testing.
+     * Runs the full tetris game GUI.
      *
      * @param theArgs command-line arguments.
      */

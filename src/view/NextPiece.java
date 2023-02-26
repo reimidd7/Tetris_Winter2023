@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
  * on the top right of the game.
  *
  * @author Viktoria Dolojan
- * @version 1.3
+ * @version Winter 2023
  */
 public class NextPiece extends JPanel {
 

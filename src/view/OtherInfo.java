@@ -16,7 +16,8 @@ import javax.swing.border.TitledBorder;
  * It is on the right side of the Tetris board.
  *
  * @author Calvin Beardemphl
- * @version 1.0
+ * @author Victoria Dolojan
+ * @version Winter 2023
  */
 public class OtherInfo extends JPanel {
 

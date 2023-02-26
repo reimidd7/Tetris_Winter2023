@@ -54,7 +54,7 @@ public class BoardPanel extends JPanel {
                                                               PANEL_HEIGHT);
 
     /**
-     * Public constructor.
+     * Public constructor. Creates the tetris game board.
      */
     public BoardPanel() {
         super();
