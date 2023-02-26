@@ -1,7 +1,7 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /** This class creates the Frame for the tetris game. It includes a menu bar at the top */
 public class Frame {
@@ -10,7 +10,13 @@ public class Frame {
     private static final int WIDTH = 400;
 
     /** Height of frame. */
-    private static final int HEIGHT = 400;
+    private static final int HEIGHT = 450;
+
+    /** Frame dimension. */
+    private static final Dimension FRAME_DIMENSION = new Dimension(400, 450);
+
+    /** Panel dimension. */
+    private static final Dimension PANEL_DIMENSION = new Dimension(200, 400);
 
     ///Possible constructor needed later.///
     public Frame() {
@@ -18,10 +24,10 @@ public class Frame {
     }
 
     //Used to create the rough frame for our tetris project.
-    public static JFrame createTetrisFrame(final int WIDTH, final int HEIGHT) {
+    public static JFrame createTetrisFrame(final int theWidth, final int theHeight) {
         final JFrame tFrame = new JFrame();
         tFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        tFrame.setSize(WIDTH, HEIGHT); //set height and width
+        tFrame.setSize(theWidth, theHeight); //set height and width
         tFrame.setVisible(true);
 
         tFrame.setJMenuBar(createFileMenu()); //add menu bar to the frame
@@ -69,20 +75,24 @@ public class Frame {
         final OtherInfo otherInfo = new OtherInfo();
         final BoardPanel boardPanel = new BoardPanel();
 
-        tetrisFrame.setLayout(new GridLayout(1,2));
+        // sets the min and max size of frame
+        tetrisFrame.setLayout(new GridLayout(1, 2));
+        tetrisFrame.setMinimumSize(FRAME_DIMENSION);
+        //tetrisFrame.setMaximumSize(FRAME_DIMENSION);
 
-//        JPanel eastInfo = new JPanel(new BorderLayout());
-//        eastInfo.add(nextPiece, BorderLayout.NORTH);
-//        eastInfo.add(otherInfo, BorderLayout.SOUTH);
+        // creates panel for next piece panel on top of other info panel
+        final JPanel eastInfo = new JPanel(new GridLayout(2, 1));
+        eastInfo.add(nextPiece);
+        eastInfo.add(otherInfo);
 
-//        tetrisFrame.add(boardPanel);
-//        tetrisFrame.add(nextPiece);
-        tetrisFrame.add(otherInfo);
-//        tetrisFrame.add(eastInfo, BorderLayout.EAST);
-//        tetrisFrame.add(nextPiece, BorderLayout.EAST);
+        // sets size of board panel and places it on the left of the frame
+        boardPanel.setPreferredSize(PANEL_DIMENSION);
+        tetrisFrame.add(boardPanel);
 
+        // sets size of info panel and places it on the right of the frame
+        eastInfo.setPreferredSize(PANEL_DIMENSION);
+        tetrisFrame.add(eastInfo);
 
-        //eastInfo.setVisible(true);
         tetrisFrame.setVisible(true);
     }
 }

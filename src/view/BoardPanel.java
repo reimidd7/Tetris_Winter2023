@@ -1,3 +1,8 @@
+/*
+ * TCSS 305 - Tetris Project
+ *
+ */
+
 package view;
 
 import java.awt.Color;
@@ -17,9 +22,9 @@ public class BoardPanel extends JPanel {
     @Serial
     private static final long serialVersionUID = 5122343764710334165L;
     /** Constant row variable for the grid dimensions. */
-    private static final int ROWS = 40;
+    private static final int ROWS = 20;
     /** Constant column variable for the grid dimensions. */
-    private static final int COLUMNS = 20;
+    private static final int COLUMNS = 10;
     /**
      * Constant variable for grid calculation.
      * Represents the x-coordinate.
@@ -41,7 +46,7 @@ public class BoardPanel extends JPanel {
     /**
      * Panel height constant.
      */
-    private static final int PANEL_HEIGHT = 400;
+    private static final int PANEL_HEIGHT = 200;
     /**
      * Board dimensions in with dimension class.
      */
@@ -55,8 +60,8 @@ public class BoardPanel extends JPanel {
         super();
         setBackground(Color.RED);
         setSize(BOARD_SIZE);
-        //setMaximumSize(BOARD_SIZE);
     }
+
     /**
      * Overrides swings paintComponent to draw a simple grid on a JPanel.
      * @param theGraphics the <code>Graphics</code> object to protect
