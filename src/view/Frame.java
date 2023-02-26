@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /** This class creates the Frame for the tetris game. It includes a menu bar at the top */
-public class Frame {
+public class Frame extends JFrame {
 
     /** Width of frame. */
     private static final int WIDTH = 400;
@@ -14,7 +14,34 @@ public class Frame {
 
     ///Possible constructor needed later.///
     public Frame() {
-        createAndShowGUI();
+        super();
+//        createAndShowGUI();
+        final JFrame tetrisFrame = createTetrisFrame(WIDTH, HEIGHT);
+
+        final JPanel panel = new JPanel(new BorderLayout());
+        panel.setSize(WIDTH, HEIGHT);
+        final NextPiece nextPiece = new NextPiece();
+        final OtherInfo otherInfo = new OtherInfo();
+        final BoardPanel boardPanel = new BoardPanel();
+        panel.add(nextPiece, BorderLayout.LINE_END);
+        panel.add(otherInfo, BorderLayout.LINE_START);
+        panel.add(boardPanel, BorderLayout.CENTER);
+        tetrisFrame.add(panel, BorderLayout.CENTER);
+//        tetrisFrame.setLayout(new BorderLayout());
+//
+//        JPanel eastInfo = new JPanel(new BorderLayout());
+//        eastInfo.add(nextPiece, BorderLayout.PAGE_START);
+//        eastInfo.add(otherInfo, BorderLayout.PAGE_END);
+
+        tetrisFrame.add(boardPanel, BorderLayout.PAGE_START);
+        tetrisFrame.add(nextPiece, BorderLayout.CENTER);
+        tetrisFrame.add(otherInfo, BorderLayout.LINE_END);
+//        tetrisFrame.add(eastInfo, BorderLayout.EAST);
+//        tetrisFrame.add(nextPiece, BorderLayout.EAST);
+
+
+        //eastInfo.setVisible(true);
+        tetrisFrame.setVisible(true);
     }
 
     //Used to create the rough frame for our tetris project.
@@ -22,9 +49,9 @@ public class Frame {
         final JFrame tFrame = new JFrame();
         tFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         tFrame.setSize(WIDTH, HEIGHT); //set height and width
-        tFrame.setVisible(true);
 
         tFrame.setJMenuBar(createFileMenu()); //add menu bar to the frame
+        tFrame.setVisible(true);
 
         return tFrame;
     }
@@ -64,25 +91,29 @@ public class Frame {
     }
 
     private static void createAndShowGUI() {
-        final JFrame tetrisFrame = createTetrisFrame(WIDTH, HEIGHT);
-        final NextPiece nextPiece = new NextPiece();
-        final OtherInfo otherInfo = new OtherInfo();
-        final BoardPanel boardPanel = new BoardPanel();
+//        final JFrame tetrisFrame = createTetrisFrame(WIDTH, HEIGHT);
+//        final NextPiece nextPiece = new NextPiece();
+//        final OtherInfo otherInfo = new OtherInfo();
+//        final BoardPanel boardPanel = new BoardPanel();
+//
+//        tetrisFrame.setLayout(new BorderLayout());
+////
+////        JPanel eastInfo = new JPanel(new BorderLayout());
+////        eastInfo.add(nextPiece, BorderLayout.PAGE_START);
+////        eastInfo.add(otherInfo, BorderLayout.PAGE_END);
+//
+//        tetrisFrame.add(boardPanel, BorderLayout.CENTER);
+//        tetrisFrame.add(nextPiece, BorderLayout.LINE_START);
+//        tetrisFrame.add(otherInfo, BorderLayout.LINE_END);
+////        tetrisFrame.add(eastInfo, BorderLayout.EAST);
+////        tetrisFrame.add(nextPiece, BorderLayout.EAST);
+//
+//
+//        //eastInfo.setVisible(true);
+//        tetrisFrame.setVisible(true);
+    }
 
-        tetrisFrame.setLayout(new GridLayout(1,2));
-
-//        JPanel eastInfo = new JPanel(new BorderLayout());
-//        eastInfo.add(nextPiece, BorderLayout.NORTH);
-//        eastInfo.add(otherInfo, BorderLayout.SOUTH);
-
-//        tetrisFrame.add(boardPanel);
-//        tetrisFrame.add(nextPiece);
-        tetrisFrame.add(otherInfo);
-//        tetrisFrame.add(eastInfo, BorderLayout.EAST);
-//        tetrisFrame.add(nextPiece, BorderLayout.EAST);
-
-
-        //eastInfo.setVisible(true);
-        tetrisFrame.setVisible(true);
+    public static void main(String[] args) {
+        new Frame();
     }
 }

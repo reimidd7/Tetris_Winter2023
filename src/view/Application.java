@@ -1,8 +1,8 @@
 package view;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.io.Serial;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * Application for the board panel testing.
@@ -16,19 +16,30 @@ public class Application extends JFrame {
     @Serial
     private static final long serialVersionUID = 1942683769738516682L;
      /** Frame width constant.*/
-//    private static final int FRAME_WIDTH = 200;
-//    /** Frame height constant.*/
-//    private static final int FRAME_HEIGHT = 400;
-//    /**
-//     * Frames dimensions with dimension class.
-//     */
-//   // private static final Dimension FRAME_SIZE = new Dimension(FRAME_WIDTH,
-//                                                              FRAME_HEIGHT);
+    private static final int FRAME_WIDTH = 200;
+    /** Frame height constant.*/
+    private static final int FRAME_HEIGHT = 400;
+    /**
+     * Frames dimensions with dimension class.
+     */
+ private static final Dimension FRAME_SIZE = new Dimension(FRAME_WIDTH,
+                                                              FRAME_HEIGHT);
     /**
      * Public constructor.
      */
     public Application() {
         super();
+        setSize(FRAME_SIZE);
+       
+        final JPanel panel = new JPanel(new BorderLayout());
+        final NextPiece nextPiece = new NextPiece();
+        final OtherInfo otherInfo = new OtherInfo();
+        final BoardPanel boardPanel = new BoardPanel();
+        panel.add(nextPiece, BorderLayout.LINE_END);
+        panel.add(otherInfo, BorderLayout.LINE_START);
+        panel.add(boardPanel, BorderLayout.CENTER);
+        add(panel);
+
     }
 
     /**
@@ -38,7 +49,8 @@ public class Application extends JFrame {
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
-        new Frame();
+
+        new Application().setVisible(true);
     }
 
 

@@ -15,24 +15,30 @@ import javax.swing.JPanel;
 public class NextPiece extends JPanel {
 
     /** Width and height of panel. */
-    private static final int SIZE = 250;
+    private static final int SIZE = 50;
 
     /** Panel that displays the next tetris piece. */
-    private static JPanel myNextPiecePanel;
+//    private static JPanel myNextPiecePanel;
 
     public NextPiece () {
         super();
-        createPiecePanel();
+//        createPiecePanel();
+//         myNextPiecePanel = new JPanel();
+        setBackground(Color.BLUE);
+//        myNextPiecePanel.setBounds(SIZE, 0, SIZE, SIZE);
+        setPreferredSize(new Dimension(SIZE, SIZE));
+
+//        myNextPiecePanel.setVisible(true);
     }
 
     /** Creates the panel that displays the next tetris piece. */
     private static void createPiecePanel() {
-        myNextPiecePanel = new JPanel();
-        myNextPiecePanel.setBackground(Color.BLUE);
+//        myNextPiecePanel = new JPanel();
+//        myNextPiecePanel.setBackground(Color.BLUE);
 //        myNextPiecePanel.setBounds(SIZE, 0, SIZE, SIZE);
-        myNextPiecePanel.setPreferredSize(new Dimension(SIZE, SIZE));
-
-        myNextPiecePanel.setVisible(true);
+//        myNextPiecePanel.setPreferredSize(new Dimension(SIZE, SIZE));
+//
+//        myNextPiecePanel.setVisible(true);
         // TODO: display next tetris piece inside panel
         // Note: model.Board class has a private field which holds the next tetris piece
     }

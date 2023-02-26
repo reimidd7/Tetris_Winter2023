@@ -24,17 +24,20 @@ public class OtherInfo extends JPanel {
 
 
     /** The preferred height of the panel.*/
-    private static final int PREFERRED_HEIGHT = 250;
+    private static final int PREFERRED_HEIGHT = 50;
     /** The preferred width of the panel.*/
-    private static final int PREFERRED_WIDTH = 250;
+    private static final int PREFERRED_WIDTH = 50;
 
     /** The Panel myInfo that will hold the information for the User.*/
-    private static JPanel myInfo;
+//    private static JPanel myInfo;
 
     /** Constructor so Checkstyle doesn't yell at me. */
     public OtherInfo() {
         super();
-        createOtherInfoPanel();
+//        createOtherInfoPanel();
+        setBackground(Color.GREEN);
+        setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+        //myInfo.setMaximumSize(new Dimension(PREFERRED_WIDTH,PREFERRED_HEIGHT));
     }
 
 
@@ -43,31 +46,31 @@ public class OtherInfo extends JPanel {
      * It sets the color of the panel, and the preferred size
      * of the panel.
      */
-    public static JPanel createOtherInfoPanel() {
-        myInfo = new JPanel();
-        myInfo.setBackground(Color.GREEN);
-        myInfo.setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
-        //myInfo.setMaximumSize(new Dimension(PREFERRED_WIDTH,PREFERRED_HEIGHT));
-        myInfo.setVisible(true);
-
-        return myInfo;
-    }
+//    public static JPanel createOtherInfoPanel() {
+//        myInfo = new JPanel();
+//        myInfo.setBackground(Color.GREEN);
+//        myInfo.setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+//        //myInfo.setMaximumSize(new Dimension(PREFERRED_WIDTH,PREFERRED_HEIGHT));
+//        myInfo.setVisible(true);
+//
+//        return myInfo;
+//    }
 
     // TODO: add to frame
 
     // main just for testing!
-    public static void main(final String[] theArgs) {
-        final JFrame frame = new JFrame();
-        // using the rough frame size
-        frame.setSize(new Dimension(1000, 500));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-
-        createOtherInfoPanel();
-        // adding the panel on the right side to test
-        frame.add(myInfo, BorderLayout.EAST);
-        frame.setVisible(true);
-    }
+//    public static void main(final String[] theArgs) {
+//        final JFrame frame = new JFrame();
+//        // using the rough frame size
+//        frame.setSize(new Dimension(1000, 500));
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setLocationRelativeTo(null);
+//
+//        createOtherInfoPanel();
+//        // adding the panel on the right side to test
+//        frame.add(myInfo, BorderLayout.EAST);
+//        frame.setVisible(true);
+//    }
 
 
 }
