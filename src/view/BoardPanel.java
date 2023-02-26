@@ -1,5 +1,5 @@
 /*
- * TCSS 305 - Tetris Project
+ * TCSS 305A - Tetris Project
  *
  */
 
@@ -59,7 +59,7 @@ public class BoardPanel extends JPanel {
     public BoardPanel() {
         super();
         setBackground(Color.RED);
-        setSize(BOARD_SIZE);
+        setPreferredSize(BOARD_SIZE);
     }
 
     /**
