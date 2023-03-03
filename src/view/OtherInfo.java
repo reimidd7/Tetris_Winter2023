@@ -5,11 +5,10 @@
 
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 /**
  * This is the class that creates a panel to display
@@ -17,60 +16,19 @@ import javax.swing.JPanel;
  * It is on the right side of the Tetris board.
  *
  * @author Calvin Beardemphl
- * @version 1.0
+ * @author Victoria Dolojan
+ * @version Winter 2023
  */
 public class OtherInfo extends JPanel {
 
+    /** Width and height of the panel.*/
+    private static final int PANEL_SIZE = 200;
 
-
-    /** The preferred height of the panel.*/
-    private static final int PREFERRED_HEIGHT = 50;
-    /** The preferred width of the panel.*/
-    private static final int PREFERRED_WIDTH = 50;
-
-    /** The Panel myInfo that will hold the information for the User.*/
-//    private static JPanel myInfo;
-
-    /** Constructor so Checkstyle doesn't yell at me. */
+    /** Constructor for OtherInfo panel. */
     public OtherInfo() {
         super();
-//        createOtherInfoPanel();
         setBackground(Color.GREEN);
-        setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
-        //myInfo.setMaximumSize(new Dimension(PREFERRED_WIDTH,PREFERRED_HEIGHT));
+        setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
+        setBorder(new TitledBorder("Other Information"));
     }
-
-
-    /**
-     * This method creates the information panel.
-     * It sets the color of the panel, and the preferred size
-     * of the panel.
-     */
-//    public static JPanel createOtherInfoPanel() {
-//        myInfo = new JPanel();
-//        myInfo.setBackground(Color.GREEN);
-//        myInfo.setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
-//        //myInfo.setMaximumSize(new Dimension(PREFERRED_WIDTH,PREFERRED_HEIGHT));
-//        myInfo.setVisible(true);
-//
-//        return myInfo;
-//    }
-
-    // TODO: add to frame
-
-    // main just for testing!
-//    public static void main(final String[] theArgs) {
-//        final JFrame frame = new JFrame();
-//        // using the rough frame size
-//        frame.setSize(new Dimension(1000, 500));
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-//
-//        createOtherInfoPanel();
-//        // adding the panel on the right side to test
-//        frame.add(myInfo, BorderLayout.EAST);
-//        frame.setVisible(true);
-//    }
-
-
 }
