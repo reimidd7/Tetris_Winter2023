@@ -8,11 +8,11 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
 import model.Block;
 import model.TetrisPiece;
 
@@ -42,25 +42,26 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     @Override
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
 
         // TODO: draw tetris piece
-        /*if (myNextPiece != null) {
-            for (int i = 0; i < myNextPiece.getHeight(); i++) {
-                for (int j = 0; j < myNextPiece.getWidth(); j++) {
+        // attempt at drawing next piece
+        if (myNextPiece != null) {
+            for (int rows = 0; rows < myNextPiece.getHeight(); rows++) {
+                for (int columns = 0; columns < myNextPiece.getWidth(); columns++) {
                     if (myNextPiece.getBlock() != Block.EMPTY) { // if block type is not empty, paint block
-                        theGraphics.fillRect(i * 25, j * 25, 25, 25);
+                        g2d.fillRect(25 * rows, 25 * columns, 25, 25);
                     }
                 }
             }
-        }*/
+        }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent theEvent) {
         if ("PROPERTY_NEXT_PIECE".equals(theEvent.getPropertyName())) {
-            // TODO: get next piece
-            // myNextPiece = ;
+            myNextPiece = (TetrisPiece) theEvent.getNewValue();
+            repaint(); // draws next tetris piece in panel
         }
-        repaint();
     }
 }
