@@ -45,7 +45,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private final BoardInterface myBoard;
 
     /** Movable Tetris Piece object. */
-    private MovableTetrisPiece myCurrentPiece;
+    private MovableTetrisPiece myCurrentPiece; //TODO: Need to find a way to instantiate. For use in property change method
 
 
     ///Possible constructor needed later.///
@@ -55,7 +55,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         //Create a board/model object from interface
         myBoard = theBoard;
 
-        //myCurrentPiece = ;//TODO: How to instantiate?  used within the property change method
+        //myCurrentPiece = ;//TODO: How to instantiate?
 
 
         // Create the frame for the tetris game (aka the top most "panel")
@@ -115,9 +115,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
     public static void createAndShowGUI() {
         final Board board = new Board();
 
-
-
-
         final Frame tetrisFrame = new Frame(board);
         board.addPropertyChangeListener(tetrisFrame);
 
@@ -125,6 +122,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final OtherInfo otherInfo = new OtherInfo();
         final BoardPanel boardPanel = new BoardPanel();
 
+        board.addPropertyChangeListener(boardPanel);
+        board.addPropertyChangeListener(nextPiece);
 
         // instantiate the timer and set the delay to 500ms
         final Timer timer = new Timer(TIME_CONST,
@@ -166,7 +165,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
             final model.Point temp = (model.Point) evt.getNewValue();
-            this.myCurrentPiece.getPosition().transform(temp);
+            this.myCurrentPiece.getPosition().transform(temp); //TODO: This is the line that uses myCurrentPiece
             repaint();
         }
     }

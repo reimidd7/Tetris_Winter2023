@@ -44,7 +44,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     /**
      * Instantiated Board object.
      */
-    private Board myBoard;
+    //private Board myBoard;
     /**
      * Public constructor. Creates the tetris game board.
      */
@@ -61,10 +61,10 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      *
      * @param theBoard the Board.class.
      */
-    public BoardPanel(final Board theBoard) {
-        this();
-        myBoard = theBoard;
-    }
+//    public BoardPanel(final Board theBoard) {
+//        this();
+//        myBoard = theBoard;
+//    }
 
     /**
      * "Accesser" method for the painted grid's dimensions.
