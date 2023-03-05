@@ -5,13 +5,14 @@
 
 package view;
 
-import model.Board;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
 import javax.swing.JPanel;
+import model.Board;
+
+
 /**
  * group1-tetris game board.
  *
@@ -33,13 +34,17 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     /**
      * Panel height constant.
      */
-    private static final int PANEL_HEIGHT = 200;
+    private static final int PANEL_HEIGHT = 400;
     /**
      * Board dimensions in with dimension class.
      */
     private static final Dimension BOARD_SIZE = new Dimension(PANEL_WIDTH,
                                                               PANEL_HEIGHT);
 
+    /**
+     * Instantiated Board object.
+     */
+    private Board myBoard;
     /**
      * Public constructor. Creates the tetris game board.
      */
@@ -49,6 +54,16 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         setPreferredSize(BOARD_SIZE);
 
 
+    }
+
+    /**
+     * Constructor for local instantiation.
+     *
+     * @param theBoard the Board.class.
+     */
+    public BoardPanel(final Board theBoard) {
+        this();
+        myBoard = theBoard;
     }
 
     /**
@@ -76,12 +91,12 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
         for (int rows = 0; rows < getGridDimension().height; rows++) {
             for (int cols = 0; cols < getGridDimension().width; cols++) {
-                g2d.draw(new Rectangle2D.Double(cols * GRID_SIDE,
+                g2d.drawRect(cols * GRID_SIDE,
                         rows * GRID_SIDE,
-                        GRID_SIDE, GRID_SIDE));
+                        GRID_SIDE, GRID_SIDE);
             }
         }
-
+        repaint();
     }
 
     /**
@@ -92,11 +107,19 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        Board board = new Board();
-        if (board.equals(theEvent.getPropertyName())) {
-            board = (Board) theEvent.getNewValue();
-            board.addPropertyChangeListener(this);
-            repaint();
+
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_DROP)) {
+            myBoard = (Board) theEvent.getNewValue();
+        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+            myBoard = (Board) theEvent.getNewValue();
+        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
+            myBoard = (Board) theEvent.getNewValue();
+        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
+            myBoard = (Board) theEvent.getNewValue();
+        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
+            myBoard = (Board) theEvent.getNewValue();
         }
+        myBoard.addPropertyChangeListener(this);
+        repaint();
     }
 }
