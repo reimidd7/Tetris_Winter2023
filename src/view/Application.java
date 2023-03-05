@@ -4,9 +4,9 @@
  */
 package view;
 
+
 import model.Board;
 import model.BoardInterface;
-
 import javax.swing.*;
 
 /**
@@ -32,6 +32,7 @@ public final class Application  {
      */
     public static void main(final String[] theArgs) {
         SwingUtilities.invokeLater(Frame::createAndShowGUI);
+
     }
 
 

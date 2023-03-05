@@ -57,22 +57,22 @@ public class Board implements BoardInterface {
     /**
      * A property name for drop.
      */
-    private static final String PROPERTY_DROP = "This doesn't not matter!";
+    public static final String PROPERTY_DROP = "This doesn't not matter!";
 
     /**
      * A property name for the frozen blocks.
      */
-    private static final String PROPERTY_FROZEN_BLOCKS = "This doesn't not matter1!";
+    public static final String PROPERTY_FROZEN_BLOCKS = "This doesn't not matter1!";
 
     /**
      * A property name for game over boolean.
      */
-    private static final String PROPERTY_GAME_OVER = "This doesn't not matte!";
+    public static final String PROPERTY_GAME_OVER = "This doesn't not matte!";
 
     /**
      * A property name for the next piece.
      */
-    private static final String PROPERTY_NEXT_PIECE = "This doesn't not mate!";
+    public static final String PROPERTY_NEXT_PIECE = "This doesn't not mate!";
 
     
     // Instance fields
