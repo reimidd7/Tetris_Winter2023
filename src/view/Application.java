@@ -4,6 +4,8 @@
  */
 package view;
 
+import javax.swing.*;
+
 /**
  * Application class to kick off the Tetris game.
  *
@@ -24,6 +26,7 @@ public final class Application  {
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
-        new Frame();
+        SwingUtilities.invokeLater(Frame::new);
+
     }
 }
