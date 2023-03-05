@@ -47,7 +47,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     private Board myBoard;
 
     /**
-     * Public constructor. Creates the tetris game board.
+     * Public constructor. Creates the tetris game board panel.
      */
     public BoardPanel() {
         super(true);
@@ -56,7 +56,11 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
     }
 
-
+    /**
+     * Public constructor for instantiation.
+     *
+     * @param theBoard An instantiated Board object.
+     */
     public BoardPanel(final Board theBoard) {
         this();
         myBoard = theBoard;
@@ -103,11 +107,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        // Here until I can think of a general Board check/update.
+
         if (myBoard != null) {
-            if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-                myBoard = (Board) theEvent.getNewValue();
-            } else if (theEvent.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
+            if (theEvent.getPropertyName().equals(Board.PROPERTY_BOARD)) {
                 myBoard = (Board) theEvent.getNewValue();
             }
             repaint();
