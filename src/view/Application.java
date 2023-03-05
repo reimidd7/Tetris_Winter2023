@@ -4,6 +4,11 @@
  */
 package view;
 
+import model.Board;
+import model.BoardInterface;
+
+import javax.swing.*;
+
 /**
  * Application class to kick off the Tetris game.
  *
@@ -12,6 +17,8 @@ package view;
  * @version Winter 2023.
  */
 public final class Application  {
+
+
     /**
      * Public constructor.
      */
@@ -24,6 +31,8 @@ public final class Application  {
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
-        new Frame();
+        SwingUtilities.invokeLater(Frame::createAndShowGUI);
     }
+
+
 }

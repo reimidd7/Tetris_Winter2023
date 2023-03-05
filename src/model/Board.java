@@ -52,7 +52,7 @@ public class Board implements BoardInterface {
     /**
      * A property name for the current piece.
      */
-    private static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
+    public static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
 
     /**
      * A property name for drop.
