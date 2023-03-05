@@ -149,7 +149,7 @@ public class Board implements BoardInterface {
         super();
         myWidth = theWidth;
         myHeight = theHeight;
-        myFrozenBlocks = new LinkedList<Block[]>();
+        myFrozenBlocks = new LinkedList<>();
          
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
