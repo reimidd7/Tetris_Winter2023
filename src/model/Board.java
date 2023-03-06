@@ -74,6 +74,8 @@ public class Board implements BoardInterface {
      */
     public static final String PROPERTY_NEXT_PIECE = "This doesn't not mate!";
 
+    /** Property name for the general board. */
+    public static final String PROPERTY_BOARD = "Board";
     
     // Instance fields
     
@@ -128,7 +130,7 @@ public class Board implements BoardInterface {
      * Manager for Property Change Listeners.
      */
     private final PropertyChangeSupport myPcs;
-    
+
     // Constructors
 
     /**
@@ -149,13 +151,14 @@ public class Board implements BoardInterface {
         super();
         myWidth = theWidth;
         myHeight = theHeight;
-        myFrozenBlocks = new LinkedList<Block[]>();
+        myFrozenBlocks = new LinkedList<>();
          
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
 
+
         myPcs = new PropertyChangeSupport(this);
-        
+
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
@@ -231,6 +234,9 @@ public class Board implements BoardInterface {
          * to implement additional functionality
          */
         down();
+        Board board = new Board();
+        Board oldBoard = board;
+        myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
     }
 
 
