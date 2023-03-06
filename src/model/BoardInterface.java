@@ -44,7 +44,6 @@ public interface BoardInterface {
 
     /**
      * Advances the board by one 'step'.
-     *
      * This could include
      * - moving the current piece down 1 line
      * - freezing the current piece if appropriate

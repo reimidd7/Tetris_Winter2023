@@ -75,8 +75,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         setVisible(true);
 
-
-
     }
 
     //Create a file menu with event handlers.

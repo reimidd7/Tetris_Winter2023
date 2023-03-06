@@ -44,13 +44,16 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
+//        g2d.setPaint(Color.PINK);
+//        g2d.drawRect(25 , 25 , 25, 25);
+
         // TODO: draw tetris piece
         // attempt at drawing next piece
         if (myNextPiece != null) {
             for (int rows = 0; rows < myNextPiece.getHeight(); rows++) {
                 for (int columns = 0; columns < myNextPiece.getWidth(); columns++) {
                     if (myNextPiece.getBlock() != Block.EMPTY) { // if block type is not empty, paint block
-                        g2d.fillRect(25 * rows, 25 * columns, 25, 25);
+                        g2d.drawRect(25 * rows, 25 * columns, 25, 25);
                     }
                 }
             }

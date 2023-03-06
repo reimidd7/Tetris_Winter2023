@@ -71,7 +71,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
 
     /**
-     * "Accesser" method for the painted grid's dimensions.
+     * "Accessor" method for the painted grid's dimensions.
      *
      * @return returns dimensions of the painted grid.
      */

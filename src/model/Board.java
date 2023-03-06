@@ -38,17 +38,6 @@ import model.wallkicks.WallKick;
 public class Board implements BoardInterface {
 
     // Class constants
-    
-    /**
-     * Default width of a Tetris game board.
-     */
-    private static final int DEFAULT_WIDTH = 10;
-
-    /**
-     * Default height of a Tetris game board.
-     */
-    private static final int DEFAULT_HEIGHT = 20;
-
     /**
      * A property name for the current piece.
      */
@@ -77,6 +66,16 @@ public class Board implements BoardInterface {
     /** Property name for the general board. */
     public static final String PROPERTY_BOARD = "Board";
     
+    /**
+     * Default width of a Tetris game board.
+     */
+    private static final int DEFAULT_WIDTH = 10;
+
+    /**
+     * Default height of a Tetris game board.
+     */
+    private static final int DEFAULT_HEIGHT = 20;
+
     // Instance fields
     
     /**
@@ -212,16 +211,10 @@ public class Board implements BoardInterface {
 
     @Override
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
-//        // saved old values - added for firePropertyChange
-//        final MovableTetrisPiece oldPiece = myCurrentPiece;
-
         myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
 
-//        myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-//        // Changing state
-//        // PROPERTY_CURRENT_PIECE
     }
 
 
@@ -234,8 +227,8 @@ public class Board implements BoardInterface {
          * to implement additional functionality
          */
         down();
-        Board board = new Board();
-        Board oldBoard = board;
+        final Board board = new Board();
+        final Board oldBoard = board;
         myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
     }
 
@@ -262,37 +255,20 @@ public class Board implements BoardInterface {
 
     @Override
     public void left() {
-//        // saved old value - added for firePropertyChange
-//        final MovableTetrisPiece oldPiece = myCurrentPiece;
-
         if (myCurrentPiece != null) {
             move(myCurrentPiece.left());
-//            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
         }
-        // or here ?
-        //myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-        // Changing state
-        // PROPERTY_CURRENT_PIECE
     }
 
     @Override
     public void right() {
-        // saved old value - added for firePropertyChange
-//        final MovableTetrisPiece oldPiece = myCurrentPiece;
-
         if (myCurrentPiece != null) {
             move(myCurrentPiece.right());
-//            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
         }
-        // Changing state
-        // PROPERTY_CURRENT_PIECE
     }
 
     @Override
     public void rotateCW() {
-        // saved old value - added for firePropertyChange
-//        final MovableTetrisPiece oldPiece = myCurrentPiece;
-
         if (myCurrentPiece != null) {
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
                 move(myCurrentPiece.rotateCW());
@@ -310,16 +286,10 @@ public class Board implements BoardInterface {
                 }
             }
         }
-//        myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-        // Changing state
-        // PROPERTY_CURRENT_PIECE
     }
 
     @Override
     public void rotateCCW() {
-        // saved old value - added for firePropertyChange
-//        final MovableTetrisPiece oldPiece = myCurrentPiece;
-
         if (myCurrentPiece != null) {
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
                 move(myCurrentPiece.rotateCCW());
@@ -337,17 +307,10 @@ public class Board implements BoardInterface {
                 }
             }
         }
-//        myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-        // Changing state
-        // PROPERTY_CURRENT_PIECE
     }
 
     @Override
     public void drop() {
-        // saved old values - added for firePropertyChange
-//        final MovableTetrisPiece oldPiece = myCurrentPiece;
-//        final boolean oldDrop = myDrop;
-
         if (!myGameOver) {
             myDrop = true;
             while (isPieceLegal(myCurrentPiece.down())) {
@@ -355,16 +318,8 @@ public class Board implements BoardInterface {
             }
             myDrop = false;
             down();  // move down one more time to freeze in place
-//            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-//            myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
-//            // not sure where drop fire should go, changes twice but will always end up false?
         }
-        // Changing state
-        // PROPERTY_CURRENT_PIECE
-        // PROPERTY_DROP
     }
-    
-
 
     @Override
     public String toString() {
@@ -452,7 +407,6 @@ public class Board implements BoardInterface {
             }
         }
 
-
         return result;
         // Changing state
         // PROPERTY_CURRENT_PIECE
@@ -518,7 +472,8 @@ public class Board implements BoardInterface {
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
              // TODO Publish Update!
-                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
+                        oldFrozenBlocks, myFrozenBlocks);
             }
         }
         // loop through list backwards removing items by index
