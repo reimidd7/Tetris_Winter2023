@@ -42,10 +42,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                                                               PANEL_HEIGHT);
 
     /**
-     * Instantiated Board object.
-     */
-    //private Board myBoard;
-    /**
      * Public constructor. Creates the tetris game board.
      */
     public BoardPanel() {
@@ -56,15 +52,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
     }
 
-    /**
-     * Constructor for local instantiation.
-     *
-     * @param theBoard the Board.class.
-     */
-//    public BoardPanel(final Board theBoard) {
-//        this();
-//        myBoard = theBoard;
-//    }
 
     /**
      * "Accesser" method for the painted grid's dimensions.
@@ -108,18 +95,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
-        if (theEvent.getPropertyName().equals(Board.PROPERTY_DROP)) {
-            myBoard = (Board) theEvent.getNewValue();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-            myBoard = (Board) theEvent.getNewValue();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
-            myBoard = (Board) theEvent.getNewValue();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
-            myBoard = (Board) theEvent.getNewValue();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
-            myBoard = (Board) theEvent.getNewValue();
-        }
-        myBoard.addPropertyChangeListener(this);
         repaint();
     }
 }

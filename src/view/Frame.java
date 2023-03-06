@@ -3,8 +3,6 @@ package view;
 import model.Board;
 import model.BoardInterface;
 import model.MovableTetrisPiece;
-import model.Point;
-import model.TetrisPiece;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -47,15 +45,14 @@ public class Frame extends JFrame implements PropertyChangeListener {
     /** Movable Tetris Piece object. */
     private MovableTetrisPiece myCurrentPiece; //TODO: Need to find a way to instantiate. For use in property change method
 
-
-    ///Possible constructor needed later.///
     public Frame(final BoardInterface theBoard) {
         super();
 
         //Create a board/model object from interface
         myBoard = theBoard;
 
-        //myCurrentPiece = ;//TODO: How to instantiate?
+        myCurrentPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
+                myCurrentPiece.getPosition()); //TODO: How to instantiate?
 
 
         // Create the frame for the tetris game (aka the top most "panel")
@@ -71,10 +68,15 @@ public class Frame extends JFrame implements PropertyChangeListener {
     //Used to create the rough frame for our tetris project.
     public void createTetrisFrame(final int theWidth, final int theHeight) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Group 1 - Tetris Game");
         setSize(theWidth, theHeight); //set height and width
+
+        setResizable(true); //TODO: do we want the user to be able to adjust the frame?
+        setJMenuBar(createFileMenu()); //add menu bar to the frame
+
         setVisible(true);
 
-        setJMenuBar(createFileMenu()); //add menu bar to the frame
+
 
     }
 
@@ -132,7 +134,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                     public void actionPerformed(final ActionEvent e) {
                         // call the appropriate method from the
                         //      Interface defined in Model Update.
-                        new Board().step(); // TODO: Is step() the correct method to do... could be down()
+                        new Board().step();
                     }
                 });
 
@@ -165,7 +167,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
             final model.Point temp = (model.Point) evt.getNewValue();
-            this.myCurrentPiece.getPosition().transform(temp); //TODO: This is the line that uses myCurrentPiece
+            myCurrentPiece.getPosition().transform(temp); //TODO: This is the line that uses myCurrentPiece
             repaint();
         }
     }
