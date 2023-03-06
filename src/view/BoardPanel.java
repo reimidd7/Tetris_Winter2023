@@ -54,6 +54,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         super(true);
         setBackground(UW_PURPLE);
         setPreferredSize(BOARD_SIZE);
+        //setMaximumSize(BOARD_SIZE);
 
     }
 
@@ -94,7 +95,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
         for (int rows = 0; rows < getGridDimension().height; rows++) {
             for (int cols = 0; cols < getGridDimension().width; cols++) {
-                g2d.drawRect(cols * GRID_SIDE,
+                g2d.drawRect(cols  * GRID_SIDE,
                         rows * GRID_SIDE,
                         GRID_SIDE, GRID_SIDE);
             }

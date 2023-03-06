@@ -3,7 +3,6 @@ package view;
 import model.Board;
 import model.BoardInterface;
 import model.MovableTetrisPiece;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,8 +50,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
         //Create a board/model object from interface
         myBoard = theBoard;
 
-        myCurrentPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-                myCurrentPiece.getPosition()); //TODO: How to instantiate?
+//        myCurrentPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
+//                myCurrentPiece.getPosition()); //TODO: How to instantiate?
 
 
         // Create the frame for the tetris game (aka the top most "panel")
@@ -71,7 +70,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         setTitle("Group 1 - Tetris Game");
         setSize(theWidth, theHeight); //set height and width
 
-        setResizable(true); //TODO: do we want the user to be able to adjust the frame?
+        setResizable(false); //TODO: do we want the user to be able to adjust the frame?
         setJMenuBar(createFileMenu()); //add menu bar to the frame
 
         setVisible(true);
@@ -144,7 +143,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         // sets the min and max size of frame
         tetrisFrame.setLayout(new GridLayout(1, 2));
         tetrisFrame.setMinimumSize(FRAME_DIMENSION);
-        //tetrisFrame.setMaximumSize(FRAME_DIMENSION);
+        tetrisFrame.setMaximumSize(FRAME_DIMENSION);
 
         // creates panel for next piece panel on top of other info panel
         final JPanel eastInfo = new JPanel(new GridLayout(2, 1));
