@@ -96,7 +96,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                         GRID_SIDE, GRID_SIDE);
             }
         }
-//        repaint();
     }
 
     /**

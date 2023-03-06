@@ -131,7 +131,6 @@ public class Board implements BoardInterface {
      */
     private final PropertyChangeSupport myPcs;
 
-    private final Board myBoard;
     // Constructors
 
     /**
@@ -156,10 +155,10 @@ public class Board implements BoardInterface {
          
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
-        myBoard = new Board();
-        final Board oldBoard = myBoard;
+
+
         myPcs = new PropertyChangeSupport(this);
-        myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, myBoard);
+
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
@@ -236,6 +235,9 @@ public class Board implements BoardInterface {
          * to implement additional functionality
          */
         down();
+        Board board = new Board();
+        Board oldBoard = board;
+        myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
     }
 
 
