@@ -6,6 +6,8 @@
 
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +15,7 @@ import model.wallkicks.WallKick;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
- * <p>Clients can expect Board objects to call norifyObservers with four different 
+ * <p>Clients can expect Board objects to call notifyObservers with four different
  * data types:</p>
  * <dl>
  * <dt>{@code List<Block[]>}</dt>
@@ -30,11 +32,39 @@ import model.wallkicks.WallKick;
  * 
  * @author Charles Bryan
  * @author Alan Fowler
- * @version 1.3
+ * @author Calvin Beardemphl, Rick Adams, Viktoria Dolojan, Tsion Fufa, Reilly Middlebrooks.
+ * @version Winter 2023
  */
-public class Board {
+public class Board implements BoardInterface {
 
     // Class constants
+    /**
+     * A property name for the current piece.
+     */
+    public static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
+
+    /**
+     * A property name for drop.
+     */
+    public static final String PROPERTY_DROP = "This doesn't not matter!";
+
+    /**
+     * A property name for the frozen blocks.
+     */
+    public static final String PROPERTY_FROZEN_BLOCKS = "This doesn't not matter1!";
+
+    /**
+     * A property name for game over boolean.
+     */
+    public static final String PROPERTY_GAME_OVER = "This doesn't not matte!";
+
+    /**
+     * A property name for the next piece.
+     */
+    public static final String PROPERTY_NEXT_PIECE = "This doesn't not mate!";
+
+    /** Property name for the general board. */
+    public static final String PROPERTY_BOARD = "Board";
     
     /**
      * Default width of a Tetris game board.
@@ -46,7 +76,6 @@ public class Board {
      */
     private static final int DEFAULT_HEIGHT = 20;
 
-    
     // Instance fields
     
     /**
@@ -70,12 +99,12 @@ public class Board {
     private boolean myGameOver;
 
     /**
-     * Contains a non random sequence of TetrisPieces to loop through.
+     * Contains a non-random sequence of TetrisPieces to loop through.
      */
     private List<TetrisPiece> myNonRandomPieces;
 
     /**
-     * The current index in the non random piece sequence.
+     * The current index in the non-random piece sequence.
      */
     private int mySequenceIndex;
     
@@ -95,7 +124,12 @@ public class Board {
      * down movement in the drop.
      */
     private boolean myDrop;
-    
+
+    /**
+     * Manager for Property Change Listeners.
+     */
+    private final PropertyChangeSupport myPcs;
+
     // Constructors
 
     /**
@@ -116,46 +150,41 @@ public class Board {
         super();
         myWidth = theWidth;
         myHeight = theHeight;
-        myFrozenBlocks = new LinkedList<Block[]>();
+        myFrozenBlocks = new LinkedList<>();
          
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
-        
+
+
+        myPcs = new PropertyChangeSupport(this);
+
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
     }
-    
 
     // public queries
-    
-    /**
-     * Get the width of the board.
-     * 
-     * @return Width of the board.
-     */
+
+    @Override
     public int getWidth() {
         return myWidth;
     }
 
-    /**
-     * Get the height of the board.
-     * 
-     * @return Height of the board.
-     */
+    @Override
     public int getHeight() {
         return myHeight;
     }
-    
 
-
-    /**
-     * Resets the board for a new game.
-     * This method must be called before the first game
-     * and before each new game.
-     */
+    @Override
     public void newGame() {
-        
+
+        // saved old values - added for firePropertyChange
+        final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
+        final boolean oldGameOver = myGameOver;
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
+        final boolean oldDrop = myDrop;
+
+
         mySequenceIndex = 0;
         myFrozenBlocks.clear();
         for (int h = 0; h < myHeight; h++) {
@@ -167,27 +196,29 @@ public class Board {
         myDrop = false;
         
         // TODO Publish Update!
+        myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+        myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+        myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+        myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
+        // Restarts states - everything -
+        // PROPERTY_FROZEN_BLOCKS
+        // PROPERTY_GAME_OVER
+        // PROPERTY_CURRENT_PIECE
+        // PROPERTY_DROP
+        // PROPERTY_NEXT_PIECE not affected ???
     }
 
-    /**
-     * Sets a non random sequence of pieces to loop through.
-     * 
-     * @param thePieces the List of non random TetrisPieces.
-     */
+
+    @Override
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
         myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
+
     }
-    
-    /**
-     * Advances the board by one 'step'.
-     * 
-     * This could include
-     * - moving the current piece down 1 line
-     * - freezing the current piece if appropriate
-     * - clearing full lines as needed
-     */
+
+
+    @Override
     public void step() {
         /*
          * Calling the down() method from here should be sufficient
@@ -196,14 +227,17 @@ public class Board {
          * to implement additional functionality
          */
         down();
+        final Board board = new Board();
+        final Board oldBoard = board;
+        myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
     }
-    
-    /**
-     * Try to move the movable piece down.
-     * Freeze the Piece in position if down tries to move into an illegal state.
-     * Clear full lines.
-     */
+
+
+    @Override
     public void down() {
+        // saved old value - added for firePropertyChange
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
+
         if (!move(myCurrentPiece.down())) {
             // the piece froze, so clear lines and update current piece
             addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
@@ -212,30 +246,28 @@ public class Board {
                 myCurrentPiece = nextMovablePiece(false);
             }
             // TODO Publish Update!
+            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+            // Changing state
+            // PROPERTY_CURRENT_PIECE
         }
     }
 
-    /**
-     * Try to move the movable piece left.
-     */
+
+    @Override
     public void left() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.left());
         }
     }
 
-    /**
-     * Try to move the movable piece right.
-     */
+    @Override
     public void right() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.right());
         }
     }
 
-    /**
-     * Try to rotate the movable piece in the clockwise direction.
-     */
+    @Override
     public void rotateCW() {
         if (myCurrentPiece != null) {
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
@@ -255,10 +287,8 @@ public class Board {
             }
         }
     }
-    
-    /**
-     * Try to rotate the movable piece in the counter-clockwise direction.
-     */
+
+    @Override
     public void rotateCCW() {
         if (myCurrentPiece != null) {
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
@@ -279,9 +309,7 @@ public class Board {
         }
     }
 
-    /**
-     * Drop the piece until piece is set.
-     */
+    @Override
     public void drop() {
         if (!myGameOver) {
             myDrop = true;
@@ -292,8 +320,6 @@ public class Board {
             down();  // move down one more time to freeze in place
         }
     }
-    
-
 
     @Override
     public String toString() {
@@ -331,8 +357,32 @@ public class Board {
         }
         sb.append('|');
         return sb.toString();
+        // Represents the state
     }
 
+    @Override
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.removePropertyChangeListener(theListener);
+    }
+
+    @Override
+    public void addPropertyChangeListener(final String thePropertyName,
+                                          final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(thePropertyName, theListener);
+
+    }
+
+    @Override
+    public void removePropertyChangeListener(final String thePropertyName,
+                                             final PropertyChangeListener theListener) {
+        myPcs.removePropertyChangeListener(thePropertyName, theListener);
+
+    }
     
     // private helper methods
     
@@ -344,15 +394,23 @@ public class Board {
      * @return True if the move succeeded
      */
     private boolean move(final MovableTetrisPiece theMovedPiece) {
+        // saved old values - added for firePropertyChange
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
+
         boolean result = false;
         if (isPieceLegal(theMovedPiece)) {
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
                 // TODO Publish Update!
+                myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
             }
         }
+
         return result;
+        // Changing state
+        // PROPERTY_CURRENT_PIECE
+
     }
 
     /**
@@ -399,6 +457,9 @@ public class Board {
      * Checks the board for complete rows.
      */
     private void checkRows() {
+        // saved old values - added for firePropertyChange
+        final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
+
         final List<Integer> completeRows = new ArrayList<>();
         for (final Block[] row : myFrozenBlocks) {
             boolean complete = true;
@@ -411,6 +472,8 @@ public class Board {
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
              // TODO Publish Update!
+                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
+                        oldFrozenBlocks, myFrozenBlocks);
             }
         }
         // loop through list backwards removing items by index
@@ -421,6 +484,9 @@ public class Board {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
+
+        // Changing state
+        // PROPERTY_FROZEN_BLOCKS
     }
     
     /**
@@ -458,6 +524,8 @@ public class Board {
     private void setPoint(final List<Block[]> theBoard,
                           final Point thePoint,
                           final Block theBlock) {
+        // saved old value - added for firePropertyChange
+        final boolean oldGameOver = myGameOver;
         
         if (isPointOnBoard(theBoard, thePoint)) { 
             final Block[] row = theBoard.get(thePoint.y());
@@ -465,7 +533,11 @@ public class Board {
         } else if (!myGameOver) {
             myGameOver = true;
             // TODO Publish Update!
+            myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldGameOver, myFrozenBlocks);
+//            myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
         }
+        // Changing state
+        // PROPERTY_GAME_OVER
     }
 
     /**
@@ -503,7 +575,7 @@ public class Board {
     /**
      * Gets the next MovableTetrisPiece.
      * 
-     * @param theRestart Restart the non random cycle.
+     * @param theRestart Restart the non-random cycle.
      * @return A new MovableTetrisPiece.
      */
     private MovableTetrisPiece nextMovablePiece(final boolean theRestart) {
@@ -529,6 +601,8 @@ public class Board {
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
+        // saved old values - added for firePropertyChange
+        final TetrisPiece oldPiece = myNextPiece;
         
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
@@ -539,7 +613,12 @@ public class Board {
         }
         if (share && !myGameOver) {
             // TODO Publish Update!
+            myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldPiece, myNextPiece);
+            // Changing state
+            // PROPERTY_NEXT_PIECE
         }
+
+
     }    
 
     
@@ -586,4 +665,4 @@ public class Board {
     } // end inner class BoardData
 
     
-}
+} // end of Board class
