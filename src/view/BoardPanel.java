@@ -39,6 +39,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     private static final Dimension BOARD_SIZE = new Dimension(PANEL_WIDTH,
                                                               PANEL_HEIGHT);
 
+
     /** UW Purple. */
     private static final Color UW_GOLD = new Color(145, 123, 76);
     /** UW Purple. */
@@ -56,6 +57,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
     }
 
+
     /**
      * Public constructor for instantiation.
      *
@@ -65,6 +67,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         this();
         myBoard = theBoard;
     }
+
 
     /**
      * "Accesser" method for the painted grid's dimensions.
@@ -113,6 +116,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             }
             repaint();
         }
+
     }
 
 }
