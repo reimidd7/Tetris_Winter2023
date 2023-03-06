@@ -77,8 +77,11 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     public static Dimension getGridDimension() {
 
-        return new Dimension(BOARD_SIZE.height * GRID_SIDE + 1,
-                BOARD_SIZE.width * GRID_SIDE + 1);
+//        return new Dimension(BOARD_SIZE.height * GRID_SIDE + 1,
+//                BOARD_SIZE.width * GRID_SIDE + 1);
+
+        return BOARD_SIZE;
+
     }
 
     /**
@@ -100,6 +103,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                         GRID_SIDE, GRID_SIDE);
             }
         }
+
     }
 
     /**
