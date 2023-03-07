@@ -53,7 +53,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
 //        myCurrentPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
 //                myCurrentPiece.getPosition()); //TODO: How to instantiate?
 
-
         // Create the frame for the tetris game (aka the top most "panel")
         createTetrisFrame(WIDTH, HEIGHT);
 
@@ -69,12 +68,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Group 1 - Tetris Game");
         setSize(theWidth, theHeight); //set height and width
-
-        setResizable(false); //TODO: do we want the user to be able to adjust the frame?
+        setResizable(false);
         setJMenuBar(createFileMenu()); //add menu bar to the frame
-
         setVisible(true);
-
     }
 
     //Create a file menu with event handlers.
@@ -107,6 +103,36 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 });
         about.add(abt);
         menuBar.add(about);
+
+        final JMenu pause = new JMenu("Pause");
+        final JButton pauseButton = new JButton("Pause Current Game");
+        pause.add(pauseButton);
+        pauseButton.addActionListener(
+                e -> {
+                    // TODO: pause current game
+
+                });
+        menuBar.add(pause);
+
+        final JMenu end = new JMenu("End Game");
+        final JButton endButton = new JButton("End Current Game");
+        end.add(endButton);
+        endButton.addActionListener(
+                e -> {
+                    // TODO: end current game and display game stats
+
+                });
+        menuBar.add(end);
+
+        final JMenu restart = new JMenu("New Game");
+        final JButton restartButton = new JButton("Start New Game");
+        restart.add(restartButton);
+        restartButton.addActionListener(
+                e -> {
+                    // TODO: start new game only if no game is in progress
+
+                });
+        menuBar.add(restart);
 
         return menuBar;
     }
