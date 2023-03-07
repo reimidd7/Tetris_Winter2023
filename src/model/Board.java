@@ -131,7 +131,6 @@ public class Board implements BoardInterface {
     private final PropertyChangeSupport myPcs;
 
     // Constructors
-
     /**
      * Default Tetris board constructor.
      * Creates a standard size tetris game board.
@@ -155,7 +154,6 @@ public class Board implements BoardInterface {
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
 
-
         myPcs = new PropertyChangeSupport(this);
 
         /*  myNextPiece and myCurrentPiece
@@ -163,8 +161,7 @@ public class Board implements BoardInterface {
          */
     }
 
-    // public queries
-
+    // Public queries
     @Override
     public int getWidth() {
         return myWidth;
@@ -177,13 +174,11 @@ public class Board implements BoardInterface {
 
     @Override
     public void newGame() {
-
         // saved old values - added for firePropertyChange
         final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
         final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
         final boolean oldDrop = myDrop;
-
 
         mySequenceIndex = 0;
         myFrozenBlocks.clear();
@@ -208,7 +203,6 @@ public class Board implements BoardInterface {
         // PROPERTY_NEXT_PIECE not affected ???
     }
 
-
     @Override
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
         myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
@@ -216,7 +210,6 @@ public class Board implements BoardInterface {
         myCurrentPiece = nextMovablePiece(true);
 
     }
-
 
     @Override
     public void step() {
@@ -231,7 +224,6 @@ public class Board implements BoardInterface {
         final Board oldBoard = board;
         myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
     }
-
 
     @Override
     public void down() {
@@ -251,7 +243,6 @@ public class Board implements BoardInterface {
             // PROPERTY_CURRENT_PIECE
         }
     }
-
 
     @Override
     public void left() {
@@ -384,8 +375,7 @@ public class Board implements BoardInterface {
 
     }
     
-    // private helper methods
-    
+    // Private helper methods
     /**
      * Helper function to check if the current piece can be shifted to the
      * specified position.
@@ -406,11 +396,9 @@ public class Board implements BoardInterface {
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
             }
         }
-
         return result;
         // Changing state
         // PROPERTY_CURRENT_PIECE
-
     }
 
     /**
@@ -484,7 +472,6 @@ public class Board implements BoardInterface {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
-
         // Changing state
         // PROPERTY_FROZEN_BLOCKS
     }
@@ -617,13 +604,9 @@ public class Board implements BoardInterface {
             // Changing state
             // PROPERTY_NEXT_PIECE
         }
-
-
-    }    
-
+    }
     
     // Inner classes
-
     /**
      * A class to describe the board data to registered Observers.
      * The board data includes the current piece and the frozen blocks.
@@ -661,8 +644,5 @@ public class Board implements BoardInterface {
             }
             return board;
         }
-        
     } // end inner class BoardData
-
-    
 } // end of Board class
