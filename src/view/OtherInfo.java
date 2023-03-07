@@ -7,7 +7,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -30,5 +30,33 @@ public class OtherInfo extends JPanel {
         setBackground(Color.GREEN);
         setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
         setBorder(new TitledBorder("Other Information"));
+        final JTextArea controlsText = new JTextArea(createTextBox());
+        controlsText.setEditable(false);
+        controlsText.setBackground(Color.GREEN);
+        add(controlsText);
     }
+
+    /**
+     * Creates the Text to be displayed on
+     * the OtherInfo panel.
+     *
+     * @return a String Text Block
+     */
+    private static String createTextBox() {
+        // NOT DONE - JUST MOCK UP
+        return """
+         Controls:
+         A/a moves piece left
+         D/d moves piece right
+         S/s moves piece down
+         W/w rotates piece
+         ----------------------
+         Score: 1000
+         Level: 5
+         Lines Cleared: 3""";
+        // this ^^^ is a text block that IntelliJ
+        // recommended I do instead of a String or String builder
+        // it looks nice to me!
+    }
+
 }
