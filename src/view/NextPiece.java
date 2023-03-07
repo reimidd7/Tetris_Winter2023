@@ -43,22 +43,12 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
-        g2d.setPaint(Color.WHITE);
-        g2d.fillRect(75, 75, 50, 50);
-        g2d.setPaint(Color.BLACK);
-        g2d.fillRect(85, 85, 10, 10);
-        g2d.fillRect(105, 85, 10, 10);
-        g2d.fillRect(85, 105, 30, 10);
-        // TODO: draw tetris piece
-        // attempt at drawing next piece
-        if (myNextPiece != null) {
-            for (int rows = 0; rows < myNextPiece.getHeight(); rows++) {
-                for (int columns = 0; columns < myNextPiece.getWidth(); columns++) {
-                    g2d.fillRect(25 * rows, 25 * columns, 25, 25);
-                }
-            }
-        }
+        final DrawPieces pieceI = new DrawPieces();
+
+        pieceI.drawI((Graphics2D) theGraphics);
+
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent theEvent) {

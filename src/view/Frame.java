@@ -42,7 +42,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private final BoardInterface myBoard;
 
     /** Movable Tetris Piece object. */
-    private MovableTetrisPiece myCurrentPiece; //TODO: Need to find a way to instantiate. For use in property change method
+    private MovableTetrisPiece myCurrentPiece ; //TODO: Need to find a way to instantiate. For use in property change method
 
     public Frame(final BoardInterface theBoard) {
         super();
@@ -174,7 +174,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
      *
      * @author Reilly Middlebrooks
      */
-    class BoardKeyListener extends KeyAdapter {
+    private class BoardKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(final KeyEvent theEvent) {
             System.out.println("key pressed");
