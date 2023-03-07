@@ -35,10 +35,13 @@ public class Frame extends JFrame implements PropertyChangeListener {
     /** Panel dimension. */
     private static final Dimension PANEL_DIMENSION = new Dimension(200, 400);
 
-    /** Time Constant. */ // TODO: Large only for testing purposes. Make smaller.
+    /** Time constant. */ // TODO: Large only for testing purposes. Make smaller.
     private static final int TIME_CONST = 60000;
 
-    /** Board Object. */
+    /** Timer object. */
+    private static Timer timer;
+
+    /** BoardInterface object. */
     private final BoardInterface myBoard;
 
     /** Movable Tetris Piece object. */
@@ -90,7 +93,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final JMenuItem rules = new JMenuItem("Rules");
         rules.addActionListener(
                 e -> {
-                    JOptionPane.showMessageDialog(null, "Best of Luck");
+                    JOptionPane.showMessageDialog(null, "Based off the classic Tetris rules.");
                 });
         help.add(rules);
         menuBar.add(help);
@@ -99,7 +102,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final JMenuItem abt = new JMenuItem("About Game");
         abt.addActionListener(
                 e -> {
-                    JOptionPane.showMessageDialog(null, "This is a tetris game");
+                    JOptionPane.showMessageDialog(null, "This is a clone Tetris game.");
                 });
         about.add(abt);
         menuBar.add(about);
@@ -109,8 +112,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
         pause.add(pauseButton);
         pauseButton.addActionListener(
                 e -> {
-                    // TODO: pause current game
-
+                    timer.stop();
+                    // TODO: display option to continue current game
                 });
         menuBar.add(pause);
 
@@ -151,7 +154,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         board.addPropertyChangeListener(nextPiece);
 
         // instantiate the timer and set the delay to 500ms
-        final Timer timer = new Timer(TIME_CONST,
+        timer = new Timer(TIME_CONST,
                 new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
@@ -222,5 +225,4 @@ public class Frame extends JFrame implements PropertyChangeListener {
             }
         }
     }
-
 } // end of frame class

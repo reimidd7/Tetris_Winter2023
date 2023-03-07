@@ -227,20 +227,22 @@ public class Board implements BoardInterface {
 
     @Override
     public void down() {
-        // saved old value - added for firePropertyChange
-        final MovableTetrisPiece oldPiece = myCurrentPiece;
+        if (myCurrentPiece != null) {
+            // saved old value - added for firePropertyChange
+            final MovableTetrisPiece oldPiece = myCurrentPiece;
 
-        if (!move(myCurrentPiece.down())) {
-            // the piece froze, so clear lines and update current piece
-            addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
-            checkRows();
-            if (!myGameOver) {
-                myCurrentPiece = nextMovablePiece(false);
+            if (!move(myCurrentPiece.down())) {
+                // the piece froze, so clear lines and update current piece
+                addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
+                checkRows();
+                if (!myGameOver) {
+                    myCurrentPiece = nextMovablePiece(false);
+                }
+                // TODO Publish Update!
+                myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+                // Changing state
+                // PROPERTY_CURRENT_PIECE
             }
-            // TODO Publish Update!
-            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-            // Changing state
-            // PROPERTY_CURRENT_PIECE
         }
     }
 

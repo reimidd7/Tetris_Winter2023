@@ -14,7 +14,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import model.TetrisPiece;
-import view.DrawPieces;
 
 /**
  * This class creates a panel to displays the next tetris piece to the user
