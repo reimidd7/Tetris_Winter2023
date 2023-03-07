@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.io.Serial;
 import javax.swing.JPanel;
 import model.Board;
+
 /**
  * group1-tetris game board.
  *
@@ -24,7 +25,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     /**
      * Grid size for calculating grid dimensions.
      */
-    private static final int GRID_SIDE = 20;
+    private static final int GRID_SIDE = 15;
     /**
      * Panel width constant.
      */
@@ -33,6 +34,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * Panel height constant.
      */
     private static final int PANEL_HEIGHT = 400;
+
     /**
      * Board dimensions in with dimension class.
      */
@@ -45,7 +47,8 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     /** UW Purple. */
     private static final Color UW_PURPLE = new Color(51, 0, 111);
     /** Board object for instantiation. */
-    private Board myBoard;
+    private Board myBoard = new Board();
+
 
     /**
      * Public constructor. Creates the tetris game board panel.
@@ -53,22 +56,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     public BoardPanel() {
         super(true);
         setBackground(UW_PURPLE);
-        setPreferredSize(BOARD_SIZE);
-        //setMaximumSize(BOARD_SIZE);
+
 
     }
-
-
-    /**
-     * Public constructor for instantiation.
-     *
-     * @param theBoard An instantiated Board object.
-     */
-    public BoardPanel(final Board theBoard) {
-        this();
-        myBoard = theBoard;
-    }
-
 
     /**
      * "Accessor" method for the painted grid's dimensions.
@@ -77,8 +67,8 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     public static Dimension getGridDimension() {
         return BOARD_SIZE;
-
     }
+
 
     /**
      * Overrides swings paintComponent to draw a simple grid on a JPanel.
@@ -88,6 +78,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        myBoard.addPropertyChangeListener(this);
+
         g2d.setPaint(UW_GOLD);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -112,7 +105,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
         if (myBoard != null) {
-            if (theEvent.getPropertyName().equals(Board.PROPERTY_BOARD)) {
+            if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
                 myBoard = (Board) theEvent.getNewValue();
             }
             repaint();
