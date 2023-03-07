@@ -76,10 +76,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * @return returns dimensions of the painted grid.
      */
     public static Dimension getGridDimension() {
-
-//        return new Dimension(BOARD_SIZE.height * GRID_SIDE + 1,
-//                BOARD_SIZE.width * GRID_SIDE + 1);
-
         return BOARD_SIZE;
 
     }
