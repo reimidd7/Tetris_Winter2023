@@ -67,29 +67,4 @@ public class OtherInfo extends JPanel {
         //
     }
 
-
-    /**
-     * Creates the Text to be displayed on
-     * the OtherInfo panel.
-     *
-     * @return a String Text Block
-     */
-    private static String createTextBox() {
-        // NOT DONE - JUST MOCK UP
-        return """
-         Controls:
-         A/a moves piece left
-         D/d moves piece right
-         S/s moves piece down
-         W/w rotates piece
-         ----------------------
-         Score: 1000
-         Level: 5
-         Lines Cleared: 3""";
-        // this ^^^ is a text block that IntelliJ
-        // recommended I do instead of a String or String builder
-        // it looks nice to me!
-        //
-    }
-
 }
