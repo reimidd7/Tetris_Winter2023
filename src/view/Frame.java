@@ -129,12 +129,19 @@ public class Frame extends JFrame implements PropertyChangeListener {
         end.add(endButton);
         endButton.addActionListener(
                 e -> {
-                    // TODO: end current game and display game stats
-                    // can use these methods to get Stats
-                    // myScore.getScore();
-                    // myScore.getLevel();
-                    // myScore.getLinesCleared();
+                    // TODO: end current game
 
+                    // displays game stats
+                    JFrame scoreFrame = new JFrame("Your Score:");
+                    JPanel scorePanel = new JPanel();
+                    JLabel score = new JLabel("Score: " + myScore.getScore());
+                    JLabel level = new JLabel("Level: " + myScore.getLevel());
+                    JLabel lines = new JLabel("Lines Cleared: " + myScore.getLinesCleared());
+                    scorePanel.add(score);
+                    scorePanel.add(level);
+                    scorePanel.add(lines);
+                    scoreFrame.add(scorePanel);
+                    scoreFrame.setVisible(true);
                 });
         menuBar.add(end);
 
