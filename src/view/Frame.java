@@ -3,6 +3,8 @@ package view;
 import model.Board;
 import model.BoardInterface;
 import model.MovableTetrisPiece;
+import model.Score;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +45,11 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
     /** BoardInterface object. */
     private final BoardInterface myBoard;
+
+    /**
+     * The Score object.
+     */
+    private static Score myScore = new Score();
 
     /** Movable Tetris Piece object. */
     private MovableTetrisPiece myCurrentPiece ; //TODO: Need to find a way to instantiate. For use in property change method
@@ -123,6 +130,10 @@ public class Frame extends JFrame implements PropertyChangeListener {
         endButton.addActionListener(
                 e -> {
                     // TODO: end current game and display game stats
+                    // can use these methods to get Stats
+                    // myScore.getScore();
+                    // myScore.getLevel();
+                    // myScore.getLinesCleared();
 
                 });
         menuBar.add(end);

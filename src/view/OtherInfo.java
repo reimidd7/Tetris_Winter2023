@@ -5,6 +5,8 @@
 
 package view;
 
+import model.Score;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -23,6 +25,11 @@ public class OtherInfo extends JPanel {
 
     /** Width and height of the panel.*/
     private static final int PANEL_SIZE = 200;
+
+    /**
+     * The Score object.
+     */
+    private static Score myScore = new Score();
 
     /** Constructor for OtherInfo panel. */
     public OtherInfo() {
@@ -46,14 +53,14 @@ public class OtherInfo extends JPanel {
         // NOT DONE - JUST MOCK UP
         return """
          Controls:
-         A/a moves piece left
-         D/d moves piece right
-         S/s moves piece down
-         W/w rotates piece
+         A/a/← moves piece left
+         D/d/→ moves piece right
+         S/s/↓ moves piece down
+         W/w/↑ rotates piece
          ----------------------
-         Score: 1000
-         Level: 5
-         Lines Cleared: 3""";
+         Score:\s""" + myScore.getScore() + """
+         \nLevel:\s""" + myScore.getLevel() + """
+         \nLines Cleared:\s""" + myScore.getLinesCleared();
         // this ^^^ is a text block that IntelliJ
         // recommended I do instead of a String or String builder
         // it looks nice to me!
