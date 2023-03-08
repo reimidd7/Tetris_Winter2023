@@ -45,7 +45,6 @@ public class Score {
      */
     private int myLinesCleared;
 
-
     /**
      * Constructor for a Score object.
      */
@@ -91,7 +90,6 @@ public class Score {
         myLevel = 1;
         myLinesCleared = 0;
     }
-
 
     /**
      * Calculates how many lines have been cleared.
@@ -141,7 +139,6 @@ public class Score {
         // fire property change ? or in board class ?
     }
 
-
     /**
      * Returns the current Score.
      * @return the current score
@@ -166,8 +163,4 @@ public class Score {
         return myLinesCleared;
     }
 
-
-
-
 }
-

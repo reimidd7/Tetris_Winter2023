@@ -46,9 +46,10 @@ public class Frame extends JFrame implements PropertyChangeListener {
     /** BoardInterface object. */
     private final BoardInterface myBoard;
 
-    /**
-     * The Score object.
-     */
+    /** Tracks if game is in progress. */
+    private static boolean gameInProgress = false;
+
+    /** The Score object. */
     private static Score myScore = new Score();
 
     /** Movable Tetris Piece object. */
@@ -151,26 +152,50 @@ public class Frame extends JFrame implements PropertyChangeListener {
         menuBar.add(difficultyMenu);
 
         final JMenu pause = new JMenu("Pause");
-        final JButton pauseButton = new JButton("Pause Current Game");
+        final JButton pauseButton = new JButton("Pause");
         pause.add(pauseButton);
         pauseButton.addActionListener(
                 e -> {
                     timer.stop();
                     // TODO: display option to continue current game
+                    JFrame continueFrame = new JFrame("Paused");
+                    JPanel continuePanel = new JPanel();
+                    JLabel continueLabel = new JLabel("Game is currently paused. Would you like to continue?");
+                    JButton continueButton = new JButton("Continue");
+                    continuePanel.add(continueLabel);
+                    continuePanel.add(continueButton);
+                    continueFrame.add(continuePanel);
+                    continueFrame.setSize(WIDTH,100);
+                    continueFrame.setVisible(true);
+                    continueButton.addActionListener(
+                            actionEvent -> {
+                                timer.start();
+                                continueFrame.setVisible(false);
+                            }
+                    );
                 });
         menuBar.add(pause);
 
         final JMenu end = new JMenu("End Game");
-        final JButton endButton = new JButton("End Current Game");
+        final JButton endButton = new JButton("End Game");
         end.add(endButton);
         endButton.addActionListener(
                 e -> {
-                    // TODO: end current game and display game stats
-                    // can use these methods to get Stats
-                    // myScore.getScore();
-                    // myScore.getLevel();
-                    // myScore.getLinesCleared();
+                    // TODO: end current game
+                    gameInProgress = false;
 
+                    // displays game stats
+                    JFrame scoreFrame = new JFrame("GAME OVER");
+                    JPanel scorePanel = new JPanel();
+                    JLabel score = new JLabel("Score: " + myScore.getScore());
+                    JLabel level = new JLabel("Level: " + myScore.getLevel());
+                    JLabel lines = new JLabel("Lines Cleared: " + myScore.getLinesCleared());
+                    scorePanel.add(score);
+                    scorePanel.add(level);
+                    scorePanel.add(lines);
+                    scoreFrame.add(scorePanel);
+                    scoreFrame.setSize(WIDTH,100);
+                    scoreFrame.setVisible(true);
                 });
         menuBar.add(end);
 
@@ -180,7 +205,12 @@ public class Frame extends JFrame implements PropertyChangeListener {
         restartButton.addActionListener(
                 e -> {
                     // TODO: start new game only if no game is in progress
-
+                    if (gameInProgress == false) {
+                        gameInProgress = true;
+                        // myBoard.newGame();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Current game has not ended.");
+                    }
                 });
         menuBar.add(restart);
 
