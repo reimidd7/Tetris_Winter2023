@@ -64,7 +64,5 @@ public class OtherInfo extends JPanel {
         // this ^^^ is a text block that IntelliJ
         // recommended I do instead of a String or String builder
         // it looks nice to me!
-        //
     }
-
 }

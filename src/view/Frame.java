@@ -6,8 +6,6 @@ import model.MovableTetrisPiece;
 import model.Score;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
@@ -91,27 +89,21 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final JMenu menu = new JMenu("File");
         final JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(
-                e -> {
-                    System.exit(0);
-                });
+                e -> System.exit(0));
         menu.add(exit);
         menuBar.add(menu);
 
         final JMenu help = new JMenu("Help");
         final JMenuItem rules = new JMenuItem("Rules");
         rules.addActionListener(
-                e -> {
-                    JOptionPane.showMessageDialog(null, "Based off the classic Tetris rules.");
-                });
+                e -> JOptionPane.showMessageDialog(null, "Based off the classic Tetris rules."));
         help.add(rules);
         menuBar.add(help);
 
         final JMenu about = new JMenu("About");
         final JMenuItem abt = new JMenuItem("About Game");
         abt.addActionListener(
-                e -> {
-                    JOptionPane.showMessageDialog(null, "This is a clone Tetris game.");
-                });
+                e -> JOptionPane.showMessageDialog(null, "This is a clone Tetris game."));
         about.add(abt);
         menuBar.add(about);
 
@@ -157,7 +149,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         pauseButton.addActionListener(
                 e -> {
                     timer.stop();
-                    // TODO: display option to continue current game
                     JFrame continueFrame = new JFrame("Paused");
                     JPanel continuePanel = new JPanel();
                     JLabel continueLabel = new JLabel("Game is currently paused. Would you like to continue?");
@@ -183,6 +174,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 e -> {
                     // TODO: end current game
                     gameInProgress = false;
+                    timer.stop();
+                    timer.restart();
+                    myScore.reset();
 
                     // displays game stats
                     JFrame scoreFrame = new JFrame("GAME OVER");
@@ -204,9 +198,10 @@ public class Frame extends JFrame implements PropertyChangeListener {
         restart.add(restartButton);
         restartButton.addActionListener(
                 e -> {
-                    // TODO: start new game only if no game is in progress
-                    if (gameInProgress == false) {
+                    // TODO: start new game
+                    if (!gameInProgress) {
                         gameInProgress = true;
+                        timer.start();
                         // myBoard.newGame();
                     } else {
                         JOptionPane.showMessageDialog(null, "Current game has not ended.");
@@ -218,7 +213,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     public static void createAndShowGUI() {
-       // final Board board = new Board();
+        // final Board board = new Board();
 
         // Get the Board size from the user
         Dimension boardDimensions = getBoardSize();
@@ -237,17 +232,10 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         // instantiate the timer and set the delay to 500ms
         timer = new Timer(TIME_CONST,
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        // call the appropriate method from the
-                        //      Interface defined in Model Update.
-                        new Board().step();
-                    }
+                e -> { // call the appropriate method from the Interface defined in Model Update
+                    new Board().step();
                 });
-
-        // start the timer
-        timer.start();
+        timer.start(); // start the timer
 
         // sets the min and max size of frame
         tetrisFrame.setLayout(new GridLayout(1, 2));

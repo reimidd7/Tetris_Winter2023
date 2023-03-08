@@ -126,7 +126,6 @@ public class Score {
         }
 
         // fire property change ? or in board class ?
-
     }
 
     /**
@@ -162,5 +161,4 @@ public class Score {
     public int getLinesCleared() {
         return myLinesCleared;
     }
-
 }
