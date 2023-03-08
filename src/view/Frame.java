@@ -114,6 +114,42 @@ public class Frame extends JFrame implements PropertyChangeListener {
         about.add(abt);
         menuBar.add(about);
 
+        // Create "Difficulty" submenu with 5 difficulty levels
+        final JMenu difficultyMenu = new JMenu("Difficulty");
+        final ButtonGroup difficultyGroup = new ButtonGroup();
+        final JRadioButtonMenuItem level1Item = new JRadioButtonMenuItem("Level 1");
+        final JRadioButtonMenuItem level2Item = new JRadioButtonMenuItem("Level 2");
+        final JRadioButtonMenuItem level3Item = new JRadioButtonMenuItem("Level 3");
+        final JRadioButtonMenuItem level4Item = new JRadioButtonMenuItem("Level 4");
+        final JRadioButtonMenuItem level5Item = new JRadioButtonMenuItem("Level 5");
+        level1Item.setSelected(true); // Default level is 1
+        difficultyGroup.add(level1Item);
+        difficultyGroup.add(level2Item);
+        difficultyGroup.add(level3Item);
+        difficultyGroup.add(level4Item);
+        difficultyGroup.add(level5Item);
+        difficultyMenu.add(level1Item);
+        difficultyMenu.add(level2Item);
+        difficultyMenu.add(level3Item);
+        difficultyMenu.add(level4Item);
+        difficultyMenu.add(level5Item);
+        level1Item.addActionListener(e -> {
+            Board.setDelay(800); // Update game delay for level 1
+        });
+        level2Item.addActionListener(e -> {
+            Board.setDelay(600); // Update game delay for level 2
+        });
+        level3Item.addActionListener(e -> {
+            Board.setDelay(400); // Update game delay for level 3
+        });
+        level4Item.addActionListener(e -> {
+            Board.setDelay(200); // Update game delay for level 4
+        });
+        level5Item.addActionListener(e -> {
+            Board.setDelay(100); // Update game delay for level 5
+        });
+        menuBar.add(difficultyMenu);
+
         final JMenu pause = new JMenu("Pause");
         final JButton pauseButton = new JButton("Pause Current Game");
         pause.add(pauseButton);
@@ -152,7 +188,12 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     public static void createAndShowGUI() {
-        final Board board = new Board();
+       // final Board board = new Board();
+
+        // Get the Board size from the user
+        Dimension boardDimensions = getBoardSize();
+        // Make a Board based on user inputted size
+        final Board board = new Board((int) boardDimensions.getWidth(), (int) boardDimensions.getHeight());
 
         final Frame tetrisFrame = new Frame(board);
         board.addPropertyChangeListener(tetrisFrame);
@@ -198,6 +239,40 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         tetrisFrame.pack();
         tetrisFrame.setVisible(true);
+    }
+
+    private static Dimension getBoardSize() {
+        int width = 10;
+        int height = 10;
+        boolean validInput = false;
+
+        // Prompt the user for the board size
+        while (!validInput) {
+            String input = JOptionPane.showInputDialog(null,
+                    "Enter board size (format: width x height):",
+                    width + " x " + height);
+            if (input == null) {
+                // User clicked Cancel
+                System.exit(0);
+            }
+            String[] dimensions = input.split("x");
+            if (dimensions.length == 2) {
+                try {
+                    width = Integer.parseInt(dimensions[0].trim());
+                    height = Integer.parseInt(dimensions[1].trim());
+                    if (width > 0 && height > 0) {
+                        validInput = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid board size");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid board size");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid board size");
+            }
+        }
+        return new Dimension(width, height);
     }
 
     @Override

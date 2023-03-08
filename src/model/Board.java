@@ -615,6 +615,10 @@ public class Board implements BoardInterface {
             // PROPERTY_NEXT_PIECE
         }
     }
+    public static void setDelay(int i) {
+        // TODO Auto-generated method stub
+
+    }
     
     // Inner classes
     /**
