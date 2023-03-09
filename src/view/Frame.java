@@ -211,36 +211,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 });
         menuBar.add(restart);
 
-        final JMenu pause = new JMenu("Pause");
-        final JButton pauseButton = new JButton("Pause Current Game");
-        pause.add(pauseButton);
-        pauseButton.addActionListener(
-                e -> {
-                    timer.stop();
-                    // TODO: display option to continue current game
-                });
-        menuBar.add(pause);
-
-        final JMenu end = new JMenu("End Game");
-        final JButton endButton = new JButton("End Current Game");
-        end.add(endButton);
-        endButton.addActionListener(
-                e -> {
-                    // TODO: end current game and display game stats
-
-                });
-        menuBar.add(end);
-
-        final JMenu restart = new JMenu("New Game");
-        final JButton restartButton = new JButton("Start New Game");
-        restart.add(restartButton);
-        restartButton.addActionListener(
-                e -> {
-                    // TODO: start new game only if no game is in progress
-
-                });
-        menuBar.add(restart);
-
         return menuBar;
     }
 
