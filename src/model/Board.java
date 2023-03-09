@@ -119,6 +119,11 @@ public class Board implements BoardInterface {
     private MovableTetrisPiece myCurrentPiece;
 
     /**
+     * The Score object.
+     */
+    private Score myScore = new Score();
+
+    /**
      * A flag to indicate when moving a piece down is part of a drop operation.
      * This is used to prevent the Board from notifying observers for each incremental
      * down movement in the drop.
@@ -190,7 +195,8 @@ public class Board implements BoardInterface {
         myGameOver = false;
         myCurrentPiece = nextMovablePiece(true);
         myDrop = false;
-        
+        myScore.reset();
+
         // TODO Publish Update!
 
 //        myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
@@ -317,6 +323,8 @@ public class Board implements BoardInterface {
             }
             myDrop = false;
             down();  // move down one more time to freeze in place
+
+            myScore.calculateScore(); // I believe this would go here, but I'm not sure
         }
     }
 
@@ -621,6 +629,11 @@ public class Board implements BoardInterface {
             // Changing state
             // PROPERTY_NEXT_PIECE
         }
+    }
+
+    public static void setDelay(int i) {
+        // TODO Auto-generated method stub
+
     }
     
     // Inner classes
