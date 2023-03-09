@@ -13,6 +13,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import model.Board;
+import model.MovableTetrisPiece;
 import model.TetrisPiece;
 
 /**
@@ -29,7 +32,7 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
 
     /** Next Tetris Piece to be played. */
     private TetrisPiece myNextPiece;
-
+    // MovableTetrisPiece
     /** Constructor for NextPiece panel. */
     public NextPiece() {
         super();
@@ -48,6 +51,7 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         // attempt at drawing next piece
         if (myNextPiece != null) {
             DrawPieces draw = new DrawPieces();
+            //.getTetrisPiece()) {
             switch (myNextPiece) {
                 case I -> draw.drawI(g2d);
                 case J -> draw.drawJ(g2d);
@@ -61,10 +65,22 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent theEvent) {
-        if ("PROPERTY_NEXT_PIECE".equals(theEvent.getPropertyName())) {
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if (Board.PROPERTY_NEXT_PIECE.equals(theEvent.getPropertyName())) {
             myNextPiece = (TetrisPiece) theEvent.getNewValue();
             repaint(); // draws next tetris piece in panel
         }
+
+        // (MovableTetrisPiece)
+//        if (theEvent.getPropertyName().equals(Board.PROPERTY_BOARD)) {
+//            myNextPiece = (TetrisPiece) theEvent.getNewValue();
+//        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
+//            myNextPiece = (TetrisPiece) theEvent.getNewValue();
+//        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+//            myNextPiece = (TetrisPiece) theEvent.getNewValue();
+//        }
+//
+//        repaint();
+
     }
 }

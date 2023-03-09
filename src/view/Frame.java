@@ -187,13 +187,15 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         tetrisFrame.pack();
         tetrisFrame.setVisible(true);
+        // didn't work :((((
+        board.newGame();
     }
 
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-            final model.Point temp = (model.Point) evt.getNewValue();
-            myCurrentPiece.getPosition().transform(temp); //TODO: This is the line that uses myCurrentPiece
+            final model.MovableTetrisPiece temp = (model.MovableTetrisPiece) evt.getNewValue();
+            myCurrentPiece = temp; //TODO: This is the line that uses myCurrentPiece
             repaint();
         }
     }

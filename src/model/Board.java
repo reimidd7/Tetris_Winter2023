@@ -175,10 +175,11 @@ public class Board implements BoardInterface {
     @Override
     public void newGame() {
         // saved old values - added for firePropertyChange
-        final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
-        final boolean oldGameOver = myGameOver;
+//        final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
+//        final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
-        final boolean oldDrop = myDrop;
+        final TetrisPiece oldNextPiece = myNextPiece;
+//        final boolean oldDrop = myDrop;
 
         mySequenceIndex = 0;
         myFrozenBlocks.clear();
@@ -191,10 +192,14 @@ public class Board implements BoardInterface {
         myDrop = false;
         
         // TODO Publish Update!
-        myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-        myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+
+//        myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+//        myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+//        final MovableTetrisPiece oldPiece = myCurrentPiece;
+//        final TetrisPiece oldNextPiece = myNextPiece;
         myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-        myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
+        myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
+//        myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
         // Restarts states - everything -
         // PROPERTY_FROZEN_BLOCKS
         // PROPERTY_GAME_OVER
@@ -223,6 +228,7 @@ public class Board implements BoardInterface {
         final Board board = new Board();
         final Board oldBoard = board;
         myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
+        // TODO: Not sure
     }
 
     @Override
@@ -353,6 +359,7 @@ public class Board implements BoardInterface {
         // Represents the state
     }
 
+
     @Override
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myPcs.addPropertyChangeListener(theListener);
@@ -449,6 +456,8 @@ public class Board implements BoardInterface {
     private void checkRows() {
         // saved old values - added for firePropertyChange
         final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
+        final TetrisPiece oldNextPiece = myNextPiece;
 
         final List<Integer> completeRows = new ArrayList<>();
         for (final Block[] row : myFrozenBlocks) {
@@ -462,6 +471,9 @@ public class Board implements BoardInterface {
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
              // TODO Publish Update!
+
+                myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+                myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
                 myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
                         oldFrozenBlocks, myFrozenBlocks);
             }
@@ -514,7 +526,8 @@ public class Board implements BoardInterface {
                           final Point thePoint,
                           final Block theBlock) {
         // saved old value - added for firePropertyChange
-        final boolean oldGameOver = myGameOver;
+//        final boolean oldGameOver = myGameOver;
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
         
         if (isPointOnBoard(theBoard, thePoint)) { 
             final Block[] row = theBoard.get(thePoint.y());
@@ -522,7 +535,9 @@ public class Board implements BoardInterface {
         } else if (!myGameOver) {
             myGameOver = true;
             // TODO Publish Update!
-            myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldGameOver, myFrozenBlocks);
+
+            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+//            myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldGameOver, myFrozenBlocks);
 //            myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
         }
         // Changing state

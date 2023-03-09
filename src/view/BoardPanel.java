@@ -11,6 +11,9 @@ import java.beans.PropertyChangeListener;
 import java.io.Serial;
 import javax.swing.JPanel;
 import model.Board;
+import model.MovableTetrisPiece;
+import model.TetrisPiece;
+
 /**
  * group1-tetris game board.
  *
@@ -33,6 +36,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * Panel height constant.
      */
     private static final int PANEL_HEIGHT = 400;
+    private MovableTetrisPiece myCurrentPiece;
     /**
      * Board dimensions in with dimension class.
      */
@@ -87,6 +91,19 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        if (myCurrentPiece != null) {
+            DrawPieces draw = new DrawPieces();
+            //.getTetrisPiece()) {
+            switch (myCurrentPiece.getTetrisPiece()) {
+                case I -> draw.drawI(g2d);
+                case J -> draw.drawJ(g2d);
+                case L -> draw.drawL(g2d);
+                case O -> draw.drawO(g2d);
+                case S -> draw.drawS(g2d);
+                case T -> draw.drawT(g2d);
+                case Z -> draw.drawZ(g2d);
+            }
+        }
         for (int rows = 0; rows < getGridDimension().height; rows++) {
             for (int cols = 0; cols < getGridDimension().width; cols++) {
                 g2d.drawRect(cols  * GRID_SIDE,
@@ -94,6 +111,8 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                         GRID_SIDE, GRID_SIDE);
             }
         }
+
+
 
     }
 
@@ -107,9 +126,15 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
         if (myBoard != null) {
-            if (theEvent.getPropertyName().equals(Board.PROPERTY_BOARD)) {
+            if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+                myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
                 myBoard = (Board) theEvent.getNewValue();
-            }
+            } else if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
+
+                myBoard = (Board) theEvent.getNewValue();
+            } // else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+//                myBoard = (Board) theEvent.getNewValue();
+//            }
             repaint();
         }
     }

@@ -30,6 +30,7 @@ public final class Application  {
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
-       SwingUtilities.invokeLater(Frame::createAndShowGUI);
+
+        SwingUtilities.invokeLater(Frame::createAndShowGUI);
     }
 }
