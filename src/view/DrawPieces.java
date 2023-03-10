@@ -9,6 +9,8 @@ public class DrawPieces {
    /** For the scale of our grid. */
     private static final int GRID_UNIT = 20;
 
+
+
     public void drawI(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
@@ -51,6 +53,7 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bL.x() * GRID_UNIT, bL.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
+
     }
 
     public void drawS(final Graphics2D theGraphics) {
@@ -62,6 +65,7 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bS.x() * GRID_UNIT, bS.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
+
     }
 
     public void drawT(final Graphics2D theGraphics) {
@@ -73,6 +77,7 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bT.x() * GRID_UNIT, bT.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
+
     }
 
     public void drawZ(final Graphics2D theGraphics) {
@@ -84,5 +89,6 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bZ.x() * GRID_UNIT, bZ.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
+
     }
 }
