@@ -11,7 +11,7 @@ public class DrawPieces {
 
 
 
-    public Graphics2D drawI(final Graphics2D theGraphics) {
+    public void drawI(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bI: TetrisPiece.I.getPoints()) {
@@ -20,10 +20,9 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bI.x() * GRID_UNIT, bI.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
     }
 
-    public Graphics2D drawO(final Graphics2D theGraphics) {
+    public void drawO(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bO: TetrisPiece.O.getPoints()) {
@@ -32,10 +31,9 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bO.x() * GRID_UNIT, bO.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
     }
 
-    public Graphics2D drawJ(final Graphics2D theGraphics) {
+    public void drawJ(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bJ: TetrisPiece.J.getPoints()) {
@@ -44,10 +42,9 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bJ.x() * GRID_UNIT, bJ.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
     }
 
-    public Graphics2D drawL(final Graphics2D theGraphics) {
+    public void drawL(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bL: TetrisPiece.L.getPoints()) {
@@ -56,11 +53,10 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bL.x() * GRID_UNIT, bL.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
 
     }
 
-    public Graphics2D drawS(final Graphics2D theGraphics) {
+    public void drawS(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bS: TetrisPiece.S.getPoints()) {
@@ -69,11 +65,10 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bS.x() * GRID_UNIT, bS.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
 
     }
 
-    public Graphics2D drawT(final Graphics2D theGraphics) {
+    public void drawT(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bT: TetrisPiece.T.getPoints()) {
@@ -82,11 +77,10 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bT.x() * GRID_UNIT, bT.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
 
     }
 
-    public Graphics2D drawZ(final Graphics2D theGraphics) {
+    public void drawZ(final Graphics2D theGraphics) {
         final Graphics2D block = (Graphics2D) theGraphics;
 
         for (Point bZ: TetrisPiece.Z.getPoints()) {
@@ -95,7 +89,6 @@ public class DrawPieces {
             block.setPaint(Color.BLACK);
             block.drawRect(bZ.x() * GRID_UNIT, bZ.y() * GRID_UNIT, GRID_UNIT, GRID_UNIT);
         }
-        return block;
 
     }
 }
