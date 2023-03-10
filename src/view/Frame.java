@@ -177,9 +177,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                     timer.stop();
                     timer.restart();
                     myScore.reset();
-
-                    // displays game stats
-                    createGameOver();
+                    createGameOver(); // displays game stats
                 });
         menuBar.add(end);
 

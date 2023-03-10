@@ -4,8 +4,6 @@
  */
 package view;
 
-import model.Board;
-import model.BoardInterface;
 import javax.swing.*;
 
 /**
@@ -20,10 +18,10 @@ public final class Application  {
     /** Public constructor. */
     private Application() {
     }
-
     /**
      * Main driver method.
      * Calls the parent container, Frame().
+     *
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
