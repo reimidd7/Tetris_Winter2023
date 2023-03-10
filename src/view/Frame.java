@@ -6,8 +6,6 @@ import model.MovableTetrisPiece;
 import model.Score;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
@@ -47,7 +45,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private final BoardInterface myBoard;
 
     /** Tracks if game is in progress. */
-    private static boolean gameInProgress = false;
+    private static boolean myGameOver = false;
 
     /** The Score object. */
     private static Score myScore = new Score();
@@ -175,23 +173,13 @@ public class Frame extends JFrame implements PropertyChangeListener {
         endButton.addActionListener(
                 e -> {
                     // TODO: end current game
-                    gameInProgress = false;
+                    myGameOver = false;
                     timer.stop();
                     timer.restart();
                     myScore.reset();
 
                     // displays game stats
-                    JFrame scoreFrame = new JFrame("GAME OVER");
-                    JPanel scorePanel = new JPanel();
-                    JLabel score = new JLabel("Score: " + myScore.getScore());
-                    JLabel level = new JLabel("Level: " + myScore.getLevel());
-                    JLabel lines = new JLabel("Lines Cleared: " + myScore.getLinesCleared());
-                    scorePanel.add(score);
-                    scorePanel.add(level);
-                    scorePanel.add(lines);
-                    scoreFrame.add(scorePanel);
-                    scoreFrame.setSize(WIDTH,100);
-                    scoreFrame.setVisible(true);
+                    createGameOver();
                 });
         menuBar.add(end);
 
@@ -201,8 +189,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
         restartButton.addActionListener(
                 e -> {
                     // TODO: start new game
-                    if (!gameInProgress) {
-                        gameInProgress = true;
+                    if (!myGameOver) {
+                        myGameOver = true;
                         timer.start();
                         // myBoard.newGame();
                     } else {
@@ -212,6 +200,20 @@ public class Frame extends JFrame implements PropertyChangeListener {
         menuBar.add(restart);
 
         return menuBar;
+    }
+
+    public static void createGameOver() {
+        JFrame scoreFrame = new JFrame("GAME OVER");
+        JPanel scorePanel = new JPanel();
+        JLabel score = new JLabel("Score: " + myScore.getScore());
+        JLabel level = new JLabel("Level: " + myScore.getLevel());
+        JLabel lines = new JLabel("Lines Cleared: " + myScore.getLinesCleared());
+        scorePanel.add(score);
+        scorePanel.add(level);
+        scorePanel.add(lines);
+        scoreFrame.add(scorePanel);
+        scoreFrame.setSize(WIDTH,100);
+        scoreFrame.setVisible(true);
     }
 
     public static void createAndShowGUI() {
@@ -305,6 +307,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
             final model.MovableTetrisPiece temp = (model.MovableTetrisPiece) evt.getNewValue();
             myCurrentPiece = temp; //TODO: This is the line that uses myCurrentPiece
             repaint();
+        } else if (evt.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
+            myGameOver = (boolean) evt.getNewValue();
+            createGameOver();
         }
     }
 

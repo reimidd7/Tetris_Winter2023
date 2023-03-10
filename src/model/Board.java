@@ -181,7 +181,7 @@ public class Board implements BoardInterface {
     public void newGame() {
         // saved old values - added for firePropertyChange
 //        final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
-//        final boolean oldGameOver = myGameOver;
+        final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
         final TetrisPiece oldNextPiece = myNextPiece;
 //        final boolean oldDrop = myDrop;
@@ -200,7 +200,7 @@ public class Board implements BoardInterface {
         // TODO Publish Update!
 
 //        myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-//        myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+        myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
 //        final MovableTetrisPiece oldPiece = myCurrentPiece;
 //        final TetrisPiece oldNextPiece = myNextPiece;
         myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
@@ -534,7 +534,7 @@ public class Board implements BoardInterface {
                           final Point thePoint,
                           final Block theBlock) {
         // saved old value - added for firePropertyChange
-//        final boolean oldGameOver = myGameOver;
+        final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
         
         if (isPointOnBoard(theBoard, thePoint)) { 
@@ -546,7 +546,7 @@ public class Board implements BoardInterface {
 
             myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
 //            myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldGameOver, myFrozenBlocks);
-//            myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+            myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
         }
         // Changing state
         // PROPERTY_GAME_OVER
