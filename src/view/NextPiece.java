@@ -14,6 +14,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import model.Block;
 import model.Board;
 import model.MovableTetrisPiece;
 import model.TetrisPiece;
@@ -38,7 +39,8 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         super();
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
-        setBorder(new TitledBorder("Next Tetris Piece"));
+        //setBorder(new TitledBorder("Next Tetris Piece"));
+
     }
 
     @Override
@@ -46,11 +48,14 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
-        // TODO: draw tetris piece
         // IDEA: call draw pieces depending on myNextPiece
         // attempt at drawing next piece
         if (myNextPiece != null) {
-            DrawPieces draw = new DrawPieces();
+            final DrawPieces draw = new DrawPieces();
+            final int w = (int) (getWidth() - myNextPiece.getWidth() * 20) / 2;
+            final int h =  (int) (getHeight() - myNextPiece.getHeight() * 20 - 60) / 2;
+            g2d.translate(w, h);
+
             //.getTetrisPiece()) {
             switch (myNextPiece) {
                 case I -> draw.drawI(g2d);
@@ -63,6 +68,7 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
             }
         }
     }
+
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
