@@ -10,7 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.Serial;
 import javax.swing.*;
 
 /**
@@ -23,9 +22,7 @@ import javax.swing.*;
  * @version Winter 2023
  */
 public class Frame extends JFrame implements PropertyChangeListener {
-    /** Serial generated for version UID. */
-    @Serial
-    private static final long serialVersionUID = -6379935306740427613L;
+
     /** Width of frame. */
     private static final int WIDTH = 400;
 
@@ -87,21 +84,27 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final JMenu menu = new JMenu("File");
         final JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(
-                e -> System.exit(0));
+                e -> {
+                    System.exit(0);
+                });
         menu.add(exit);
         menuBar.add(menu);
 
         final JMenu help = new JMenu("Help");
         final JMenuItem rules = new JMenuItem("Rules");
         rules.addActionListener(
-                e -> JOptionPane.showMessageDialog(null, "Best of Luck"));
+                e -> {
+                    JOptionPane.showMessageDialog(null, "Best of Luck");
+                });
         help.add(rules);
         menuBar.add(help);
 
         final JMenu about = new JMenu("About");
         final JMenuItem abt = new JMenuItem("About Game");
         abt.addActionListener(
-                e -> JOptionPane.showMessageDialog(null, "This is a tetris game"));
+                e -> {
+                    JOptionPane.showMessageDialog(null, "This is a tetris game");
+                });
         about.add(abt);
         menuBar.add(about);
 
@@ -123,10 +126,13 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         // instantiate the timer and set the delay to 500ms
         final Timer timer = new Timer(TIME_CONST,
-                e -> {
-                    // call the appropriate method from the
-                    //      Interface defined in Model Update.
-                    new Board().step();
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        // call the appropriate method from the
+                        //      Interface defined in Model Update.
+                        new Board().step();
+                    }
                 });
 
         // start the timer
@@ -155,9 +161,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-            final model.Point temp = (model.Point) theEvent.getNewValue();
+    public void propertyChange(final PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+            final model.Point temp = (model.Point) evt.getNewValue();
             myCurrentPiece.getPosition().transform(temp); //TODO: This is the line that uses myCurrentPiece
             repaint();
         }
