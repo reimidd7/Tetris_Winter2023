@@ -11,7 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import model.Block;
@@ -33,14 +33,13 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
 
     /** Next Tetris Piece to be played. */
     private TetrisPiece myNextPiece;
-    // MovableTetrisPiece
+
     /** Constructor for NextPiece panel. */
     public NextPiece() {
         super();
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
-        //setBorder(new TitledBorder("Next Tetris Piece"));
-
+        //add(new JLabel("Next Tetris Piece"));
     }
 
     @Override
@@ -49,14 +48,12 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
         // IDEA: call draw pieces depending on myNextPiece
-        // attempt at drawing next piece
         if (myNextPiece != null) {
             final DrawPieces draw = new DrawPieces();
-            final int w = (int) (getWidth() - myNextPiece.getWidth() * 20) / 2;
-            final int h =  (int) (getHeight() - myNextPiece.getHeight() * 20 - 60) / 2;
+            final int w = (getWidth() - myNextPiece.getWidth() * 20) / 2;
+            final int h =  (getHeight() - myNextPiece.getHeight() * 20 - 60) / 2;
             g2d.translate(w, h);
 
-            //.getTetrisPiece()) {
             switch (myNextPiece) {
                 case I -> draw.drawI(g2d);
                 case J -> draw.drawJ(g2d);
@@ -69,24 +66,11 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         }
     }
 
-
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (Board.PROPERTY_NEXT_PIECE.equals(theEvent.getPropertyName())) {
             myNextPiece = (TetrisPiece) theEvent.getNewValue();
             repaint(); // draws next tetris piece in panel
         }
-
-        // (MovableTetrisPiece)
-//        if (theEvent.getPropertyName().equals(Board.PROPERTY_BOARD)) {
-//            myNextPiece = (TetrisPiece) theEvent.getNewValue();
-//        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
-//            myNextPiece = (TetrisPiece) theEvent.getNewValue();
-//        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-//            myNextPiece = (TetrisPiece) theEvent.getNewValue();
-//        }
-//
-//        repaint();
-
     }
 }

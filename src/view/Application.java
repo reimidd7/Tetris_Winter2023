@@ -17,9 +17,7 @@ import javax.swing.*;
  */
 public final class Application  {
 
-    /**
-     * Public constructor.
-     */
+    /** Public constructor. */
     private Application() {
     }
 
@@ -30,7 +28,6 @@ public final class Application  {
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
-
         SwingUtilities.invokeLater(Frame::createAndShowGUI);
     }
 }
