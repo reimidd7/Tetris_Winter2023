@@ -24,7 +24,6 @@ public final class Application  {
     /**
      * Main driver method.
      * Calls the parent container, Frame().
-     *
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {

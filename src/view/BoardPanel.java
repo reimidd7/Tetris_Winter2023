@@ -91,12 +91,10 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         // !! TESTING WHETHER PIECE WILL DRAW ON BOARD !!
-        model.Point p = new model.Point(0,0);
-        myCurrentPiece = new MovableTetrisPiece(TetrisPiece.I, p);
+        myCurrentPiece = new MovableTetrisPiece(TetrisPiece.I, new model.Point(0,0));
 
         if (myCurrentPiece != null) {
             DrawPieces draw = new DrawPieces();
-            //.getTetrisPiece()) {
             switch (myCurrentPiece.getTetrisPiece()) {
                 case I -> draw.drawI(g2d);
                 case J -> draw.drawJ(g2d);
