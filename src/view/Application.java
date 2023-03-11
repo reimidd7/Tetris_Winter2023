@@ -4,8 +4,6 @@
  */
 package view;
 
-import model.Board;
-import model.BoardInterface;
 import javax.swing.*;
 
 /**
@@ -17,12 +15,9 @@ import javax.swing.*;
  */
 public final class Application  {
 
-    /**
-     * Public constructor.
-     */
+    /** Public constructor. */
     private Application() {
     }
-
     /**
      * Main driver method.
      * Calls the parent container, Frame().
@@ -30,7 +25,6 @@ public final class Application  {
      * @param theArgs command-line arguments.
      */
     public static void main(final String[] theArgs) {
-
         SwingUtilities.invokeLater(Frame::createAndShowGUI);
     }
 }
