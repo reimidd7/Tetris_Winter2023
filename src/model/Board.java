@@ -205,17 +205,17 @@ public class Board implements BoardInterface {
         // TODO Publish Update!
 
 //        myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-        myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+        ///myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
 //        final MovableTetrisPiece oldPiece = myCurrentPiece;
 //        final TetrisPiece oldNextPiece = myNextPiece;
         myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
         myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
 
-//        myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-//                null,
-//                new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-//                        new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
-//                        myCurrentPiece.getRotation()));
+        myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
+                oldPiece,
+                new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
+                        new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
+                        myCurrentPiece.getRotation()));
 //
 
 //        myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
@@ -252,8 +252,6 @@ public class Board implements BoardInterface {
          * to implement additional functionality
          */
         down();
-       // myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
-        // TODO: Not sure
     }
 
     @Override
@@ -274,7 +272,7 @@ public class Board implements BoardInterface {
                 //myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
 
                 myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-                        null,
+                        oldPiece,
                         new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
                                 new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
                                 myCurrentPiece.getRotation()));
@@ -437,13 +435,10 @@ public class Board implements BoardInterface {
             result = true;
             if (!myDrop) {
                 // TODO Publish Update!
-                //myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-//                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-//                        null,
-//                        new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()));
+                myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
 
                 myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-                        null,
+                        oldPiece,
                         new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
                                 new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
                                 myCurrentPiece.getRotation()));
@@ -520,6 +515,11 @@ public class Board implements BoardInterface {
                 myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
                 myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
                         oldFrozenBlocks, myFrozenBlocks);
+                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
+                        oldPiece,
+                        new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
+                                new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
+                                myCurrentPiece.getRotation()));
             }
         }
         // loop through list backwards removing items by index
@@ -580,15 +580,10 @@ public class Board implements BoardInterface {
             myGameOver = true;
             // TODO Publish Update!
 
-            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+            //myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
 //            myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldGameOver, myFrozenBlocks);
             myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
 
-            myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-                    null,
-                    new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-                            new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
-                            myCurrentPiece.getRotation()));
         }
         // Changing state
         // PROPERTY_GAME_OVER

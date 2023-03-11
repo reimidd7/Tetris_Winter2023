@@ -268,7 +268,7 @@ public class Frame extends JFrame {
 
     private static Dimension getBoardSize() {
         int width = 10;
-        int height = 10;
+        int height = 20;
         boolean validInput = false;
 
         // Prompt the user for the board size
@@ -322,11 +322,11 @@ public class Frame extends JFrame {
             if (theEvent.getKeyCode() == KeyEvent.VK_A
                     || theEvent.getKeyCode() == KeyEvent.VK_LEFT) {
                 System.out.println("Left");
-                myBoard.left();
+                myBoard.right();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_D
                     || theEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
                 System.out.println("Right");
-                myBoard.right();
+                myBoard.left();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_W
                     || theEvent.getKeyCode() == KeyEvent.VK_UP) {
                 //Do I need to make this different for each piece some CCW and some CW

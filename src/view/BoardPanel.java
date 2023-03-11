@@ -53,8 +53,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * UW Purple.
      */
     private static final Color UW_PURPLE = new Color(51, 0, 111);
-    /** Board object for instantiation. */
-    //private Board myBoard;
 
     /**
      * Public constructor. Creates the tetris game board panel.
@@ -65,16 +63,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         setPreferredSize(BOARD_SIZE);
         //myBoard.newGame();
     }
-
-    /**
-     * Public constructor for instantiation.
-     *
-     * @param theBoard An instantiated Board object.
-     */
-//    public BoardPanel(final Board theBoard) {
-//        this();
-//        myBoard = theBoard;
-//    }
 
     /**
      * "Accessor" method for the painted grid's dimensions.
@@ -94,65 +82,72 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
+
         g2d.setPaint(UW_GOLD);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // !! TESTING WHETHER PIECE WILL DRAW ON BOARD !!
-        //myCurrentPiece = new MovableTetrisPiece(TetrisPiece.I, new model.Point(0,0));
-
 
         for (int rows = 0; rows < getGridDimension().height; rows++) {
-            for (int cols = 0; cols < getGridDimension().width; cols++) {
-                g2d.drawRect(cols * GRID_SIDE,
-                        rows * GRID_SIDE,
+            for (int cols = 0; cols < getGridDimension().width ; cols++) {
+                g2d.drawRect(cols * GRID_SIDE, rows * GRID_SIDE,
                         GRID_SIDE, GRID_SIDE);
             }
         }
+
+
+
 
         if (myCurrentPiece != null) {
             int pX = myCurrentPiece.getPosition().x() * 20;
 
             int pY = myCurrentPiece.getPosition().y() * 20;
 
-
             DrawPieces draw = new DrawPieces();
 
-            g2d.translate(pX,pY);
+            g2d.rotate(Math.PI, 100,200);
 
 
             switch (myCurrentPiece.getTetrisPiece()) {
                 case I -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20 - 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawI(g2d);
                 }
                 case J -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawJ(g2d);
                 }
                 case L -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawL(g2d);
                 }
                 case O -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawO(g2d);
                 }
                 case S -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawS(g2d);
                 }
                 case T -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawT(g2d);
                 }
                 case Z -> {
+                    g2d.translate(pX,pY);
                     //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawZ(g2d);
                 }
-
             }
+
         }
+
     }
 
     /**
