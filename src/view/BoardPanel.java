@@ -21,7 +21,9 @@ import model.TetrisPiece;
  * @version Winter 2023.
  */
 public class BoardPanel extends JPanel implements PropertyChangeListener {
-    /** Serial generated for version UID. */
+    /**
+     * Serial generated for version UID.
+     */
     @Serial
     private static final long serialVersionUID = 5122343764710334165L;
     /**
@@ -41,22 +43,27 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * Board dimensions in with dimension class.
      */
     private static final Dimension BOARD_SIZE = new Dimension(PANEL_WIDTH,
-                                                              PANEL_HEIGHT);
+            PANEL_HEIGHT);
 
-    /** UW Purple. */
+    /**
+     * UW Purple.
+     */
     private static final Color UW_GOLD = new Color(145, 123, 76);
-    /** UW Purple. */
+    /**
+     * UW Purple.
+     */
     private static final Color UW_PURPLE = new Color(51, 0, 111);
     /** Board object for instantiation. */
-    private Board myBoard;
+    //private Board myBoard;
 
     /**
      * Public constructor. Creates the tetris game board panel.
      */
     public BoardPanel() {
-        super(true);
+        super();
         setBackground(UW_PURPLE);
         setPreferredSize(BOARD_SIZE);
+        //myBoard.newGame();
     }
 
     /**
@@ -64,10 +71,10 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      *
      * @param theBoard An instantiated Board object.
      */
-    public BoardPanel(final Board theBoard) {
-        this();
-        myBoard = theBoard;
-    }
+//    public BoardPanel(final Board theBoard) {
+//        this();
+//        myBoard = theBoard;
+//    }
 
     /**
      * "Accessor" method for the painted grid's dimensions.
@@ -80,6 +87,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
     /**
      * Overrides swings paintComponent to draw a simple grid on a JPanel.
+     *
      * @param theGraphics the <code>Graphics</code> object to protect
      */
     @Override
@@ -91,25 +99,58 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         // !! TESTING WHETHER PIECE WILL DRAW ON BOARD !!
-        myCurrentPiece = new MovableTetrisPiece(TetrisPiece.I, new model.Point(0,0));
+        //myCurrentPiece = new MovableTetrisPiece(TetrisPiece.I, new model.Point(0,0));
 
-        if (myCurrentPiece != null) {
-            DrawPieces draw = new DrawPieces();
-            switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> draw.drawI(g2d);
-                case J -> draw.drawJ(g2d);
-                case L -> draw.drawL(g2d);
-                case O -> draw.drawO(g2d);
-                case S -> draw.drawS(g2d);
-                case T -> draw.drawT(g2d);
-                case Z -> draw.drawZ(g2d);
-            }
-        }
+
         for (int rows = 0; rows < getGridDimension().height; rows++) {
             for (int cols = 0; cols < getGridDimension().width; cols++) {
-                g2d.drawRect(cols  * GRID_SIDE,
+                g2d.drawRect(cols * GRID_SIDE,
                         rows * GRID_SIDE,
                         GRID_SIDE, GRID_SIDE);
+            }
+        }
+
+        if (myCurrentPiece != null) {
+            int pX = myCurrentPiece.getPosition().x() * 20;
+
+            int pY = myCurrentPiece.getPosition().y() * 20;
+
+
+            DrawPieces draw = new DrawPieces();
+
+            g2d.translate(pX,pY);
+
+
+            switch (myCurrentPiece.getTetrisPiece()) {
+                case I -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20 - 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawI(g2d);
+                }
+                case J -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawJ(g2d);
+                }
+                case L -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawL(g2d);
+                }
+                case O -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawO(g2d);
+                }
+                case S -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawS(g2d);
+                }
+                case T -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawT(g2d);
+                }
+                case Z -> {
+                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
+                    draw.drawZ(g2d);
+                }
+
             }
         }
     }
@@ -118,18 +159,21 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * This method gets called when a bound property is changed.
      *
      * @param theEvent A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
+     *                 and the property that has changed.
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (myBoard != null) {
-            if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-                myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
-                myBoard = (Board) theEvent.getNewValue();
-            } else if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
-                myBoard = (Board) theEvent.getNewValue();
-            }
+        //if (myBoard != null) {
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_PIECE_LOCATION)) {
+
+
+            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
-        }
+
+
+    }  //else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+//            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
+//            repaint();
+//        }
     }
 }

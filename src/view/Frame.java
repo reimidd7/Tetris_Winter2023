@@ -21,7 +21,7 @@ import javax.swing.*;
  * @author Calvin Beardemphl, Viktoria Dolojan, Rick Adams
  * @version Winter 2023
  */
-public class Frame extends JFrame implements PropertyChangeListener {
+public class Frame extends JFrame {
 
     /** Width of frame. */
     private static final int WIDTH = 400;
@@ -36,7 +36,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private static final Dimension PANEL_DIMENSION = new Dimension(200, 400);
 
     /** Time constant. */ // TODO: Large only for testing purposes. Make smaller.
-    private static final int TIME_CONST = 60000;
+    private static final int TIME_CONST = 1000;
 
     /** Timer object. */
     private static Timer timer;
@@ -51,7 +51,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private static Score myScore = new Score();
 
     /** Movable Tetris Piece object. */
-    private MovableTetrisPiece myCurrentPiece ; //TODO: Need to find a way to instantiate. For use in property change method
+    private MovableTetrisPiece myCurrentPiece; //TODO: Need to find a way to instantiate. For use in property change method
 
     public Frame(final BoardInterface theBoard) {
         super();
@@ -222,7 +222,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         // Make a Board based on user inputted size
         final Board board = new Board((int) boardDimensions.getWidth(), (int) boardDimensions.getHeight());
         final Frame tetrisFrame = new Frame(board);
-        board.addPropertyChangeListener(tetrisFrame);
+        //board.addPropertyChangeListener(tetrisFrame);
 
         final NextPiece nextPiece = new NextPiece();
         final OtherInfo otherInfo = new OtherInfo();
@@ -300,40 +300,44 @@ public class Frame extends JFrame implements PropertyChangeListener {
         return new Dimension(width, height);
     }
 
-    @Override
-    public void propertyChange(final PropertyChangeEvent theEvent ) {
-        if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-            myCurrentPiece = (model.MovableTetrisPiece) theEvent.getNewValue();
-            repaint();
-        } else if (evt.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
-            myGameOver = (boolean) evt.getNewValue();
-            createGameOver();
-        }
-    }
+//    @Override
+//    public void propertyChange(final PropertyChangeEvent theEvent ) {
+//        if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+//            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
+//            repaint();
+//        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
+//            myGameOver = (boolean) theEvent.getNewValue();
+//            createGameOver();
+//        }
+//    }
 
     /**
      * Inner class for key listeners in order to move the piece.
      *
      * @author Reilly Middlebrooks
      */
-    private class BoardKeyListener extends KeyAdapter {
+    class BoardKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(final KeyEvent theEvent) {
-            System.out.println("key pressed");
             if (theEvent.getKeyCode() == KeyEvent.VK_A
                     || theEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+                System.out.println("Left");
                 myBoard.left();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_D
                     || theEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+                System.out.println("Right");
                 myBoard.right();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_W
                     || theEvent.getKeyCode() == KeyEvent.VK_UP) {
                 //Do I need to make this different for each piece some CCW and some CW
+                System.out.println("UP");
                 myBoard.rotateCW();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_S
                     || theEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+                System.out.println("Down");
                 myBoard.down();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+                System.out.println("drop");
                 myBoard.drop();
             }
         }
