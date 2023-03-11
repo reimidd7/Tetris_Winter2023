@@ -231,9 +231,7 @@ public class Board implements BoardInterface {
          * to implement additional functionality
          */
         down();
-        final Board board = new Board();
-        final Board oldBoard = board;
-        myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
+        myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
         // TODO: Not sure
     }
 

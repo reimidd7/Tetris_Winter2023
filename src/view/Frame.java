@@ -221,7 +221,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         Dimension boardDimensions = getBoardSize();
         // Make a Board based on user inputted size
         final Board board = new Board((int) boardDimensions.getWidth(), (int) boardDimensions.getHeight());
-
         final Frame tetrisFrame = new Frame(board);
         board.addPropertyChangeListener(tetrisFrame);
 
@@ -231,6 +230,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         board.addPropertyChangeListener(boardPanel);
         board.addPropertyChangeListener(nextPiece);
+
+        board.newGame();
 
         // instantiate the timer and set the delay to 500ms
         timer = new Timer(TIME_CONST,
@@ -262,7 +263,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         tetrisFrame.pack();
         tetrisFrame.setVisible(true);
         // didn't work :((((
-        board.newGame();
+
     }
 
     private static Dimension getBoardSize() {
@@ -300,10 +301,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(final PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-            final model.MovableTetrisPiece temp = (model.MovableTetrisPiece) evt.getNewValue();
-            myCurrentPiece = temp; //TODO: This is the line that uses myCurrentPiece
+    public void propertyChange(final PropertyChangeEvent theEvent ) {
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+            myCurrentPiece = (model.MovableTetrisPiece) theEvent.getNewValue();
             repaint();
         }
     }
