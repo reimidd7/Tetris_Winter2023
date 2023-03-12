@@ -43,16 +43,19 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * Panel height constant.
      */
     private static final int PANEL_HEIGHT = 400;
+    /**
+     * The current tetris piece in play.
+     */
     private MovableTetrisPiece myCurrentPiece;
-
+    /**
+     * A list of all the frozen blocks currently on the board.
+     */
     private List<Block[]> myFrozenBlocks;
-
     /**
      * Board dimensions in with dimension class.
      */
     private static final Dimension BOARD_SIZE = new Dimension(PANEL_WIDTH,
             PANEL_HEIGHT);
-
     /**
      * UW Purple.
      */
