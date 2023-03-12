@@ -1,15 +1,27 @@
 package view;
 
-import model.Board;
-import model.BoardInterface;
-import model.Score;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.Timer;
+import model.Board;
+import model.BoardInterface;
+import model.MovableTetrisPiece;
+import model.Score;
 
 /**
  * This class creates the Frame and GUI for the tetris game.
@@ -31,13 +43,18 @@ public class Frame extends JFrame implements PropertyChangeListener {
     /** Height of frame. */
     private static final int HEIGHT = 450;
 
+    /** Default width for the board. */
+    private static final int DEFAULT_WIDTH = 10;
+    /** Default height for the board. */
+    private static final int DEFAULT_HEIGHT = 20;
+
     /** Frame dimension. */
     private static final Dimension FRAME_DIMENSION = new Dimension(400, 450);
 
     /** Panel dimension. */
     private static final Dimension PANEL_DIMENSION = new Dimension(200, 400);
 
-    /** Time constant. */ // TODO: Large only for testing purposes. Make smaller.
+    /** Time constant. */
     private static final int TIME_CONST = 1000;
 
     /** Timer object. */
@@ -47,7 +64,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private final BoardInterface myBoard;
 
     /** Tracks if game is in progress. */
-    private static boolean myGameOver = false;
+    private static boolean myGameOver;
 
     /** The Score object. */
     private static Score myScore;
@@ -57,6 +74,10 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         //Create a board/model object from interface
         myBoard = theBoard;
+
+
+        myScore = new Score();
+        myGameOver = false;
 
         // Create the frame for the tetris game (aka the top most "panel")
         createTetrisFrame(WIDTH, HEIGHT);
@@ -68,6 +89,13 @@ public class Frame extends JFrame implements PropertyChangeListener {
         requestFocus();
         createTimer();
     }
+
+//    public void setMyScore(final Score theScore) {
+//        myScore = theScore;
+//    }
+//    public Score getMyScore() {
+//        return myScore;
+//    }
 
     //Used to create the rough frame for our tetris project.
     public void createTetrisFrame(final int theWidth, final int theHeight) {
@@ -93,14 +121,16 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final JMenu help = new JMenu("Help");
         final JMenuItem rules = new JMenuItem("Rules");
         rules.addActionListener(
-                e -> JOptionPane.showMessageDialog(null, "Based off the classic Tetris rules."));
+                e -> JOptionPane.showMessageDialog(null,
+                        "Based off the classic Tetris rules."));
         help.add(rules);
         menuBar.add(help);
 
         final JMenu about = new JMenu("About");
         final JMenuItem abt = new JMenuItem("About Game");
         abt.addActionListener(
-                e -> JOptionPane.showMessageDialog(null, "This is a clone Tetris game."));
+                e -> JOptionPane.showMessageDialog(null,
+                        "This is a clone Tetris game."));
         about.add(abt);
         menuBar.add(about);
 
@@ -151,10 +181,10 @@ public class Frame extends JFrame implements PropertyChangeListener {
         pauseButton.addActionListener(
                 e -> {
                     timer.stop();
-                    JFrame continueFrame = new JFrame("Paused");
-                    JPanel continuePanel = new JPanel();
-                    JLabel continueLabel = new JLabel("Game is currently paused. Would you like to continue?");
-                    JButton continueButton = new JButton("Continue");
+                    final JFrame continueFrame = new JFrame("Paused");
+                    final JPanel continuePanel = new JPanel();
+                    final JLabel continueLabel = new JLabel("Game is currently paused. Would you like to continue?");
+                    final JButton continueButton = new JButton("Continue");
                     continuePanel.add(continueLabel);
                     continuePanel.add(continueButton);
                     continueFrame.add(continuePanel);
@@ -175,6 +205,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         endButton.addActionListener(
                 e -> {
                     myGameOver = true;
+                   // myGameOver = false;
                     timer.stop();
                     myScore.reset();
                     createGameOver(); // displays game stats
@@ -190,7 +221,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
                         myGameOver = false;
                         timer.setDelay(TIME_CONST);
                         timer.start();
+
                         myBoard.newGame(); // start new game
+                        //myBoard.newGame();
                     } else {
                         JOptionPane.showMessageDialog(null, "Current game has not ended.");
                     }
@@ -201,11 +234,11 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     public static void createGameOver() {
-        JFrame scoreFrame = new JFrame("GAME OVER");
-        JPanel scorePanel = new JPanel();
-        JLabel score = new JLabel("Score: " + myScore.getScore());
-        JLabel level = new JLabel("Level: " + myScore.getLevel());
-        JLabel lines = new JLabel("Lines Cleared: " + myScore.getLinesCleared());
+        final JFrame scoreFrame = new JFrame("GAME OVER");
+        final JPanel scorePanel = new JPanel();
+        final JLabel score = new JLabel("Score: " + myScore.getScore());
+        final JLabel level = new JLabel("Level: " + myScore.getLevel());
+        final JLabel lines = new JLabel("Lines Cleared: " + myScore.getLinesCleared());
         scorePanel.add(score);
         scorePanel.add(level);
         scorePanel.add(lines);
@@ -218,11 +251,12 @@ public class Frame extends JFrame implements PropertyChangeListener {
     public static void createAndShowGUI() {
         // final Board board = new Board();
 
+
         // Get the Board size from the user - easter egg
         Dimension boardDimensions = getBoardSize();
-
         // Make a Board based on user inputted size
-        final Board board = new Board((int) boardDimensions.getWidth(), (int) boardDimensions.getHeight());
+        final Board board = new Board((int) boardDimensions.getWidth(),
+                (int) boardDimensions.getHeight());
         final Frame tetrisFrame = new Frame(board);
         board.addPropertyChangeListener(tetrisFrame);
 
@@ -261,8 +295,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     private static Dimension getBoardSize() {
-        int width = 10;
-        int height = 20;
+        int width = DEFAULT_WIDTH;
+        int height = DEFAULT_HEIGHT;
         boolean validInput = false;
 
         // Prompt the user for the board size
@@ -271,6 +305,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 width + " x " + height);
         if (input == null) {
             System.exit(0); // User clicked Cancel
+
         }
         JOptionPane.showMessageDialog(null, "Hahaha you can't do that!"); // easter egg
         return new Dimension(width, height);
@@ -313,7 +348,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 // TODO: Do I need to make this different for each piece some CCW and some CW?
                 System.out.println("UP");
                 myBoard.rotateCW();
-                myBoard.rotateCCW();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_S
                     || theEvent.getKeyCode() == KeyEvent.VK_DOWN) {
                 System.out.println("Down");
