@@ -132,18 +132,14 @@ public class Frame extends JFrame implements PropertyChangeListener {
         difficultyMenu.add(level5Item);
         level1Item.addActionListener(e -> {
             timer.setDelay(TIME_CONST); // Update game delay for level 1
-//            firePropertyChange(PROPERTY_LEVEL, null, 1);
             myScore.updateLevel(1);
-
         });
         level2Item.addActionListener(e -> {
             timer.setDelay(800); // Update game delay for level 2
-//            firePropertyChange(PROPERTY_LEVEL, null, 2);
             myScore.updateLevel(2);
         });
         level3Item.addActionListener(e -> {
             timer.setDelay(600); // Update game delay for level 3
-//            firePropertyChange(PROPERTY_LEVEL, null, 3);
             myScore.updateLevel(3);
         });
         level4Item.addActionListener(e -> {
@@ -188,7 +184,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
                     // TODO: end current game
                     myGameOver = false;
                     timer.stop();
-//                    timer.restart();
                     myScore.reset();
                     createGameOver(); // displays game stats
                 });
@@ -249,7 +244,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         board.addPropertyChangeListener(otherInfo);
         board.addPropertyChangeListener(myScore);
 
-
         // sets the min and max size of frame
         tetrisFrame.setLayout(new GridLayout(1, 2));
         tetrisFrame.setMinimumSize(FRAME_DIMENSION);
@@ -272,7 +266,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         tetrisFrame.setVisible(true);
 
         board.newGame();
-
     }
 
     private static Dimension getBoardSize() {
@@ -292,8 +285,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         // easter egg
         JOptionPane.showMessageDialog(null, "Hahaha you can't do that!");
 //            validInput = true;
-
-
 //            String[] dimensions = input.split("x");
 //            if (dimensions.length == 2) {
 //                try {
@@ -320,10 +311,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 e -> { // call the appropriate method from the Interface defined in Model Update
                     myBoard.step();
                 });
-
-        // start the timer
-        timer.start();
-
+        timer.start(); // start the timer
     }
 
     @Override
@@ -352,7 +340,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 myBoard.left();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_W
                     || theEvent.getKeyCode() == KeyEvent.VK_UP) {
-                //Do I need to make this different for each piece some CCW and some CW
+                // TODO: Do I need to make this different for each piece some CCW and some CW?
                 System.out.println("UP");
                 myBoard.rotateCW();
                 myBoard.rotateCCW();

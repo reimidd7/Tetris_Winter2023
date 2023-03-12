@@ -114,27 +114,13 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             g2d.translate(pX, pY);
 
             switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> {
-                    draw.drawI(g2d);
-                }
-                case J -> {
-                    draw.drawJ(g2d);
-                }
-                case L -> {
-                    draw.drawL(g2d);
-                }
-                case O -> {
-                    draw.drawO(g2d);
-                }
-                case S -> {
-                    draw.drawS(g2d);
-                }
-                case T -> {
-                    draw.drawT(g2d);
-                }
-                case Z -> {
-                    draw.drawZ(g2d);
-                }
+                case I -> draw.drawI(g2d);
+                case J -> draw.drawJ(g2d);
+                case L -> draw.drawL(g2d);
+                case O -> draw.drawO(g2d);
+                case S -> draw.drawS(g2d);
+                case T -> draw.drawT(g2d);
+                case Z -> draw.drawZ(g2d);
             }
         }
 
@@ -143,27 +129,13 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             for (Block[] blockArr : myFrozenBlocks) {
                 for (Block block : blockArr) {
                     switch (block) {
-                        case I -> {
-                            draw.drawI(g2d);
-                        }
-                        case J -> {
-                            draw.drawJ(g2d);
-                        }
-                        case L -> {
-                            draw.drawL(g2d);
-                        }
-                        case O -> {
-                            draw.drawO(g2d);
-                        }
-                        case S -> {
-                            draw.drawS(g2d);
-                        }
-                        case T -> {
-                            draw.drawT(g2d);
-                        }
-                       case Z -> {
-                            draw.drawZ(g2d);
-                        }
+                        case I -> draw.drawI(g2d);
+                        case J -> draw.drawJ(g2d);
+                        case L -> draw.drawL(g2d);
+                        case O -> draw.drawO(g2d);
+                        case S -> draw.drawS(g2d);
+                        case T -> draw.drawT(g2d);
+                        case Z -> draw.drawZ(g2d);
                     }
                 }
             }
