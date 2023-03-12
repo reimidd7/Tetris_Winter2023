@@ -9,6 +9,7 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -93,7 +94,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-
         for (int rows = 0; rows < getGridDimension().height; rows++) {
             for (int cols = 0; cols < getGridDimension().width ; cols++) {
                 g2d.drawRect(cols * GRID_SIDE, rows * GRID_SIDE,
@@ -103,17 +103,12 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
         DrawPieces draw = new DrawPieces();
 
-
         if (myCurrentPiece != null) {
             int pX = myCurrentPiece.getPosition().x() * 20;
-
             int pY = myCurrentPiece.getPosition().y() * 20;
-
-
 
             g2d.rotate(Math.PI, 100,200);
             g2d.translate(pX, pY);
-
 
             switch (myCurrentPiece.getTetrisPiece()) {
                 case I -> {
@@ -138,9 +133,38 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
                     draw.drawZ(g2d);
                 }
             }
-
         }
 
+        // attempt at drawing frozen blocks
+        /*if (myFrozenBlocks != null) {
+            for (Block[] blockArr : myFrozenBlocks) {
+                for (Block block : blockArr) {
+                    switch (block) {
+                        case I -> {
+                            draw.drawI(g2d);
+                        }
+                        case J -> {
+                            draw.drawJ(g2d);
+                        }
+                        case L -> {
+                            draw.drawL(g2d);
+                        }
+                        case O -> {
+                            draw.drawO(g2d);
+                        }
+                        case S -> {
+                            draw.drawS(g2d);
+                        }
+                        case T -> {
+                            draw.drawT(g2d);
+                        }
+                       case Z -> {
+                            draw.drawZ(g2d);
+                        }
+                    }
+                }
+            }
+        }*/
     }
 
     /**
@@ -151,19 +175,15 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-
         if (theEvent.getPropertyName().equals(Board.PROPERTY_PIECE_LOCATION)) {
             myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
-
         } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
             myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
         } else if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
-            List<Block[]> b = (List<Block[]>) theEvent.getNewValue();
-            myFrozenBlocks = b;
+            myFrozenBlocks = (List<Block[]>) theEvent.getNewValue();
             repaint();
         }
     }
-
 }
