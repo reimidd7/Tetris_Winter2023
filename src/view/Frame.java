@@ -1,5 +1,6 @@
 package view;
 
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -33,6 +34,9 @@ import model.Score;
  */
 public class Frame extends JFrame implements PropertyChangeListener {
 
+    public static final String PROPERTY_LEVEL = "edskjhfa";
+
+
     /** Width of frame. */
     private static final int WIDTH = 400;
 
@@ -65,16 +69,15 @@ public class Frame extends JFrame implements PropertyChangeListener {
     /** The Score object. */
     private static Score myScore;
 
-
     public Frame(final BoardInterface theBoard) {
         super();
 
         //Create a board/model object from interface
         myBoard = theBoard;
 
+
         myScore = new Score();
         myGameOver = false;
-
 
         // Create the frame for the tetris game (aka the top most "panel")
         createTetrisFrame(WIDTH, HEIGHT);
@@ -84,6 +87,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         setFocusable(true);
         requestFocus();
+        createTimer();
     }
 
 //    public void setMyScore(final Score theScore) {
@@ -104,7 +108,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     //Create a file menu with event handlers.
-    public static JMenuBar createFileMenu() {
+    public JMenuBar createFileMenu() {
         final JMenuBar menuBar = new JMenuBar();
 
         final JMenu menu = new JMenu("File");
@@ -150,19 +154,24 @@ public class Frame extends JFrame implements PropertyChangeListener {
         difficultyMenu.add(level4Item);
         difficultyMenu.add(level5Item);
         level1Item.addActionListener(e -> {
-            Board.setDelay(800); // Update game delay for level 1
+            timer.setDelay(TIME_CONST); // Update game delay for level 1
+            myScore.updateLevel(1);
         });
         level2Item.addActionListener(e -> {
-            Board.setDelay(600); // Update game delay for level 2
+            timer.setDelay(800); // Update game delay for level 2
+            myScore.updateLevel(2);
         });
         level3Item.addActionListener(e -> {
-            Board.setDelay(400); // Update game delay for level 3
+            timer.setDelay(600); // Update game delay for level 3
+            myScore.updateLevel(3);
         });
         level4Item.addActionListener(e -> {
-            Board.setDelay(200); // Update game delay for level 4
+            timer.setDelay(400); // Update game delay for level 4
+            myScore.updateLevel(4);
         });
         level5Item.addActionListener(e -> {
-            Board.setDelay(100); // Update game delay for level 5
+            timer.setDelay(200); // Update game delay for level 5
+            myScore.updateLevel(5);
         });
         menuBar.add(difficultyMenu);
 
@@ -195,9 +204,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
         end.add(endButton);
         endButton.addActionListener(
                 e -> {
-                    myGameOver = false;
+                    myGameOver = true;
+                   // myGameOver = false;
                     timer.stop();
-                    timer.restart();
                     myScore.reset();
                     createGameOver(); // displays game stats
                 });
@@ -208,10 +217,12 @@ public class Frame extends JFrame implements PropertyChangeListener {
         restart.add(restartButton);
         restartButton.addActionListener(
                 e -> {
-                    // TODO: start new game
-                    if (!myGameOver) {
-                        myGameOver = true;
+                    if (myGameOver) {
+                        myGameOver = false;
+                        timer.setDelay(TIME_CONST);
                         timer.start();
+
+                        myBoard.newGame(); // start new game
                         //myBoard.newGame();
                     } else {
                         JOptionPane.showMessageDialog(null, "Current game has not ended.");
@@ -236,11 +247,13 @@ public class Frame extends JFrame implements PropertyChangeListener {
         scoreFrame.setVisible(true);
     }
 
+
     public static void createAndShowGUI() {
         // final Board board = new Board();
 
-        // Get the Board size from the user
-        final Dimension boardDimensions = getBoardSize();
+
+        // Get the Board size from the user - easter egg
+        Dimension boardDimensions = getBoardSize();
         // Make a Board based on user inputted size
         final Board board = new Board((int) boardDimensions.getWidth(),
                 (int) boardDimensions.getHeight());
@@ -250,18 +263,12 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final NextPiece nextPiece = new NextPiece();
         final OtherInfo otherInfo = new OtherInfo();
         final BoardPanel boardPanel = new BoardPanel();
+        myScore = new Score();
 
         board.addPropertyChangeListener(boardPanel);
         board.addPropertyChangeListener(nextPiece);
-
-        // instantiate the timer and set the delay to 500ms
-        timer = new Timer(TIME_CONST,
-                e -> {
-                    new Board().step();
-                });
-
-        // start the timer
-        timer.start();
+        board.addPropertyChangeListener(otherInfo);
+        board.addPropertyChangeListener(myScore);
 
         // sets the min and max size of frame
         tetrisFrame.setLayout(new GridLayout(1, 2));
@@ -285,7 +292,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         tetrisFrame.setVisible(true);
 
         board.newGame();
-
     }
 
     private static Dimension getBoardSize() {
@@ -294,32 +300,23 @@ public class Frame extends JFrame implements PropertyChangeListener {
         boolean validInput = false;
 
         // Prompt the user for the board size
-        while (!validInput) {
-            final String input = JOptionPane.showInputDialog(null,
-                    "Enter board size (format: width x height):",
-                    width + " x " + height);
-            if (input == null) {
-                // User clicked Cancel
-                System.exit(0);
-            }
-            final String[] dimensions = input.split("x");
-            if (dimensions.length == 2) {
-                try {
-                    width = Integer.parseInt(dimensions[0].trim());
-                    height = Integer.parseInt(dimensions[1].trim());
-                    if (width > 0 && height > 0) {
-                        validInput = true;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid board size");
-                    }
-                } catch (final NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Invalid board size");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid board size");
-            }
+        String input = JOptionPane.showInputDialog(null,
+                "Enter board size (format: width x height):",
+                width + " x " + height);
+        if (input == null) {
+            System.exit(0); // User clicked Cancel
+
         }
+        JOptionPane.showMessageDialog(null, "Hahaha you can't do that!"); // easter egg
         return new Dimension(width, height);
+    }
+
+    private void createTimer() {
+        // instantiate the timer and set the delay to 500ms
+        timer = new Timer(TIME_CONST,
+                // call the appropriate method from the Interface defined in Model Update
+                e -> myBoard.step());
+        timer.start(); // start the timer
     }
 
     @Override
@@ -348,7 +345,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 myBoard.left();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_W
                     || theEvent.getKeyCode() == KeyEvent.VK_UP) {
-                //Do I need to make this different for each piece some CCW and some CW
+                // TODO: Do I need to make this different for each piece some CCW and some CW?
                 System.out.println("UP");
                 myBoard.rotateCW();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_S

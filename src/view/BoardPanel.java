@@ -10,11 +10,14 @@ import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
 
-import model.*;
+
+import model.Block;
+import model.Board;
+import model.MovableTetrisPiece;
+
 
 /**
  * group1-tetris game board.
@@ -28,23 +31,45 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     @Serial
     private static final long serialVersionUID = 5122343764710334165L;
 
-    /** Grid size for calculating grid dimensions. */
+    /**
+     * Grid size for calculating grid dimensions.
+     */
     private static final int GRID_SIDE = 20;
 
-    /** Panel width constant. */
+    /**
+     * Panel width constant.
+     */
     private static final int PANEL_WIDTH = 200;
 
-    /** Panel height constant. */
+    /**
+     * Panel height constant.
+     */
     private static final int PANEL_HEIGHT = 400;
+
+    /**
+     * The current tetris piece in play.
+     */
+    private MovableTetrisPiece myCurrentPiece;
+
+    /**
+     * A list of all the frozen blocks currently on the board.
+     */
+    private List<Block[]> myFrozenBlocks;
+
 
     /** Board dimensions in with dimension class.*/
     private static final Dimension BOARD_SIZE = new Dimension(PANEL_WIDTH,
             PANEL_HEIGHT);
-
-    /** UW Purple. */
+            
+    /**
+     * UW Purple.
+     */
     private static final Color UW_GOLD = new Color(145, 123, 76);
 
-    /** UW Purple.*/
+    /**
+     * UW Purple.
+     */
+
     private static final Color UW_PURPLE = new Color(51, 0, 111);
 
     /** Current Tetris Piece in motion. */
@@ -102,12 +127,35 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             int pX = myCurrentPiece.getPosition().x() * 20;
             int pY = myCurrentPiece.getPosition().y() * 20;
 
+
             g2d.rotate(Math.PI, 100, 200);
             g2d.translate(pX, pY);
 
             drawRotatedPiece(g2d, draw);
+
+        final int GRID_UNIT = 20;
+        // attempt at drawing frozen blocks
+        if (myFrozenBlocks != null) {
+            int row = 0;
+            for (Block[] blockArr : myFrozenBlocks) {
+                row++;
+                if (blockArr != null) {
+                    int column = 0; // use -4 to center blocks
+                    for (Block block : blockArr) {
+                        column++;
+                        if (block != null) {
+                            g2d.setPaint(Color.GRAY);
+                            g2d.fillRect(column * GRID_UNIT, row * GRID_UNIT, GRID_UNIT, GRID_UNIT);
+                            g2d.setPaint(Color.BLACK);
+                            g2d.drawRect(column * GRID_UNIT, row * GRID_UNIT, GRID_UNIT, GRID_UNIT);
+                        }
+                    }
+                }
+            }
         }
-    }
+
+     }
+ }
 
     /**
      * Draws the pieces with proper rotation.
@@ -181,11 +229,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-
         if (theEvent.getPropertyName().equals(Board.PROPERTY_PIECE_LOCATION)) {
             myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
-
         } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
             myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
@@ -193,10 +239,8 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             myRot = (Rotation) theEvent.getNewValue();
             repaint();
         } else if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
-            List<Block[]> b = (List<Block[]>) theEvent.getNewValue();
-            myFrozenBlocks = b;
+            myFrozenBlocks = (List<Block[]>) theEvent.getNewValue();
             repaint();
         }
     }
-
 }
