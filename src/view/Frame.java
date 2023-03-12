@@ -21,7 +21,7 @@ import javax.swing.*;
  * @author Calvin Beardemphl, Viktoria Dolojan, Rick Adams
  * @version Winter 2023
  */
-public class Frame extends JFrame {
+public class Frame extends JFrame implements PropertyChangeListener {
 
     /** Width of frame. */
     private static final int WIDTH = 400;
@@ -222,7 +222,7 @@ public class Frame extends JFrame {
         // Make a Board based on user inputted size
         final Board board = new Board((int) boardDimensions.getWidth(), (int) boardDimensions.getHeight());
         final Frame tetrisFrame = new Frame(board);
-        //board.addPropertyChangeListener(tetrisFrame);
+        board.addPropertyChangeListener(tetrisFrame);
 
         final NextPiece nextPiece = new NextPiece();
         final OtherInfo otherInfo = new OtherInfo();
@@ -231,7 +231,7 @@ public class Frame extends JFrame {
         board.addPropertyChangeListener(boardPanel);
         board.addPropertyChangeListener(nextPiece);
 
-        board.newGame();
+
 
         // instantiate the timer and set the delay to 500ms
         timer = new Timer(TIME_CONST,
@@ -262,7 +262,8 @@ public class Frame extends JFrame {
 
         tetrisFrame.pack();
         tetrisFrame.setVisible(true);
-        // didn't work :((((
+
+        board.newGame();
 
     }
 
@@ -300,16 +301,13 @@ public class Frame extends JFrame {
         return new Dimension(width, height);
     }
 
-//    @Override
-//    public void propertyChange(final PropertyChangeEvent theEvent ) {
-//        if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-//            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
-//            repaint();
-//        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
-//            myGameOver = (boolean) theEvent.getNewValue();
-//            createGameOver();
-//        }
-//    }
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_GAME_OVER)) {
+            myGameOver = (boolean) theEvent.getNewValue();
+            createGameOver();
+        }
+    }
 
     /**
      * Inner class for key listeners in order to move the piece.
@@ -332,6 +330,7 @@ public class Frame extends JFrame {
                 //Do I need to make this different for each piece some CCW and some CW
                 System.out.println("UP");
                 myBoard.rotateCW();
+                myBoard.rotateCCW();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_S
                     || theEvent.getKeyCode() == KeyEvent.VK_DOWN) {
                 System.out.println("Down");

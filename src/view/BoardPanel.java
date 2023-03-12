@@ -9,7 +9,11 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JPanel;
+
+import model.Block;
 import model.Board;
 import model.MovableTetrisPiece;
 import model.TetrisPiece;
@@ -39,6 +43,9 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     private static final int PANEL_HEIGHT = 400;
     private MovableTetrisPiece myCurrentPiece;
+
+    private List<Block[]> myFrozenBlocks;
+
     /**
      * Board dimensions in with dimension class.
      */
@@ -61,7 +68,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
         super();
         setBackground(UW_PURPLE);
         setPreferredSize(BOARD_SIZE);
-        //myBoard.newGame();
     }
 
     /**
@@ -95,7 +101,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             }
         }
 
-
+        DrawPieces draw = new DrawPieces();
 
 
         if (myCurrentPiece != null) {
@@ -103,50 +109,40 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
             int pY = myCurrentPiece.getPosition().y() * 20;
 
-            DrawPieces draw = new DrawPieces();
+
 
             g2d.rotate(Math.PI, 100,200);
+            g2d.translate(pX, pY);
 
 
             switch (myCurrentPiece.getTetrisPiece()) {
                 case I -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20 - 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawI(g2d);
                 }
                 case J -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawJ(g2d);
                 }
                 case L -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawL(g2d);
                 }
                 case O -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawO(g2d);
                 }
                 case S -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawS(g2d);
                 }
                 case T -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawT(g2d);
                 }
                 case Z -> {
-                    g2d.translate(pX,pY);
-                    //g2d.translate(myCurrentPiece.getPosition().x() * 20- 20, myCurrentPiece.getPosition().y() * 20);
                     draw.drawZ(g2d);
                 }
             }
 
         }
+
+
+
 
     }
 
@@ -158,17 +154,19 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        //if (myBoard != null) {
+
         if (theEvent.getPropertyName().equals(Board.PROPERTY_PIECE_LOCATION)) {
-
-
             myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
 
-
-    }  //else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-//            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
-//            repaint();
-//        }
+        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
+            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
+            repaint();
+        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
+            List<Block[]> b = (List<Block[]>) theEvent.getNewValue();
+            myFrozenBlocks = b;
+            repaint();
+        }
     }
+
 }
