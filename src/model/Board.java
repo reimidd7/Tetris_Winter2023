@@ -49,11 +49,6 @@ public class Board implements BoardInterface {
     public static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
 
     /**
-     * A property name for drop.
-     */
-    public static final String PROPERTY_DROP = "This doesn't not matter!";
-
-    /**
      * A property name for the frozen blocks.
      */
     public static final String PROPERTY_FROZEN_BLOCKS = "This doesn't not matter1!";
@@ -186,7 +181,6 @@ public class Board implements BoardInterface {
         final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
         final TetrisPiece oldNextPiece = myNextPiece;
-//        final boolean oldDrop = myDrop;
 
         mySequenceIndex = 0;
         myFrozenBlocks.clear();
@@ -209,14 +203,11 @@ public class Board implements BoardInterface {
                 new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
                         new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
                         myCurrentPiece.getRotation()));
-
-        // myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
         // Restarts states - everything -
         // PROPERTY_FROZEN_BLOCKS
         // PROPERTY_GAME_OVER
         // PROPERTY_CURRENT_PIECE
-        // PROPERTY_DROP
-        // PROPERTY_NEXT_PIECE not affected ???
+        // PROPERTY_NEXT_PIECE
     }
 
     @Override
@@ -224,7 +215,6 @@ public class Board implements BoardInterface {
         myNonRandomPieces = new ArrayList<>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
-
     }
 
     @Override
@@ -256,8 +246,7 @@ public class Board implements BoardInterface {
                 // TODO Publish Update!
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
                 myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-                        oldPiece,
+                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION, oldPiece,
                         new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
                                 new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
                                 myCurrentPiece.getRotation()));
@@ -333,7 +322,6 @@ public class Board implements BoardInterface {
             myDrop = false;
             down();  // move down one more time to freeze in place
             myPcs.firePropertyChange(PROPERTY_SCORE, null, myScore);
-            //myScore.calculateScore(); // I believe this would go here, but I'm not sure
         }
     }
 
@@ -493,7 +481,6 @@ public class Board implements BoardInterface {
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
                 myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
                 myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
-
 //                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
 //                        oldPiece,
 //                        new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
@@ -510,7 +497,6 @@ public class Board implements BoardInterface {
                 myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
             }
         }
-
         // Changing state
         // PROPERTY_FROZEN_BLOCKS
     }
@@ -618,11 +604,9 @@ public class Board implements BoardInterface {
         }
 
         prepareNextMovablePiece();
-        return new MovableTetrisPiece(
-                       next,
-                       new Point((myWidth - myNextPiece.getWidth()) / 2, startY));
+        return new MovableTetrisPiece(next, new Point((myWidth - myNextPiece.getWidth()) / 2, startY));
     }
-    
+
     /**
      * Prepares the Next movable piece for preview.
      */
@@ -642,11 +626,6 @@ public class Board implements BoardInterface {
             // Changing state
             // PROPERTY_NEXT_PIECE
         }
-    }
-
-    public static void setDelay(int i) {
-        // TODO Auto-generated method stub
-
     }
     
     // Inner classes

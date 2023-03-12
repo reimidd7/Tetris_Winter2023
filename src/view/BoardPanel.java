@@ -9,16 +9,12 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
 
 import model.Block;
 import model.Board;
 import model.MovableTetrisPiece;
-import model.TetrisPiece;
 
 /**
  * group1-tetris game board.
