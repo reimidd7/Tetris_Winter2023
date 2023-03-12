@@ -68,7 +68,8 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (Board.PROPERTY_NEXT_PIECE.equals(theEvent.getPropertyName())) {
+        //if (Board.PROPERTY_NEXT_PIECE.equals(theEvent.getPropertyName())) {
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
             myNextPiece = (TetrisPiece) theEvent.getNewValue();
             repaint(); // draws next tetris piece in panel
         }
