@@ -70,6 +70,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
 
         setFocusable(true);
         requestFocus();
+        createTimer();
     }
 
     //Used to create the rough frame for our tetris project.
@@ -83,7 +84,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     }
 
     //Create a file menu with event handlers.
-    public static JMenuBar createFileMenu() {
+    public JMenuBar createFileMenu() {
         final JMenuBar menuBar = new JMenuBar();
 
         final JMenu menu = new JMenu("File");
@@ -175,7 +176,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                     // TODO: end current game
                     myGameOver = false;
                     timer.stop();
-                    timer.restart();
+//                    timer.restart();
                     myScore.reset();
                     createGameOver(); // displays game stats
                 });
@@ -190,7 +191,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
                     if (!myGameOver) {
                         myGameOver = true;
                         timer.start();
-                        // myBoard.newGame();
+                        this.myBoard.newGame();
                     } else {
                         JOptionPane.showMessageDialog(null, "Current game has not ended.");
                     }
@@ -214,10 +215,11 @@ public class Frame extends JFrame implements PropertyChangeListener {
         scoreFrame.setVisible(true);
     }
 
+
     public static void createAndShowGUI() {
         // final Board board = new Board();
 
-        // Get the Board size from the user
+        // Get the Board size from the user - easter egg
         Dimension boardDimensions = getBoardSize();
         // Make a Board based on user inputted size
         final Board board = new Board((int) boardDimensions.getWidth(), (int) boardDimensions.getHeight());
@@ -231,16 +233,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         board.addPropertyChangeListener(boardPanel);
         board.addPropertyChangeListener(nextPiece);
 
-
-
-        // instantiate the timer and set the delay to 500ms
-        timer = new Timer(TIME_CONST,
-                e -> { // call the appropriate method from the Interface defined in Model Update
-                    new Board().step();
-                });
-
-        // start the timer
-        timer.start();
 
         // sets the min and max size of frame
         tetrisFrame.setLayout(new GridLayout(1, 2));
@@ -304,6 +296,18 @@ public class Frame extends JFrame implements PropertyChangeListener {
 //            }
 //        }
         return new Dimension(width, height);
+    }
+
+    private void createTimer() {
+        // instantiate the timer and set the delay to 500ms
+        timer = new Timer(TIME_CONST,
+                e -> { // call the appropriate method from the Interface defined in Model Update
+                    this.myBoard.step();
+                });
+
+        // start the timer
+        timer.start();
+
     }
 
     @Override
