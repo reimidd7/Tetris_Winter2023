@@ -273,31 +273,36 @@ public class Frame extends JFrame implements PropertyChangeListener {
         boolean validInput = false;
 
         // Prompt the user for the board size
-        while (!validInput) {
-            String input = JOptionPane.showInputDialog(null,
-                    "Enter board size (format: width x height):",
-                    width + " x " + height);
-            if (input == null) {
-                // User clicked Cancel
-                System.exit(0);
-            }
-            String[] dimensions = input.split("x");
-            if (dimensions.length == 2) {
-                try {
-                    width = Integer.parseInt(dimensions[0].trim());
-                    height = Integer.parseInt(dimensions[1].trim());
-                    if (width > 0 && height > 0) {
-                        validInput = true;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid board size");
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Invalid board size");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid board size");
-            }
+//        while (!validInput) {
+        String input = JOptionPane.showInputDialog(null,
+                "Enter board size (format: width x height):",
+                width + " x " + height);
+        if (input == null) {
+            // User clicked Cancel
+            System.exit(0);
         }
+        // easter egg
+        JOptionPane.showMessageDialog(null, "Hahaha you can't do that!");
+//            validInput = true;
+
+
+//            String[] dimensions = input.split("x");
+//            if (dimensions.length == 2) {
+//                try {
+//                    width = Integer.parseInt(dimensions[0].trim());
+//                    height = Integer.parseInt(dimensions[1].trim());
+//                    if (width > 0 && height > 0) {
+//                        validInput = true;
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Invalid board size");
+//                    }
+//                } catch (NumberFormatException e) {
+//                    JOptionPane.showMessageDialog(null, "Invalid board size");
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Invalid board size");
+//            }
+//        }
         return new Dimension(width, height);
     }
 
