@@ -48,6 +48,8 @@ public class Board implements BoardInterface {
      */
     public static final String PROPERTY_DROP = "This doesn't not matter!";
 
+    public static final String PROPERTY_ROTATIONAL = "rot";
+
     /**
      * A property name for the frozen blocks.
      */
@@ -205,20 +207,13 @@ public class Board implements BoardInterface {
         myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
         myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
 
-        myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-                oldPiece,
-                new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-                        new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
-                        myCurrentPiece.getRotation()));
-
-        //        myPcs.firePropertyChange(PROPERTY_DROP,oldDrop, myDrop);
+//        myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
+//                oldPiece,
+//                new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
+//                        new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
+//                        myCurrentPiece.getRotation()));
 
 
-
-
-
-
-////        myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
         // Restarts states - everything -
         // PROPERTY_FROZEN_BLOCKS
         // PROPERTY_GAME_OVER
@@ -423,6 +418,7 @@ public class Board implements BoardInterface {
     private boolean move(final MovableTetrisPiece theMovedPiece) {
         // saved old values - added for firePropertyChange
         final MovableTetrisPiece oldPiece = myCurrentPiece;
+        final Rotation oldPieceRot = myCurrentPiece.getRotation();
         final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
         boolean result = false;
         if (isPieceLegal(theMovedPiece)) {
@@ -440,6 +436,10 @@ public class Board implements BoardInterface {
                         new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
                                 new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
                                 myCurrentPiece.getRotation()));
+
+                myPcs.firePropertyChange(PROPERTY_ROTATIONAL,
+                        oldPieceRot,
+                        myCurrentPiece.getRotation());
 
             }
         }

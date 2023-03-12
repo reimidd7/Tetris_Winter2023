@@ -52,6 +52,8 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
             final DrawPieces draw = new DrawPieces();
             final int w = (getWidth() - myNextPiece.getWidth() * 20) / 2;
             final int h =  (getHeight() - myNextPiece.getHeight() * 20 - 60) / 2;
+
+            g2d.rotate(Math.PI, 100,100);
             g2d.translate(w, h);
 
             switch (myNextPiece) {
