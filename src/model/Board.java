@@ -417,8 +417,8 @@ public class Board implements BoardInterface {
                                 new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
                                 myCurrentPiece.getRotation()));
                                 
-                myPcs.firePropertyChange(PROPERTY_ROTATIONAL,
-                        oldPieceRot,
+                myPcs.firePropertyChange(PROPERTY_ROTATIONAL, null,
+                        //oldPieceRot,
                         myCurrentPiece.getRotation());
             }
         }

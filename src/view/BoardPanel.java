@@ -14,9 +14,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 
-import model.Block;
-import model.Board;
-import model.MovableTetrisPiece;
+import model.*;
 
 
 /**
@@ -72,10 +70,10 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
     private static final Color UW_PURPLE = new Color(51, 0, 111);
 
-    /** Current Tetris Piece in motion. */
-    private MovableTetrisPiece myCurrentPiece;
-
-    private List<Block[]> myFrozenBlocks;
+//    /** Current Tetris Piece in motion. */
+//    private MovableTetrisPiece myCurrentPiece;
+//
+//    private List<Block[]> myFrozenBlocks;
 
     /** Current Rotation. */
     private Rotation myRot;
