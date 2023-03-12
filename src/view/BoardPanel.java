@@ -141,9 +141,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
         }
 
-
-
-
     }
 
     /**
