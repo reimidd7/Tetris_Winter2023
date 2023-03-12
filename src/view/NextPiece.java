@@ -47,7 +47,6 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
-        // IDEA: call draw pieces depending on myNextPiece
         if (myNextPiece != null) {
             final DrawPieces draw = new DrawPieces();
             final int w = (getWidth() - myNextPiece.getWidth() * 20) / 2;
@@ -68,7 +67,6 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        //if (Board.PROPERTY_NEXT_PIECE.equals(theEvent.getPropertyName())) {
         if (theEvent.getPropertyName().equals(Board.PROPERTY_NEXT_PIECE)) {
             myNextPiece = (TetrisPiece) theEvent.getNewValue();
             repaint(); // draws next tetris piece in panel

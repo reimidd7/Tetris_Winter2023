@@ -2,7 +2,6 @@ package view;
 
 import model.Board;
 import model.BoardInterface;
-import model.MovableTetrisPiece;
 import model.Score;
 
 import java.awt.*;
@@ -53,17 +52,11 @@ public class Frame extends JFrame implements PropertyChangeListener {
     /** The Score object. */
     private static Score myScore;
 
-    /** Movable Tetris Piece object. */
-    private MovableTetrisPiece myCurrentPiece; //TODO: Need to find a way to instantiate. For use in property change method
-
     public Frame(final BoardInterface theBoard) {
         super();
 
         //Create a board/model object from interface
         myBoard = theBoard;
-
-//        myCurrentPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-//                myCurrentPiece.getPosition()); //TODO: How to instantiate?
 
         // Create the frame for the tetris game (aka the top most "panel")
         createTetrisFrame(WIDTH, HEIGHT);
@@ -181,7 +174,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
         end.add(endButton);
         endButton.addActionListener(
                 e -> {
-                    // TODO: end current game
                     myGameOver = false;
                     timer.stop();
                     myScore.reset();
@@ -194,12 +186,11 @@ public class Frame extends JFrame implements PropertyChangeListener {
         restart.add(restartButton);
         restartButton.addActionListener(
                 e -> {
-                    // TODO: start new game
                     if (!myGameOver) {
                         myGameOver = true;
                         timer.setDelay(TIME_CONST);
                         timer.start();
-                        myBoard.newGame();
+                        myBoard.newGame(); // start new game
                     } else {
                         JOptionPane.showMessageDialog(null, "Current game has not ended.");
                     }
@@ -308,9 +299,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private void createTimer() {
         // instantiate the timer and set the delay to 500ms
         timer = new Timer(TIME_CONST,
-                e -> { // call the appropriate method from the Interface defined in Model Update
-                    myBoard.step();
-                });
+                // call the appropriate method from the Interface defined in Model Update
+                e -> myBoard.step());
         timer.start(); // start the timer
     }
 
