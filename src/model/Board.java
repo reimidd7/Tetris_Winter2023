@@ -489,12 +489,10 @@ public class Board implements BoardInterface {
             }
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
-             //TODO Publish Update!
+             // TODO Publish Update!
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-                //myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
                 myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
-                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
-                        oldFrozenBlocks, myFrozenBlocks);
 
 //                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
 //                        oldPiece,

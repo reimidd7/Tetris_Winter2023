@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -131,19 +132,21 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             }
         }
 
+        final int GRID_UNIT = 20;
         // attempt at drawing frozen blocks
         if (myFrozenBlocks != null) {
+            int row = 0;
             for (Block[] blockArr : myFrozenBlocks) {
-                for (Block block : blockArr) {
-                    if (block != null) {
-                        switch (block) {
-                            case I -> draw.drawI(g2d);
-                            case J -> draw.drawJ(g2d);
-                            case L -> draw.drawL(g2d);
-                            case O -> draw.drawO(g2d);
-                            case S -> draw.drawS(g2d);
-                            case T -> draw.drawT(g2d);
-                            case Z -> draw.drawZ(g2d);
+                row++;
+                if (blockArr != null) {
+                    int column = 0; // use -4 to center blocks
+                    for (Block block : blockArr) {
+                        column++;
+                        if (block != null) {
+                            g2d.setPaint(Color.GRAY);
+                            g2d.fillRect(column * GRID_UNIT, row * GRID_UNIT, GRID_UNIT, GRID_UNIT);
+                            g2d.setPaint(Color.BLACK);
+                            g2d.drawRect(column * GRID_UNIT, row * GRID_UNIT, GRID_UNIT, GRID_UNIT);
                         }
                     }
                 }

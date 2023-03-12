@@ -174,7 +174,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         end.add(endButton);
         endButton.addActionListener(
                 e -> {
-                    myGameOver = false;
+                    myGameOver = true;
                     timer.stop();
                     myScore.reset();
                     createGameOver(); // displays game stats
@@ -186,8 +186,8 @@ public class Frame extends JFrame implements PropertyChangeListener {
         restart.add(restartButton);
         restartButton.addActionListener(
                 e -> {
-                    if (!myGameOver) {
-                        myGameOver = true;
+                    if (myGameOver) {
+                        myGameOver = false;
                         timer.setDelay(TIME_CONST);
                         timer.start();
                         myBoard.newGame(); // start new game
