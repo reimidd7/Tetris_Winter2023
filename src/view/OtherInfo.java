@@ -70,26 +70,26 @@ public class OtherInfo extends JPanel implements PropertyChangeListener {
         final JLabel score = new JLabel("Score: ");
         final JLabel level = new JLabel("Level: ");
         final JLabel lines = new JLabel("Lines Cleared: ");
-        repaint();
-//        myScoreText = new JTextField("0");
-//        myLevelText = new JTextField("1");
-//        myLinesText = new JTextField("0");
-//
-//        final Border border = BorderFactory.createLineBorder(Color.BLACK);
-//        myScoreText.setBorder(border);
-//        myLevelText.setBorder(border);
-//        myLinesText.setBorder(border);
-//
-//        myScoreText.setEditable(false);
-//        myLevelText.setEditable(false);
-//        myLinesText.setEditable(false);
-//
+//        repaint();
+        myScoreText = new JTextField("0");
+        myLevelText = new JTextField("1");
+        myLinesText = new JTextField("0");
+
+        final Border border = BorderFactory.createLineBorder(Color.BLACK);
+        myScoreText.setBorder(border);
+        myLevelText.setBorder(border);
+        myLinesText.setBorder(border);
+
+        myScoreText.setEditable(false);
+        myLevelText.setEditable(false);
+        myLinesText.setEditable(false);
+
         myStats.add(score);
-////        myStats.add(myScoreText);
+        myStats.add(myScoreText);
         myStats.add(level);
-////        myStats.add(myLevelText);
+        myStats.add(myLevelText);
         myStats.add(lines);
-//        myStats.add(myLinesText);
+        myStats.add(myLinesText);
 
         add(myStats);
 //        repaint();
@@ -98,15 +98,15 @@ public class OtherInfo extends JPanel implements PropertyChangeListener {
 
     @Override
     protected void paintComponent(final Graphics theGraphics) {
-        super.paintComponent(theGraphics);
-        final Graphics2D g2d = (Graphics2D) theGraphics;
-        g2d.setColor(Color.PINK);
-        myScoreText = new JTextField(myScore.getScore());
-        myLevelText = new JTextField(myScore.getLevel());
-        myLinesText = new JTextField(myScore.getLinesCleared());
-        myStats.add(myScoreText);
-        myStats.add(myLevelText);
-        myStats.add(myLinesText);
+//        super.paintComponent(theGraphics);
+//        final Graphics2D g2d = (Graphics2D) theGraphics;
+//        g2d.setColor(Color.PINK);
+//        myScoreText = new JTextField(myScore.getScore());
+//        myLevelText = new JTextField(myScore.getLevel());
+//        myLinesText = new JTextField(myScore.getLinesCleared());
+//        myStats.add(myScoreText);
+//        myStats.add(myLevelText);
+//        myStats.add(myLinesText);
 //        g2d.drawString(myScoreText.toString(), 0, 0);
 //        g2d.drawString(myLevelText.toString(), 0, 0);
 //        g2d.drawString(myLevelText.toString(), 0, 0);
@@ -131,7 +131,7 @@ public class OtherInfo extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (theEvent.getPropertyName().equals(Board.PROPERTY_SCORE)) {
-            repaint();
+//            repaint();
         }
     }
 }
