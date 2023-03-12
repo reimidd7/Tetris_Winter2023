@@ -23,6 +23,9 @@ import javax.swing.*;
  */
 public class Frame extends JFrame implements PropertyChangeListener {
 
+    public static final String PROPERTY_LEVEL = "edskjhfa";
+
+
     /** Width of frame. */
     private static final int WIDTH = 400;
 
@@ -48,7 +51,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
     private static boolean myGameOver = false;
 
     /** The Score object. */
-    private static Score myScore = new Score();
+    private static Score myScore;
 
     /** Movable Tetris Piece object. */
     private MovableTetrisPiece myCurrentPiece; //TODO: Need to find a way to instantiate. For use in property change method
@@ -128,19 +131,28 @@ public class Frame extends JFrame implements PropertyChangeListener {
         difficultyMenu.add(level4Item);
         difficultyMenu.add(level5Item);
         level1Item.addActionListener(e -> {
-            Board.setDelay(800); // Update game delay for level 1
+            timer.setDelay(TIME_CONST); // Update game delay for level 1
+//            firePropertyChange(PROPERTY_LEVEL, null, 1);
+            myScore.updateLevel(1);
+
         });
         level2Item.addActionListener(e -> {
-            Board.setDelay(600); // Update game delay for level 2
+            timer.setDelay(800); // Update game delay for level 2
+//            firePropertyChange(PROPERTY_LEVEL, null, 2);
+            myScore.updateLevel(2);
         });
         level3Item.addActionListener(e -> {
-            Board.setDelay(400); // Update game delay for level 3
+            timer.setDelay(600); // Update game delay for level 3
+//            firePropertyChange(PROPERTY_LEVEL, null, 3);
+            myScore.updateLevel(3);
         });
         level4Item.addActionListener(e -> {
-            Board.setDelay(200); // Update game delay for level 4
+            timer.setDelay(400); // Update game delay for level 4
+            myScore.updateLevel(4);
         });
         level5Item.addActionListener(e -> {
-            Board.setDelay(100); // Update game delay for level 5
+            timer.setDelay(200); // Update game delay for level 5
+            myScore.updateLevel(5);
         });
         menuBar.add(difficultyMenu);
 
@@ -190,8 +202,9 @@ public class Frame extends JFrame implements PropertyChangeListener {
                     // TODO: start new game
                     if (!myGameOver) {
                         myGameOver = true;
+                        timer.setDelay(TIME_CONST);
                         timer.start();
-                        this.myBoard.newGame();
+                        myBoard.newGame();
                     } else {
                         JOptionPane.showMessageDialog(null, "Current game has not ended.");
                     }
@@ -229,9 +242,12 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final NextPiece nextPiece = new NextPiece();
         final OtherInfo otherInfo = new OtherInfo();
         final BoardPanel boardPanel = new BoardPanel();
+        myScore = new Score();
 
         board.addPropertyChangeListener(boardPanel);
         board.addPropertyChangeListener(nextPiece);
+        board.addPropertyChangeListener(otherInfo);
+        board.addPropertyChangeListener(myScore);
 
 
         // sets the min and max size of frame
@@ -302,7 +318,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         // instantiate the timer and set the delay to 500ms
         timer = new Timer(TIME_CONST,
                 e -> { // call the appropriate method from the Interface defined in Model Update
-                    this.myBoard.step();
+                    myBoard.step();
                 });
 
         // start the timer

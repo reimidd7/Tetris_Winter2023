@@ -39,6 +39,11 @@ public class Board implements BoardInterface {
 
     // Class constants
     /**
+     * A property name for the score.
+     */
+    public static final String PROPERTY_SCORE = "ekfuhad";
+
+    /**
      * A property name for the current piece.
      */
     public static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
@@ -63,7 +68,9 @@ public class Board implements BoardInterface {
      */
     public static final String PROPERTY_NEXT_PIECE = "This doesn't not mate!";
 
-
+    /**
+     * A property name for the piece location.
+     */
     public static final String PROPERTY_PIECE_LOCATION = "nlejielsdj";
 
     /**
@@ -77,7 +84,6 @@ public class Board implements BoardInterface {
     private static final int DEFAULT_HEIGHT = 20;
 
     // Instance fields
-    
     /**
      * Width of the game board.
      */
@@ -87,12 +93,12 @@ public class Board implements BoardInterface {
      * Height of the game board.
      */
     private final int myHeight;
-    
+
     /**
      * The frozen blocks on the board.
      */
     private final List<Block[]> myFrozenBlocks;
-    
+
     /**
      * The game over state.
      */
@@ -107,12 +113,12 @@ public class Board implements BoardInterface {
      * The current index in the non-random piece sequence.
      */
     private int mySequenceIndex;
-    
+
     /**
      * Piece that is next to play.
      */
     private TetrisPiece myNextPiece;
-    
+
     /**
      * Piece that is currently movable.
      */
@@ -250,11 +256,11 @@ public class Board implements BoardInterface {
                 // TODO Publish Update!
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
                 myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-//                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
-//                        oldPiece,
-//                        new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-//                                new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
-//                                myCurrentPiece.getRotation()));
+                myPcs.firePropertyChange(PROPERTY_PIECE_LOCATION,
+                        oldPiece,
+                        new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
+                                new Point(myCurrentPiece.getPosition().x(), myCurrentPiece.getPosition().y()),
+                                myCurrentPiece.getRotation()));
                 // Changing state
                 // PROPERTY_CURRENT_PIECE
             }
@@ -326,8 +332,8 @@ public class Board implements BoardInterface {
             }
             myDrop = false;
             down();  // move down one more time to freeze in place
-
-            myScore.calculateScore(); // I believe this would go here, but I'm not sure
+            myPcs.firePropertyChange(PROPERTY_SCORE, null, myScore);
+            //myScore.calculateScore(); // I believe this would go here, but I'm not sure
         }
     }
 
