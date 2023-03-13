@@ -27,7 +27,6 @@ public interface BoardInterface {
      */
     int getHeight();
 
-
     /**
      * Resets the board for a new game.
      * This method must be called before the first game
@@ -84,7 +83,6 @@ public interface BoardInterface {
     void drop();
 
     // toString() maybe ?????
-
 
     /**
      * Adds a PropertyChangeListener to PropertyChangeSupport.
