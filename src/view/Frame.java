@@ -135,7 +135,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
      *
      * @return returns a File JMenu.
      */
-    public static JMenu createFileMenu() {
+    private static JMenu createFileMenu() {
         final JMenu menu = new JMenu("File");
         final JMenuItem exit = new JMenuItem("Exit");
         final JMenuItem rules = new JMenuItem("Rules");
@@ -168,7 +168,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
      *
      * @return returns a difficultyMenu JMenu.
      */
-    public static JMenu createDifficultyMenu() {
+    private static JMenu createDifficultyMenu() {
         // Create "Difficulty" submenu with 5 difficulty levels
         final JMenu difficultyMenu = new JMenu("Difficulty");
         final ButtonGroup difficultyGroup = new ButtonGroup();
@@ -215,7 +215,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
      *
      * @return returns Restart/End/PauseGame JMenu.
      */
-    public static JMenu createRestartEndPauseMenu() {
+    private static JMenu createRestartEndPauseMenu() {
         final JMenu end = new JMenu("Restart/End/Pause Game");
         final JButton endButton = new JButton("End Game");
         final JButton restartButton = new JButton("Restart Game");

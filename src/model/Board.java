@@ -1,6 +1,6 @@
 /*
  * TCSS 305
- * 
+ *
  * An implementation of the classic game "Tetris".
  */
 
@@ -14,7 +14,7 @@ import java.util.List;
 import model.wallkicks.WallKick;
 
 /**
- * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
+ * Represents a Tetris board. Board objects communicate with clients via Observer pattern.
  * <p>Clients can expect Board objects to call notifyObservers with four different
  * data types:</p>
  * <dl>
@@ -29,7 +29,7 @@ import model.wallkicks.WallKick;
  * <dt>{@code Boolean}</dt>
  * <dd>When true, the game is over. </dd>
  * </dl>
- * 
+ *
  * @author Charles Bryan
  * @author Alan Fowler
  * @author Calvin Beardemphl, Rick Adams, Viktoria Dolojan, Tsion Fufa, Reilly Middlebrooks.
@@ -47,8 +47,6 @@ public class Board implements BoardInterface {
      * A property name for the current piece.
      */
     public static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
-
-    public static final String PROPERTY_ROTATIONAL = "rot";
 
     /**
      * A property name for the frozen blocks.
@@ -119,7 +117,7 @@ public class Board implements BoardInterface {
     /**
      * The Score object.
      */
-    private Score myScore = new Score();
+    private final Score myScore = new Score();
 
     /**
      * A flag to indicate when moving a piece down is part of a drop operation.
@@ -145,7 +143,7 @@ public class Board implements BoardInterface {
 
     /**
      * Tetris board constructor for non-default sized boards.
-     * 
+     *
      * @param theWidth Width of the Tetris game board.
      * @param theHeight Height of the Tetris game board.
      */
@@ -238,9 +236,6 @@ public class Board implements BoardInterface {
 
                 // TODO Publish Update!
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-               // myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-                // Changing state
-                // PROPERTY_CURRENT_PIECE
             }
         }
     }
@@ -267,8 +262,8 @@ public class Board implements BoardInterface {
             } else {
                 final MovableTetrisPiece cwPiece = myCurrentPiece.rotateCW();
                 final Point[] offsets = WallKick.getWallKicks(cwPiece.getTetrisPiece(),
-                                                    myCurrentPiece.getRotation(),
-                                                    cwPiece.getRotation());
+                        myCurrentPiece.getRotation(),
+                        cwPiece.getRotation());
                 for (final Point p : offsets) {
                     final Point offsetLocation = cwPiece.getPosition().transform(p);
                     final MovableTetrisPiece temp = cwPiece.setPosition(offsetLocation);
@@ -288,8 +283,8 @@ public class Board implements BoardInterface {
             } else {
                 final MovableTetrisPiece ccwPiece = myCurrentPiece.rotateCCW();
                 final Point[] offsets = WallKick.getWallKicks(ccwPiece.getTetrisPiece(),
-                                                    myCurrentPiece.getRotation(),
-                                                    ccwPiece.getRotation());
+                        myCurrentPiece.getRotation(),
+                        ccwPiece.getRotation());
                 for (final Point p : offsets) {
                     final Point offsetLocation = ccwPiece.getPosition().transform(p);
                     final MovableTetrisPiece temp = ccwPiece.setPosition(offsetLocation);
@@ -376,12 +371,12 @@ public class Board implements BoardInterface {
         myPcs.removePropertyChangeListener(thePropertyName, theListener);
 
     }
-    
+
     // Private helper methods
     /**
      * Helper function to check if the current piece can be shifted to the
      * specified position.
-     * 
+     *
      * @param theMovedPiece the position to attempt to shift the current piece
      * @return True if the move succeeded
      */
@@ -394,7 +389,6 @@ public class Board implements BoardInterface {
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
-                // TODO Publish Update!
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
             }
         }
@@ -405,17 +399,17 @@ public class Board implements BoardInterface {
 
     /**
      * Helper function to test if the piece is in a legal state.
-     * 
+     *
      * Illegal states:
      * - points of the piece exceed the bounds of the board
      * - points of the piece collide with frozen blocks on the board
-     * 
+     *
      * @param thePiece MovableTetrisPiece to test.
      * @return Returns true if the piece is in a legal state; false otherwise
      */
     private boolean isPieceLegal(final MovableTetrisPiece thePiece) {
         boolean result = true;
-        
+
         for (final Point p : thePiece.getBoardPoints()) {
             if (p.x() < 0 || p.x() >= myWidth) {
                 result = false;
@@ -424,15 +418,15 @@ public class Board implements BoardInterface {
                 result = false;
             }
         }
-        return result && !collision(thePiece);      
+        return result && !collision(thePiece);
     }
 
     /**
      * Adds a movable Tetris piece into a list of board data.
-     * 
+     *
      * Allows a single data structure to represent the current piece
      * and the frozen blocks.
-     * 
+     *
      * @param theFrozenBlocks Board to set the piece on.
      * @param thePiece Piece to set on the board.
      */
@@ -463,10 +457,11 @@ public class Board implements BoardInterface {
             }
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
-             // TODO Publish Update!
-               // myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-               // myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
-               // myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
+                // TODO Publish Update!
+                // myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+                // myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
+                //      oldFrozenBlocks, myFrozenBlocks);
+                // myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
 
             }
         }
@@ -476,16 +471,17 @@ public class Board implements BoardInterface {
                 final Block[] row = myFrozenBlocks.get(completeRows.get(i));
                 myFrozenBlocks.remove(row);
                 myFrozenBlocks.add(new Block[myWidth]);
-                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
+                        oldFrozenBlocks, myFrozenBlocks);
             }
         }
         // Changing state
         // PROPERTY_FROZEN_BLOCKS
     }
-    
+
     /**
      * Helper function to copy the board.
-     * 
+     *
      * @return A new copy of the board.
      */
     private List<Block[]> getBoard() {
@@ -498,19 +494,19 @@ public class Board implements BoardInterface {
 
     /**
      * Determines if a point is on the game board.
-     * 
+     *
      * @param theBoard Board to test.
      * @param thePoint Point to test.
      * @return True if the point is on the board otherwise false.
      */
     private boolean isPointOnBoard(final List<Block[]> theBoard, final Point thePoint) {
         return thePoint.x() >= 0 && thePoint.x() < myWidth && thePoint.y() >= 0
-               && thePoint.y() < theBoard.size();
+                && thePoint.y() < theBoard.size();
     }
 
     /**
      * Sets a block at a board point.
-     * 
+     *
      * @param theBoard Board to set the point on.
      * @param thePoint Board point.
      * @param theBlock Block to set at board point.
@@ -521,25 +517,21 @@ public class Board implements BoardInterface {
         // saved old value - added for firePropertyChange
         final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
-        
-        if (isPointOnBoard(theBoard, thePoint)) { 
+
+        if (isPointOnBoard(theBoard, thePoint)) {
             final Block[] row = theBoard.get(thePoint.y());
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
             // TODO Publish Update!
             myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-            //myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
-
             myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
         }
-        // Changing state
-        // PROPERTY_GAME_OVER
     }
 
     /**
      * Returns the block at a specific board point.
-     * 
+     *
      * @param thePoint the specific Point to check
      * @return the Block type at point or null if no block exists.
      */
@@ -554,7 +546,7 @@ public class Board implements BoardInterface {
     /**
      * Helper function to determine of a movable block has collided with set
      * blocks.
-     * 
+     *
      * @param theTest movable TetrisPiece to test for collision.
      * @return Returns true if any of the blocks has collided with a set board
      *         block.
@@ -571,7 +563,7 @@ public class Board implements BoardInterface {
 
     /**
      * Gets the next MovableTetrisPiece.
-     * 
+     *
      * @param theRestart Restart the non-random cycle.
      * @return A new MovableTetrisPiece.
      */
@@ -581,14 +573,15 @@ public class Board implements BoardInterface {
         }
 
         final TetrisPiece next = myNextPiece;
-        
+
         int startY = myHeight - 1;
         if (myNextPiece == TetrisPiece.I) {
-            startY--; 
+            startY--;
         }
 
         prepareNextMovablePiece();
-        return new MovableTetrisPiece(next, new Point((myWidth - myNextPiece.getWidth()) / 2, startY));
+        return new MovableTetrisPiece(next,
+                new Point((myWidth - myNextPiece.getWidth()) / 2, startY));
     }
 
     /**
@@ -611,14 +604,14 @@ public class Board implements BoardInterface {
             // PROPERTY_NEXT_PIECE
         }
     }
-    
+
     // Inner classes
     /**
      * A class to describe the board data to registered Observers.
      * The board data includes the current piece and the frozen blocks.
      */
     protected final class BoardData {
-        
+
         /**
          * The board data to pass to observers.
          */
@@ -640,7 +633,7 @@ public class Board implements BoardInterface {
 
         /**
          * Copy and return the board's data.
-         * 
+         *
          * @return Copy of the Board Data.
          */
         protected List<Block[]> getBoardData() {
