@@ -265,6 +265,7 @@ public class Frame extends JFrame implements PropertyChangeListener {
         final BoardPanel boardPanel = new BoardPanel();
         myScore = new Score();
 
+
         board.addPropertyChangeListener(boardPanel);
         board.addPropertyChangeListener(nextPiece);
         board.addPropertyChangeListener(otherInfo);
@@ -345,7 +346,6 @@ public class Frame extends JFrame implements PropertyChangeListener {
                 myBoard.left();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_W
                     || theEvent.getKeyCode() == KeyEvent.VK_UP) {
-                // TODO: Do I need to make this different for each piece some CCW and some CW?
                 System.out.println("UP");
                 myBoard.rotateCW();
             } else if (theEvent.getKeyCode() == KeyEvent.VK_S

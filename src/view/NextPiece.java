@@ -37,7 +37,7 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     /** Constructor for NextPiece panel. */
     public NextPiece() {
         super();
-        setBackground(Color.WHITE);
+        setBackground(Color.BLACK);
         setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
         //add(new JLabel("Next Tetris Piece"));
     }

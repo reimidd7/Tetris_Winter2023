@@ -1,7 +1,3 @@
-/*
- * TCSS 305A - Tetris Project
- *
- */
 
 package view;
 
@@ -11,10 +7,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serial;
 import java.util.List;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 import model.*;
+import view.DrawPieces;
+
 
 
 /**
@@ -43,22 +41,10 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      * Panel height constant.
      */
     private static final int PANEL_HEIGHT = 400;
-
-    /**
-     * The current tetris piece in play.
-     */
-    private MovableTetrisPiece myCurrentPiece;
-
-    /**
-     * A list of all the frozen blocks currently on the board.
-     */
-    private List<Block[]> myFrozenBlocks;
-
-
     /** Board dimensions in with dimension class.*/
     private static final Dimension BOARD_SIZE = new Dimension(PANEL_WIDTH,
             PANEL_HEIGHT);
-            
+
     /**
      * UW Purple.
      */
@@ -70,14 +56,15 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
     private static final Color UW_PURPLE = new Color(51, 0, 111);
 
-//    /** Current Tetris Piece in motion. */
-//    private MovableTetrisPiece myCurrentPiece;
-//
-//    private List<Block[]> myFrozenBlocks;
+    /**
+     * The current tetris piece in play.
+     */
+    private MovableTetrisPiece myCurrentPiece;
 
-    /** Current Rotation. */
-    private Rotation myRot;
-
+    /**
+     * A list of all the frozen blocks currently on the board.
+     */
+    private List<Block[]> myFrozenBlocks;
 
     /**
      * Public constructor. Creates the tetris game board panel.
@@ -106,6 +93,7 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
+        final Graphics2D g2D = (Graphics2D) theGraphics;
         DrawPieces draw = new DrawPieces();
 
         // Paint Grid.
@@ -120,40 +108,35 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
             }
         }
 
-        // Draw Pieces.
-        if (myCurrentPiece != null) {
-            int pX = myCurrentPiece.getPosition().x() * 20;
-            int pY = myCurrentPiece.getPosition().y() * 20;
-
-
-            g2d.rotate(Math.PI, 100, 200);
-            g2d.translate(pX, pY);
-
-            drawRotatedPiece(g2d, draw);
-
-        final int GRID_UNIT = 20;
         // attempt at drawing frozen blocks
         if (myFrozenBlocks != null) {
-            int row = 0;
+
+            // attempt at drawing frozen blocks
+            g2D.rotate(Math.PI, 100, 200);
+
+            int row = -1;
             for (Block[] blockArr : myFrozenBlocks) {
                 row++;
                 if (blockArr != null) {
-                    int column = 0; // use -4 to center blocks
+                    int column = -1; // use -4 to center blocks
                     for (Block block : blockArr) {
                         column++;
                         if (block != null) {
-                            g2d.setPaint(Color.GRAY);
-                            g2d.fillRect(column * GRID_UNIT, row * GRID_UNIT, GRID_UNIT, GRID_UNIT);
-                            g2d.setPaint(Color.BLACK);
-                            g2d.drawRect(column * GRID_UNIT, row * GRID_UNIT, GRID_UNIT, GRID_UNIT);
+                            g2D.setPaint(Color.GRAY);
+                            g2D.fillRect(column * GRID_SIDE  , row * GRID_SIDE, GRID_SIDE, GRID_SIDE);
+                            g2D.setPaint(Color.BLACK);
+                            g2D.drawRect(column * GRID_SIDE, row * GRID_SIDE, GRID_SIDE, GRID_SIDE);
                         }
                     }
                 }
             }
         }
-
-     }
- }
+        //Draw Moving Pieces.
+        final int pX = myCurrentPiece.getPosition().x() * 20;
+        final int pY = myCurrentPiece.getPosition().y() * 20;
+        g2d.translate(pX, pY);
+        drawRotatedPiece(g2d, draw);
+    }
 
     /**
      * Draws the pieces with proper rotation.
@@ -163,58 +146,64 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     private void drawRotatedPiece(final Graphics2D theG2d, final DrawPieces theDraw) {
 
-        if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
-            theDraw.drawO(theG2d);
+        // Draw Pieces.
+        if (myCurrentPiece != null) {
 
-        } else if (myCurrentPiece.getRotation() == Rotation.NONE) {
-            System.out.println("none");
-            switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> theDraw.drawI(theG2d);
-                case J -> theDraw.drawJ(theG2d);
-                case L -> theDraw.drawL(theG2d);
-                case S -> theDraw.drawS(theG2d);
-                case T -> theDraw.drawT(theG2d);
-                case Z -> theDraw.drawZ(theG2d);
-            }
-        } else if (myCurrentPiece.getRotation() == Rotation.QUARTER) {
-            System.out.println("1/4");
-            switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> theDraw.drawRot1I(theG2d);
-                case J -> theDraw.drawRot1J(theG2d);
-                case L -> theDraw.drawRot1L(theG2d);
-                case S -> theDraw.drawRot1S(theG2d);
-                case T -> theDraw.drawRot1T(theG2d);
-                case Z -> theDraw.drawRot1Z(theG2d);
-            }
-        } else if (myCurrentPiece.getRotation() == Rotation.HALF) {
-            System.out.println("1/2");
-            switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> theDraw.drawRot2I(theG2d);
-                case J -> theDraw.drawRot2J(theG2d);
-                case L -> theDraw.drawRot2L(theG2d);
-                case S -> theDraw.drawRot2S(theG2d);
-                case T -> theDraw.drawRot2T(theG2d);
-                case Z -> theDraw.drawRot2Z(theG2d);
-            }
-        } else if (myCurrentPiece.getRotation() == Rotation.THREEQUARTER) {
-            System.out.println("3/4");
-            switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> theDraw.drawRot3I(theG2d);
-                case J -> theDraw.drawRot3J(theG2d);
-                case L -> theDraw.drawRot3L(theG2d);
-                case S -> theDraw.drawRot3S(theG2d);
-                case T -> theDraw.drawRot3T(theG2d);
-                case Z -> theDraw.drawRot3Z(theG2d);
-            }
-        } else {
-            System.out.println("4/4");
-            switch (myCurrentPiece.getTetrisPiece()) {
-                case I -> theDraw.drawI(theG2d);
-                case J -> theDraw.drawJ(theG2d);
-                case L -> theDraw.drawL(theG2d);
-                case S -> theDraw.drawS(theG2d);
-                case T -> theDraw.drawT(theG2d);
-                case Z -> theDraw.drawZ(theG2d);
+
+
+            if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
+                theDraw.drawO(theG2d);
+
+            } else if (myCurrentPiece.getRotation() == Rotation.NONE) {
+                System.out.println("none");
+                switch (myCurrentPiece.getTetrisPiece()) {
+                    case I -> theDraw.drawI(theG2d);
+                    case J -> theDraw.drawJ(theG2d);
+                    case L -> theDraw.drawL(theG2d);
+                    case S -> theDraw.drawS(theG2d);
+                    case T -> theDraw.drawT(theG2d);
+                    case Z -> theDraw.drawZ(theG2d);
+                }
+            } else if (myCurrentPiece.getRotation() == Rotation.QUARTER) {
+                System.out.println("1/4");
+                switch (myCurrentPiece.getTetrisPiece()) {
+                    case I -> theDraw.drawRot1I(theG2d);
+                    case J -> theDraw.drawRot1J(theG2d);
+                    case L -> theDraw.drawRot1L(theG2d);
+                    case S -> theDraw.drawRot1S(theG2d);
+                    case T -> theDraw.drawRot1T(theG2d);
+                    case Z -> theDraw.drawRot1Z(theG2d);
+                }
+            } else if (myCurrentPiece.getRotation() == Rotation.HALF) {
+                System.out.println("1/2");
+                switch (myCurrentPiece.getTetrisPiece()) {
+                    case I -> theDraw.drawRot2I(theG2d);
+                    case J -> theDraw.drawRot2J(theG2d);
+                    case L -> theDraw.drawRot2L(theG2d);
+                    case S -> theDraw.drawRot2S(theG2d);
+                    case T -> theDraw.drawRot2T(theG2d);
+                    case Z -> theDraw.drawRot2Z(theG2d);
+                }
+            } else if (myCurrentPiece.getRotation() == Rotation.THREEQUARTER) {
+                System.out.println("3/4");
+                switch (myCurrentPiece.getTetrisPiece()) {
+                    case I -> theDraw.drawRot3I(theG2d);
+                    case J -> theDraw.drawRot3J(theG2d);
+                    case L -> theDraw.drawRot3L(theG2d);
+                    case S -> theDraw.drawRot3S(theG2d);
+                    case T -> theDraw.drawRot3T(theG2d);
+                    case Z -> theDraw.drawRot3Z(theG2d);
+                }
+            } else {
+                System.out.println("4/4");
+                switch (myCurrentPiece.getTetrisPiece()) {
+                    case I -> theDraw.drawI(theG2d);
+                    case J -> theDraw.drawJ(theG2d);
+                    case L -> theDraw.drawL(theG2d);
+                    case S -> theDraw.drawS(theG2d);
+                    case T -> theDraw.drawT(theG2d);
+                    case Z -> theDraw.drawZ(theG2d);
+                }
             }
         }
     }
@@ -227,18 +216,15 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (theEvent.getPropertyName().equals(Board.PROPERTY_PIECE_LOCATION)) {
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
             myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
             repaint();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_CURRENT_PIECE)) {
-            myCurrentPiece = (MovableTetrisPiece) theEvent.getNewValue();
-            repaint();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_ROTATIONAL)) {
-            myRot = (Rotation) theEvent.getNewValue();
-            repaint();
-        } else if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
+        }
+        if (theEvent.getPropertyName().equals(Board.PROPERTY_FROZEN_BLOCKS)) {
             myFrozenBlocks = (List<Block[]>) theEvent.getNewValue();
             repaint();
         }
     }
+
+
 }
