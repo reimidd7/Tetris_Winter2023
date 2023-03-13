@@ -62,19 +62,20 @@ When we did not have formal meetings, we used a Discord server with all group me
 ### Sprint 2 Comments
 We added a drawing of a face to the `NextPiece` region on the GUI, and changed the `Board` region on the GUI to UW Purple and Gold.
 
-# picture of sprint 3 goes here
+<img width="489" alt="Screenshot 2023-03-12 at 10 19 44 PM" src="https://user-images.githubusercontent.com/77321790/224614500-16b35e2d-e81f-4bca-9370-09f0c22b9036.png">
+
 
 ### Sprint 3 Contributions
 * Reilly Middlebrooks
-  * Created `DrawPiece.java` in the view class. Drew the pieces on the board, with full functionality of `left()`, `right()`, `down()`, `drop()` and `rotateCW()` in `Board.java`.
+  * Created `DrawPiece.java` in the view class. Drew the pieces on the board, with full functionality of `left()`, `right()`, `down()`, `drop()` and `rotateCW()` in `Board.java`. Worked on getting `FrozenPieces` drawn.
 * Tsion Fufa
-  * Added the ability for a user to change the difficulty level to the menu bar. Added a easter egg in start of the game for changing the board grid size.
+  * Added the ability for a user to change the difficulty level to the menu bar. Added an easter egg in start of the game for changing the board grid size.
 * Viktoria Dolojan
   * Added file menu buttons for pausing, ending, and starting a game in `Frame`, added a `timer` as well. Got pieces to be drawn in `NextPiece.java`. Worked on getting `FrozenPieces` drawn.
 * Rick Adams
   * Worked on the `Board`, and getting pieces drawn. Created functionality for the start and end game file menu buttons. Cleaned up code, and fixed warnings throughout the entire project.
 * Calvin Beardemphl
-  * Created `Score.java` in the model class. Fixed functionality creating `timer` in `Frame`. Added text displaying the controls to the user, as well as placeholders for the score, level, and lines cleared. Kept track of Daily's and updated the `README.md`.
+  * Created `Score.java` in the model class. Fixed functionality creating `timer` in `Frame`. Added text displaying the controls to the user, and placeholders for score, level, and lines cleared. Kept track of Daily's and updated the `README.md`.
 
 ### Sprint 3 Meetings
 Link to minutes for [Daily's](https://docs.google.com/document/d/1SU5WXWF8geYZqd7Kj9Kz6s9fAEKLXDZMzDAg5lB9qUU/edit?usp=sharing).
