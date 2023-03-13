@@ -39,14 +39,16 @@ public class Board implements BoardInterface {
 
     // Class constants
     /**
+     * A property name for the score.
+     */
+    public static final String PROPERTY_SCORE = "ekfuhad";
+
+    /**
      * A property name for the current piece.
      */
     public static final String PROPERTY_CURRENT_PIECE = "This doesn't not matter";
 
-    /**
-     * A property name for drop.
-     */
-    public static final String PROPERTY_DROP = "This doesn't not matter!";
+    public static final String PROPERTY_ROTATIONAL = "rot";
 
     /**
      * A property name for the frozen blocks.
@@ -63,9 +65,6 @@ public class Board implements BoardInterface {
      */
     public static final String PROPERTY_NEXT_PIECE = "This doesn't not mate!";
 
-    /** Property name for the general board. */
-    public static final String PROPERTY_BOARD = "Board";
-    
     /**
      * Default width of a Tetris game board.
      */
@@ -77,7 +76,6 @@ public class Board implements BoardInterface {
     private static final int DEFAULT_HEIGHT = 20;
 
     // Instance fields
-    
     /**
      * Width of the game board.
      */
@@ -87,12 +85,12 @@ public class Board implements BoardInterface {
      * Height of the game board.
      */
     private final int myHeight;
-    
+
     /**
      * The frozen blocks on the board.
      */
     private final List<Block[]> myFrozenBlocks;
-    
+
     /**
      * The game over state.
      */
@@ -107,16 +105,21 @@ public class Board implements BoardInterface {
      * The current index in the non-random piece sequence.
      */
     private int mySequenceIndex;
-    
+
     /**
      * Piece that is next to play.
      */
     private TetrisPiece myNextPiece;
-    
+
     /**
      * Piece that is currently movable.
      */
     private MovableTetrisPiece myCurrentPiece;
+
+    /**
+     * The Score object.
+     */
+    private Score myScore = new Score();
 
     /**
      * A flag to indicate when moving a piece down is part of a drop operation.
@@ -130,8 +133,8 @@ public class Board implements BoardInterface {
      */
     private final PropertyChangeSupport myPcs;
 
-    // Constructors
 
+    // Constructors
     /**
      * Default Tetris board constructor.
      * Creates a standard size tetris game board.
@@ -151,20 +154,13 @@ public class Board implements BoardInterface {
         myWidth = theWidth;
         myHeight = theHeight;
         myFrozenBlocks = new LinkedList<>();
-         
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
-
-
         myPcs = new PropertyChangeSupport(this);
-
-        /*  myNextPiece and myCurrentPiece
-         *  are initialized by the newGame() method.
-         */
+        // myNextPiece and myCurrentPiece are initialized by the newGame() method.
     }
 
-    // public queries
-
+    // Public queries
     @Override
     public int getWidth() {
         return myWidth;
@@ -177,13 +173,11 @@ public class Board implements BoardInterface {
 
     @Override
     public void newGame() {
-
         // saved old values - added for firePropertyChange
         final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
         final boolean oldGameOver = myGameOver;
         final MovableTetrisPiece oldPiece = myCurrentPiece;
-        final boolean oldDrop = myDrop;
-
+        final TetrisPiece oldNextPiece = myNextPiece;
 
         mySequenceIndex = 0;
         myFrozenBlocks.clear();
@@ -194,29 +188,27 @@ public class Board implements BoardInterface {
         myGameOver = false;
         myCurrentPiece = nextMovablePiece(true);
         myDrop = false;
-        
+        myScore.reset();
+
         // TODO Publish Update!
         myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
         myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
         myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-        myPcs.firePropertyChange(PROPERTY_DROP, oldDrop, myDrop);
+        myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
+
         // Restarts states - everything -
         // PROPERTY_FROZEN_BLOCKS
         // PROPERTY_GAME_OVER
         // PROPERTY_CURRENT_PIECE
-        // PROPERTY_DROP
-        // PROPERTY_NEXT_PIECE not affected ???
+        // PROPERTY_NEXT_PIECE
     }
-
 
     @Override
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
-        myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
+        myNonRandomPieces = new ArrayList<>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
-
     }
-
 
     @Override
     public void step() {
@@ -227,31 +219,31 @@ public class Board implements BoardInterface {
          * to implement additional functionality
          */
         down();
-        final Board board = new Board();
-        final Board oldBoard = board;
-        myPcs.firePropertyChange(PROPERTY_BOARD, oldBoard, board);
     }
-
 
     @Override
     public void down() {
-        // saved old value - added for firePropertyChange
-        final MovableTetrisPiece oldPiece = myCurrentPiece;
+        if (myCurrentPiece != null) {
+            // saved old value - added for firePropertyChange
+            final MovableTetrisPiece oldPiece = myCurrentPiece;
+            final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
 
-        if (!move(myCurrentPiece.down())) {
-            // the piece froze, so clear lines and update current piece
-            addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
-            checkRows();
-            if (!myGameOver) {
-                myCurrentPiece = nextMovablePiece(false);
+            if (!move(myCurrentPiece.down())) {
+                // the piece froze, so clear lines and update current piece
+                addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
+                checkRows();
+                if (!myGameOver) {
+                    myCurrentPiece = nextMovablePiece(false);
+                }
+
+                // TODO Publish Update!
+                myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+               // myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+                // Changing state
+                // PROPERTY_CURRENT_PIECE
             }
-            // TODO Publish Update!
-            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
-            // Changing state
-            // PROPERTY_CURRENT_PIECE
         }
     }
-
 
     @Override
     public void left() {
@@ -318,6 +310,7 @@ public class Board implements BoardInterface {
             }
             myDrop = false;
             down();  // move down one more time to freeze in place
+            myPcs.firePropertyChange(PROPERTY_SCORE, null, myScore);
         }
     }
 
@@ -384,8 +377,7 @@ public class Board implements BoardInterface {
 
     }
     
-    // private helper methods
-    
+    // Private helper methods
     /**
      * Helper function to check if the current piece can be shifted to the
      * specified position.
@@ -406,11 +398,9 @@ public class Board implements BoardInterface {
                 myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
             }
         }
-
         return result;
         // Changing state
         // PROPERTY_CURRENT_PIECE
-
     }
 
     /**
@@ -459,6 +449,8 @@ public class Board implements BoardInterface {
     private void checkRows() {
         // saved old values - added for firePropertyChange
         final List<Block[]> oldFrozenBlocks = new LinkedList<Block[]>(myFrozenBlocks);
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
+        final TetrisPiece oldNextPiece = myNextPiece;
 
         final List<Integer> completeRows = new ArrayList<>();
         for (final Block[] row : myFrozenBlocks) {
@@ -472,8 +464,10 @@ public class Board implements BoardInterface {
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
              // TODO Publish Update!
-                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS,
-                        oldFrozenBlocks, myFrozenBlocks);
+               // myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+               // myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
+               // myPcs.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
+
             }
         }
         // loop through list backwards removing items by index
@@ -482,9 +476,9 @@ public class Board implements BoardInterface {
                 final Block[] row = myFrozenBlocks.get(completeRows.get(i));
                 myFrozenBlocks.remove(row);
                 myFrozenBlocks.add(new Block[myWidth]);
+                myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldFrozenBlocks, myFrozenBlocks);
             }
         }
-
         // Changing state
         // PROPERTY_FROZEN_BLOCKS
     }
@@ -526,6 +520,7 @@ public class Board implements BoardInterface {
                           final Block theBlock) {
         // saved old value - added for firePropertyChange
         final boolean oldGameOver = myGameOver;
+        final MovableTetrisPiece oldPiece = myCurrentPiece;
         
         if (isPointOnBoard(theBoard, thePoint)) { 
             final Block[] row = theBoard.get(thePoint.y());
@@ -533,8 +528,10 @@ public class Board implements BoardInterface {
         } else if (!myGameOver) {
             myGameOver = true;
             // TODO Publish Update!
-            myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, oldGameOver, myFrozenBlocks);
-//            myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
+            myPcs.firePropertyChange(PROPERTY_CURRENT_PIECE, oldPiece, myCurrentPiece);
+            //myPcs.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
+
+            myPcs.firePropertyChange(PROPERTY_GAME_OVER, oldGameOver, myGameOver);
         }
         // Changing state
         // PROPERTY_GAME_OVER
@@ -579,31 +576,27 @@ public class Board implements BoardInterface {
      * @return A new MovableTetrisPiece.
      */
     private MovableTetrisPiece nextMovablePiece(final boolean theRestart) {
-        
         if (myNextPiece == null || theRestart) {
             prepareNextMovablePiece();
         }
-        
+
         final TetrisPiece next = myNextPiece;
         
         int startY = myHeight - 1;
         if (myNextPiece == TetrisPiece.I) {
             startY--; 
         }
-        
+
         prepareNextMovablePiece();
-        return new MovableTetrisPiece(
-                       next,
-                       new Point((myWidth - myNextPiece.getWidth()) / 2, startY));
+        return new MovableTetrisPiece(next, new Point((myWidth - myNextPiece.getWidth()) / 2, startY));
     }
-    
+
     /**
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
         // saved old values - added for firePropertyChange
         final TetrisPiece oldPiece = myNextPiece;
-        
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
             myNextPiece = TetrisPiece.getRandomPiece();
@@ -617,13 +610,9 @@ public class Board implements BoardInterface {
             // Changing state
             // PROPERTY_NEXT_PIECE
         }
-
-
-    }    
-
+    }
     
     // Inner classes
-
     /**
      * A class to describe the board data to registered Observers.
      * The board data includes the current piece and the frozen blocks.
@@ -661,8 +650,5 @@ public class Board implements BoardInterface {
             }
             return board;
         }
-        
     } // end inner class BoardData
-
-    
 } // end of Board class
