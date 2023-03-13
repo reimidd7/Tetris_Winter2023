@@ -148,9 +148,6 @@ public class BoardPanel extends JPanel implements PropertyChangeListener {
 
         // Draw Pieces.
         if (myCurrentPiece != null) {
-
-
-
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
                 theDraw.drawO(theG2d);
 
