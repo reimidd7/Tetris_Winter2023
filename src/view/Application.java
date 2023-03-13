@@ -5,10 +5,7 @@
 
 package view;
 
-import model.Board;
-import model.BoardInterface;
-
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 /**
  * Application class to kick off the Tetris game.
