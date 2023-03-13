@@ -5,12 +5,12 @@
 
 package view;
 
-import model.Board;
-import model.Score;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import model.Board;
+import model.Score;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -33,14 +33,17 @@ public class OtherInfo extends JPanel implements PropertyChangeListener {
      */
     private final Score myScore = new Score();
 
+    /** */
     private final JPanel myStats;
 
+    /** */
     private JTextField myScoreText;
+
+    /** */
     private JTextField myLevelText;
+
+    /** */
     private JTextField myLinesText;
-
-
-
 
     /** Constructor for OtherInfo panel. */
     public OtherInfo() {
@@ -92,10 +95,8 @@ public class OtherInfo extends JPanel implements PropertyChangeListener {
         myStats.add(myLinesText);
 
         add(myStats);
-//        repaint();
+
     }
-
-
     @Override
     protected void paintComponent(final Graphics theGraphics) {
 //        super.paintComponent(theGraphics);
@@ -131,7 +132,7 @@ public class OtherInfo extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (theEvent.getPropertyName().equals(Board.PROPERTY_SCORE)) {
-//            repaint();
+            repaint();
         }
     }
 }

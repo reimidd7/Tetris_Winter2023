@@ -12,11 +12,7 @@ import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-
-import model.Block;
 import model.Board;
-import model.MovableTetrisPiece;
 import model.TetrisPiece;
 
 /**
@@ -52,7 +48,7 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
             final int w = (getWidth() - myNextPiece.getWidth() * 20) / 2;
             final int h =  (getHeight() - myNextPiece.getHeight() * 20 - 60) / 2;
 
-            g2d.rotate(Math.PI, 100,100);
+            g2d.rotate(Math.PI, 100, 100);
             g2d.translate(w, h);
 
             switch (myNextPiece) {
